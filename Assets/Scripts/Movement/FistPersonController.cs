@@ -12,6 +12,9 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float gravityMultiplier = 9.81f;
 
+    [Header("Air Control")]
+    [SerializeField, Range(0f, 1f), Tooltip("control in the air 0 is none 1 full control")] private float airControl = 0.2f;
+
     [Header("Coyote Time Parameters")]
     [SerializeField] private float coyoteTime = 0.2f;
     [SerializeField] private float jumpBufferTime = 0.2f;
@@ -21,14 +24,15 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float upDownLookRange = 85.0f;
 
     [Header("Ground Check Parameters")]
-    [SerializeField] private float groundCheckDistance = 0.2f; // wie tief der Ray unter den Spieler schießt
-    [SerializeField] private LayerMask groundMask;             // nur Boden-Schichten
+    [SerializeField, Tooltip("radius of ground-check")] private float sphereRadius = 0.4f;
+    [SerializeField, Tooltip("distance between ray and player")] private float groundCheckDistance = 0.4f;
+    [SerializeField] private LayerMask groundMask;
 
     [Header("References")]
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private PlayerInputHandler playerInputHandler;
-
+    public bool isGround;
 
     private Vector3 currentMovement;
     private float verticalRotation;
@@ -44,20 +48,24 @@ public class FirstPersonController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
+    #region Update
     void Update()
     {
+        GroundCheck(); // Call ground check first to update isGround
         HandleCoyoteTime();
         HandleJumpBuffer();
         HandleMovement();
         HandleRotation();
-        GroundCheck();
         WallCheck();
+        Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
+        Debug.Log("Ist auf boden?(custom) " + isGround);
     }
+    #endregion
+
     #region CoyoteTime
     private void HandleCoyoteTime()
     {
-        bool isGrounded = characterController.isGrounded;
+        bool isGrounded = isGround; // Use custom ground detection
 
         // Start coyote timer when leaving ground (not from jumping)
         if (wasGrounded && !isGrounded && currentMovement.y <= 0)
@@ -95,10 +103,10 @@ public class FirstPersonController : MonoBehaviour
     // Can jump if grounded OR within coyote time
     #endregion
 
-    #region MovementAndJumping
+    #region CanJump/HasJumpInput/GetMovementSpeed
     private bool CanJump()
     {
-        return characterController.isGrounded || coyoteTimer > 0f;
+        return isGround || coyoteTimer > 0f; // Use custom ground detection
     }
 
     private bool HasJumpInput()
@@ -108,7 +116,7 @@ public class FirstPersonController : MonoBehaviour
 
     private float GetMovementSpeed()
     {
-        if (characterController.isGrounded)
+        if (isGround) // Use custom ground detection
         {
             return walkSpeed * (playerInputHandler.SprintPressed ? sprintMultiplier : 1);
         }
@@ -119,17 +127,19 @@ public class FirstPersonController : MonoBehaviour
     }
     #endregion
 
-    #region MovementAndRotation
+    #region worldDirection
     private Vector3 CalculateWorldDirection()
     {
         Vector3 inputDirection = new Vector3(playerInputHandler.MovementInput.x, 0f, playerInputHandler.MovementInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         return worldDirection.normalized;
     }
+    #endregion
 
+    #region handleJump
     private void HandleJump()
     {
-        if (characterController.isGrounded)
+        if (isGround) // Use custom ground detection
         {
             currentMovement.y = -0.5f;
         }
@@ -145,24 +155,40 @@ public class FirstPersonController : MonoBehaviour
             coyoteTimer = 0f;
             jumpBufferTimer = 0f;
         }
-        else if (!characterController.isGrounded)
+        else if (!isGround) // Use custom ground detection
         {
             // Apply gravity when not grounded
             currentMovement.y += Physics.gravity.y * gravityMultiplier * Time.deltaTime;
         }
     }
+    #endregion
 
+    #region handleMovement
     private void HandleMovement()
     {
         Vector3 worldDirection = CalculateWorldDirection();
         float currentSpeed = GetMovementSpeed();
-        currentMovement.x = worldDirection.x * currentSpeed;
-        currentMovement.z = worldDirection.z * currentSpeed;
+
+        if (isGround) // Use custom ground detection
+        {
+            // Am Boden: volle Kontrolle
+            currentMovement.x = worldDirection.x * currentSpeed;
+            currentMovement.z = worldDirection.z * currentSpeed;
+        }
+        else
+        {
+            // In der Luft: mische alte Richtung mit Input
+            Vector3 airMove = worldDirection * currentSpeed;
+            currentMovement.x = Mathf.Lerp(currentMovement.x, airMove.x, airControl * Time.deltaTime * 10f);
+            currentMovement.z = Mathf.Lerp(currentMovement.z, airMove.z, airControl * Time.deltaTime * 10f);
+        }
 
         HandleJump();
         characterController.Move(currentMovement * Time.deltaTime);
     }
+    #endregion
 
+    #region handleRotation
     private void ApplyHorizontalRotation(float rotationAmount)
     {
         transform.Rotate(0, rotationAmount, 0);
@@ -185,21 +211,19 @@ public class FirstPersonController : MonoBehaviour
     #endregion
 
     #region IsGrounded
-    private bool GroundCheck()
+    private void GroundCheck()
     {
-        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f; // Start a bit above the player's position
-        bool isGrounded = Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask); // Raycast to check for ground
-        Debug.Log("Ist auf boden? " + isGrounded);
-        #if UNITY_EDITOR
-        // Debug Ray sichtbar machen
-        Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
-        #endif
-
-                return isGrounded;
-
+        Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f; // Start etwas über dem Boden
+        isGround = Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask);
+        Debug.Log("Ist auf Boden?(meiner) " + isGround);
+#if UNITY_EDITOR
+            // Debug: Richtung anzeigen
+            Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, isGround ? Color.green : Color.red);
+#endif
     }
     #endregion
 
+    #region WallCheck
     private bool WallCheck()
     {
         Vector3 rayOrigin = transform.position + Vector3.up * 0.3f;
@@ -225,12 +249,22 @@ public class FirstPersonController : MonoBehaviour
         Debug.Log("Schaut Wand an? false");
         return false;
     }
-    //private void OnDrawGizmosSelected()
-    //{
-    //    // Draw ground check ray in editor
-    //    Gizmos.color = Color.yellow;
-    //    Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
-    //    Gizmos.DrawLine(rayOrigin, rayOrigin + Vector3.down * groundCheckDistance);
-    //}
-}
+    #endregion
 
+    #region Gizmos
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f;
+
+        // Position der Kugel am Ende des SphereCasts
+        Vector3 sphereEnd = sphereOrigin + Vector3.down * groundCheckDistance;
+
+        // Kugel am Start
+        Gizmos.DrawWireSphere(sphereOrigin, sphereRadius);
+
+        // Kugel am Ende (falls Bodenkontrolle bis dahin reicht)
+        Gizmos.DrawWireSphere(sphereEnd, sphereRadius);
+    }
+    #endregion
+}
