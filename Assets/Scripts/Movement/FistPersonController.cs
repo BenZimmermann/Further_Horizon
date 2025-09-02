@@ -1,6 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float gravityMultiplier = 9.81f;
 
     [Header("Air Control")]
-    [SerializeField, Range(0f, 1f), Tooltip("control in the air 0 is none 1 full control")] private float airControl = 0.2f;
+    [SerializeField, Range(0f, 1f), Tooltip("control in the air 0 is none 1 is full control")] private float airControl = 0.2f;
 
     [Header("Coyote Time Parameters")]
     [SerializeField] private float coyoteTime = 0.2f;
@@ -32,8 +34,11 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private PlayerInputHandler playerInputHandler;
+    
     public bool isGround;
+    public bool isNearWall;
 
+    private Vector3 groundNormal;
     private Vector3 currentMovement;
     private float verticalRotation;
     private float airSpeed;
@@ -57,7 +62,7 @@ public class FirstPersonController : MonoBehaviour
         HandleMovement();
         HandleRotation();
         WallCheck();
-     //   Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
+        //   Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
         Debug.Log("Ist auf boden?(custom) " + isGround);
     }
     #endregion
@@ -211,46 +216,219 @@ public class FirstPersonController : MonoBehaviour
     #endregion
 
     #region IsGrounded
+    //    private void GroundCheck()
+    //    {
+    //        Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f;
+    //        if (Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask))
+    //        {
+    //            isGround = true;
+    //            Vector3 groundNormal = hitInfo.normal;
+    //            //hitInfo.normal speichern für slide funktion
+
+    //            float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
+
+    //            //debug purposes
+    //            if (slopeAngle >= 46f)
+    //            {
+    //                Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(GroundCheck)");
+    //            }
+
+    //            Vector3 dir = new Vector3(characterController.velocity.x, 0f, characterController.velocity.z);
+    //            if (dir.sqrMagnitude < 0.01f)
+    //            {
+    //                dir = transform.forward;
+    //            }
+
+    //            dir.Normalize();
+
+    //            Vector3 projected = Vector3.ProjectOnPlane(dir, groundNormal);
+
+    //             Debug.Log($"SlopeAngle (gegen Up): {slopeAngle:F1}°");
+    //            //debug ende
+
+    //#if UNITY_EDITOR
+    //            Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, Color.green);   // SphereCast
+    //            Debug.DrawRay(hitInfo.point, groundNormal * 0.5f, Color.yellow);                // Normal
+    //            Debug.DrawRay(hitInfo.point, projected * 0.5f, Color.cyan);                     // Projektion
+    //#endif
+    //        }
+    //        else
+    //        {
+    //            isGround = false;
+
+    //#if UNITY_EDITOR
+    //            Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, Color.red);
+    //#endif
+
+    //            Debug.Log("GroundCheck: Kein Treffer");
+    //        }
+    //    }
     private void GroundCheck()
     {
-        Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f; // Start etwas über dem Boden
-        isGround = Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask);
-       // Debug.Log("Ist auf Boden?(meiner) " + isGround);
+        Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f;
+        if (Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask))
+        {
+            isGround = true;
+            groundNormal = hitInfo.normal; // Speichere die Boden-Normalen hier
+
+            float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
+            if (slopeAngle >= 46f)
+            {
+                isGround = false; // Treat as not grounded on steep slopes
+                WallGroundCheck();
+                SlideOnSlope();
+
+                Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(GroundCheck)");
+            }
+
+            Vector3 dir = new Vector3(characterController.velocity.x, 0f, characterController.velocity.z);
+            if (dir.sqrMagnitude < 0.01f)
+            {
+                dir = transform.forward;
+            }
+
+            dir.Normalize();
+
+            Vector3 projected = Vector3.ProjectOnPlane(dir, groundNormal);
+
+            Debug.Log($"SlopeAngle (gegen Up): {slopeAngle:F1}°");
+            //debug ende
+
 #if UNITY_EDITOR
-            // Debug: Richtung anzeigen
-            Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, isGround ? Color.green : Color.red);
+            Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, Color.green);   // SphereCast
+            Debug.DrawRay(hitInfo.point, groundNormal * 0.5f, Color.yellow);                // Normal
+            Debug.DrawRay(hitInfo.point, projected * 0.5f, Color.cyan);                     // Projektion
 #endif
+        }
+        else
+        {
+            isGround = false;
+            groundNormal = Vector3.up; // Standardwert, falls kein Boden erkannt wird
+#if UNITY_EDITOR
+            Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, Color.red);
+#endif
+        }
     }
     #endregion
 
     #region WallCheck
-    private bool WallCheck()
+    //alt---
+    //    private bool WallCheck()
+    //    {
+    //        //vector3.ProjectOnPlane(moveDirection, collisionNormal)
+
+    //        Vector3 rayOrigin = transform.position + Vector3.up * 0.3f;
+
+    //        Vector3 dir = new Vector3(characterController.velocity.x, 0f, characterController.velocity.z);
+
+    //        if (dir.sqrMagnitude < 0.01f)
+    //            dir = transform.forward;
+
+    //        dir.Normalize();
+
+    //        if (Physics.Raycast(rayOrigin, dir, out RaycastHit hitInfo, 0.7f))
+    //        {
+    //            float angle = Vector3.Angle(-dir, hitInfo.normal);
+    //            Debug.Log($"Schaut Wand an? true | Winkel zur Wand-Normal: {angle:F1}°");
+    ////...
+    //#if UNITY_EDITOR
+    //            Debug.DrawRay(rayOrigin, dir * 0.7f, Color.green);
+    //            Debug.DrawRay(hitInfo.point, hitInfo.normal * 0.5f, Color.yellow); // Normal sichtbar
+    //#endif
+    //            return true;
+    //        }
+
+    //#if UNITY_EDITOR
+    //        Debug.DrawRay(rayOrigin, dir * 0.7f, Color.red);
+    //#endif
+    ////...
+
+    //        Debug.Log("Schaut Wand an? false");
+    //        return false;
+    //    }
+    //alt---
+    private void WallCheck()
     {
         Vector3 rayOrigin = transform.position + Vector3.up * 0.3f;
-        Vector3 dir = transform.forward;
+        Vector3 dir = new Vector3(characterController.velocity.x, 0f, characterController.velocity.z);
+
+        if (dir.sqrMagnitude < 0.01f)
+        {
+            dir = transform.forward;
+        }
+
+        dir.Normalize();
 
         if (Physics.Raycast(rayOrigin, dir, out RaycastHit hitInfo, 0.7f))
         {
-            float angle = Vector3.Angle(-dir, hitInfo.normal);
+            Vector3 collisionNormal = hitInfo.normal;
 
-            Debug.Log($"Schaut Wand an? true | Winkel zur Wand-Normal: {angle:F1}°");
+            // Winkel zwischen Blickrichtung und Wandnormal
+            float angle = Vector3.Angle(-dir, collisionNormal);
+
+            // Projektion an der wand entlang
+            Vector3 projected = Vector3.ProjectOnPlane(dir, collisionNormal);
+
+            float slopeAngle = Vector3.Angle(hitInfo.normal, Vector3.up);
+            if (slopeAngle >= 46f)
+            {
+                isNearWall = true;
+                WallGroundCheck();
+                Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(WallCheck)");
+            }
+            else
+            {
+                isNearWall = false;
+            }
+
+            // Debug.Log($"RayOrigin: {rayOrigin}");                       //koordinaten des Check starts
+            // Debug.Log($"RayDir: {dir} (magnitude={dir.magnitude:F2})"); //Richtung des Raycasts
+            // Debug.Log($"HitPoint: {hitInfo.point}");                    //Punkt an der Wand
+            // Debug.Log($"CollisionNormal: {collisionNormal}");           //senkrechte Richtung der Wand
+            Debug.Log($"Angle (Richtung / Normal): {angle:F1}°");       //Winkel zwischen Blickrichtung und Wandnormal
+            // Debug.Log($"ProjectedDir (auf Wand-Ebene): {projected}");   //die Bewegung auf der Wand entlang
 
 #if UNITY_EDITOR
-            Debug.DrawRay(rayOrigin, dir * 0.7f, Color.green);
-            Debug.DrawRay(hitInfo.point, hitInfo.normal * 0.5f, Color.yellow); // Normal sichtbar
+            Debug.DrawRay(rayOrigin, dir * 0.7f, Color.green);                  //Raycast
+            Debug.DrawRay(hitInfo.point, collisionNormal * 0.5f, Color.yellow); //Normal
+            Debug.DrawRay(hitInfo.point, projected * 0.5f, Color.cyan);         //Projection On plane
 #endif
-            return true;
+            return;
         }
 
 #if UNITY_EDITOR
-        Debug.DrawRay(rayOrigin, dir * 0.7f, Color.red);
+        Debug.DrawRay(rayOrigin, dir * 0.7f, Color.red); //Raycast
 #endif
 
-        Debug.Log("Schaut Wand an? false");
-        return false;
+        Debug.Log("Keine wand");
+        isNearWall = false;
     }
+
     #endregion
 
+
+    #region SlideOnSlope
+    private void SlideOnSlope()
+    {
+        if (groundNormal == Vector3.up) return; // Keine gültige Boden-Normale
+
+        // Richtung "nach unten entlang der Fläche"
+        Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
+
+        characterController.Move(slideDir * gravityMultiplier * Time.deltaTime);
+#if UNITY_EDITOR
+        Debug.DrawRay(transform.position, slideDir * 2f, Color.cyan);
+#endif
+    }
+    #endregion
+    private void WallGroundCheck()
+    {
+        if (isNearWall && !isGround)
+        {
+            Debug.Log("slideoff");
+            SlideOnSlope();
+        }
+    }
     #region Gizmos
     private void OnDrawGizmosSelected()
     {
