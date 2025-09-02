@@ -1,17 +1,21 @@
 using UnityEngine;
 
-//erbt von Interactable, um Interaktionen zu ermöglichen
 public class ButtonClass : MonoBehaviour, Interactable
 {
-    //Made by Ben Zimmermann
-    //[SerializeField] private GameObject buttonFunc;
+    [Header("General Settings")]
     public bool isInteractable;
     public bool isEnabled = true;
-    private bool used = false;
+
+    [Header("Interaction Settings")]
     public string interactionText = "(F) Activate";
     public Material highlightMaterial;
+
+    [Header("Trigger Events")]
+    [SerializeField] GameObject obj;
+
     private Material[] originalMaterials;
     private Renderer objectRenderer;
+    private bool used = false;
 
     public void Awake()
     {
@@ -22,12 +26,10 @@ public class ButtonClass : MonoBehaviour, Interactable
     {
         if (used) return;
         if (!isEnabled) return;
-        used = true; // Assuming 'used' is a field in this class to track interaction state
+        used = true;
         isEnabled = false;
-        Debug.Log("Interacted with: Button");
-       // AudioManager.Instance.PlaySFX(AudioManager.Instance.DoorOpen); // Play the button activation sound
+        Destroy(obj);
         Remove();
-       // Destroy(buttonFunc);
     }
     public void Apply()
     {
@@ -49,10 +51,12 @@ public class ButtonClass : MonoBehaviour, Interactable
             objectRenderer.materials = originalMaterials;
         }
     }
+
     public string GetInteractionText()
     {
         return interactionText;
     }
+
     public bool IsInteractable()
     {
         return !used;

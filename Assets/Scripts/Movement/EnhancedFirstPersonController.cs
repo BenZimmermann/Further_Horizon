@@ -18,7 +18,7 @@ public class EnhancedFirstPersonController : MonoBehaviour
 
     [Header("Ground & Wall Detection")]
     [SerializeField, Tooltip("Max. Distanz für Center-Down Raycast")] private float groundCheckDistance = 0.15f;
-    [SerializeField, Tooltip("Distanz für Knie-Raycast in Bewegungsrichtung")] private float kneeCheckDistance = 0.6f;
+   // [SerializeField, Tooltip("Distanz für Knie-Raycast in Bewegungsrichtung")] private float kneeCheckDistance = 0.6f;
     [SerializeField, Tooltip("Max Winkel (in Grad) bis zu dem eine Fläche als begehbar gilt")] private float slopeLimitDegrees = 45f;
     [SerializeField] private LayerMask groundLayer = ~0;
 

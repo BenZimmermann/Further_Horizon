@@ -19,7 +19,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private PlayerInput playerInput;
     private Interactable currentInteractable;
-    //---
+
+    [Header("Debug")]
     private RaycastHit _hitInfo;
     private bool _didHit;
 
@@ -82,6 +83,7 @@ public class PlayerInteraction : MonoBehaviour
         currentInteractable = null;
         uiPanel.SetActive(false); 
     }
+    #region Gizmos
     private void OnDrawGizmos()
     {
         if (playerCamera == null) return;
@@ -89,8 +91,8 @@ public class PlayerInteraction : MonoBehaviour
         Gizmos.color = _didHit ? Color.green : Color.red;
         Gizmos.DrawRay(playerCamera.transform.position, playerCamera.transform.forward * interactDistance);
     }
+    #endregion
 }
-//---
 public static class UnityExtensions
 {
     public static bool Contains(this LayerMask mask, int layer)

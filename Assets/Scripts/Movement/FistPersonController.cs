@@ -57,7 +57,7 @@ public class FirstPersonController : MonoBehaviour
         HandleMovement();
         HandleRotation();
         WallCheck();
-        Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
+     //   Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
         Debug.Log("Ist auf boden?(custom) " + isGround);
     }
     #endregion
@@ -215,7 +215,7 @@ public class FirstPersonController : MonoBehaviour
     {
         Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f; // Start etwas über dem Boden
         isGround = Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask);
-        Debug.Log("Ist auf Boden?(meiner) " + isGround);
+       // Debug.Log("Ist auf Boden?(meiner) " + isGround);
 #if UNITY_EDITOR
             // Debug: Richtung anzeigen
             Debug.DrawRay(sphereOrigin, Vector3.down * groundCheckDistance, isGround ? Color.green : Color.red);

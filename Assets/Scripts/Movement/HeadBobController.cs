@@ -11,8 +11,8 @@ public class HeadBobController : MonoBehaviour
     [SerializeField, Range(0f, 30f)] private float _frequency = 10.0f;
 
     [Header("References")]
-    [SerializeField] private Transform _camera = null;
-    [SerializeField] private Transform _cameraHolder = null;
+    [SerializeField] private Transform _camera;
+    [SerializeField] private Transform _cameraHolder;
 
     [Header("Jump Settings")]
     [SerializeField, Range(0f, 0.3f)] private float _jumpBobAmplitude = 0.1f;
@@ -37,7 +37,7 @@ public class HeadBobController : MonoBehaviour
         CheckMotion();
         HandleJumpBob();
         ResetPosition();
-        _camera.LookAt(FocusTarget());
+       // _camera.LookAt(FocusTarget());
         _wasGrounded = _controller.isGrounded;
     }
     private void PlayMotion(Vector3 motion)
