@@ -56,11 +56,12 @@ public class FirstPersonController : MonoBehaviour
     #region Update
     void Update()
     {
-        GroundCheck(); // Call ground check first to update isGround
+        
         HandleCoyoteTime();
         HandleJumpBuffer();
         HandleMovement();
         HandleRotation();
+        GroundCheck(); // Call ground check first to update isGround
         WallCheck();
         //   Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
         Debug.Log("Ist auf boden?(custom) " + isGround);
@@ -268,17 +269,20 @@ public class FirstPersonController : MonoBehaviour
         Vector3 sphereOrigin = transform.position + Vector3.up * 0.7f;
         if (Physics.SphereCast(sphereOrigin, sphereRadius, Vector3.down, out RaycastHit hitInfo, groundCheckDistance, groundMask))
         {
-            isGround = true;
+
             groundNormal = hitInfo.normal; // Speichere die Boden-Normalen hier
 
             float slopeAngle = Vector3.Angle(groundNormal, Vector3.up);
-            if (slopeAngle >= 46f)
+            if (slopeAngle <= 46f)
+            {
+                isGround = true;
+            }
+            else
             {
                 isGround = false; // Treat as not grounded on steep slopes
-                WallGroundCheck();
+                Debug.LogWarning("ALARM!!!!Steiler ground erkannt.(GroundCheck)");
                 SlideOnSlope();
 
-                Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(GroundCheck)");
             }
 
             Vector3 dir = new Vector3(characterController.velocity.x, 0f, characterController.velocity.z);
@@ -291,7 +295,7 @@ public class FirstPersonController : MonoBehaviour
 
             Vector3 projected = Vector3.ProjectOnPlane(dir, groundNormal);
 
-            Debug.Log($"SlopeAngle (gegen Up): {slopeAngle:F1}°");
+            //Debug.LogWarning($"SlopeAngle (gegen Up): {slopeAngle:F1}°");
             //debug ende
 
 #if UNITY_EDITOR
@@ -373,7 +377,7 @@ public class FirstPersonController : MonoBehaviour
             if (slopeAngle >= 46f)
             {
                 isNearWall = true;
-                WallGroundCheck();
+                GroundCheck();
                 Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(WallCheck)");
             }
             else
@@ -385,7 +389,7 @@ public class FirstPersonController : MonoBehaviour
             // Debug.Log($"RayDir: {dir} (magnitude={dir.magnitude:F2})"); //Richtung des Raycasts
             // Debug.Log($"HitPoint: {hitInfo.point}");                    //Punkt an der Wand
             // Debug.Log($"CollisionNormal: {collisionNormal}");           //senkrechte Richtung der Wand
-            Debug.Log($"Angle (Richtung / Normal): {angle:F1}°");       //Winkel zwischen Blickrichtung und Wandnormal
+            // Debug.Log($"Angle (Richtung / Normal): {angle:F1}°");       //Winkel zwischen Blickrichtung und Wandnormal
             // Debug.Log($"ProjectedDir (auf Wand-Ebene): {projected}");   //die Bewegung auf der Wand entlang
 
 #if UNITY_EDITOR
@@ -400,7 +404,6 @@ public class FirstPersonController : MonoBehaviour
         Debug.DrawRay(rayOrigin, dir * 0.7f, Color.red); //Raycast
 #endif
 
-        Debug.Log("Keine wand");
         isNearWall = false;
     }
 
@@ -410,25 +413,16 @@ public class FirstPersonController : MonoBehaviour
     #region SlideOnSlope
     private void SlideOnSlope()
     {
-        if (groundNormal == Vector3.up) return; // Keine gültige Boden-Normale
-
+        if (groundNormal == Vector3.up) return;
         // Richtung "nach unten entlang der Fläche"
         Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
-
+        Debug.LogWarning("ich slide");
         characterController.Move(slideDir * gravityMultiplier * Time.deltaTime);
 #if UNITY_EDITOR
         Debug.DrawRay(transform.position, slideDir * 2f, Color.cyan);
 #endif
     }
     #endregion
-    private void WallGroundCheck()
-    {
-        if (isNearWall && !isGround)
-        {
-            Debug.Log("slideoff");
-            SlideOnSlope();
-        }
-    }
     #region Gizmos
     private void OnDrawGizmosSelected()
     {
