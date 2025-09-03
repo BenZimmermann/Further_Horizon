@@ -22,6 +22,9 @@ public class ButtonClass : MonoBehaviour, Interactable
         objectRenderer = GetComponent<Renderer>();
         originalMaterials = objectRenderer.materials;
     }
+    public void Update()
+    {
+    }
     public void Interact()
     {
         if (used) return;
