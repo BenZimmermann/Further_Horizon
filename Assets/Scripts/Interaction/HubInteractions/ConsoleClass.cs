@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class ConsoleClass : MonoBehaviour, Interactable
@@ -12,52 +11,46 @@ public class ConsoleClass : MonoBehaviour, Interactable
     public Material highlightMaterial;
 
     [Header("Trigger Events")]
-    [SerializeField] GameObject map; // Das Fenster, das geöffnet/geschlossen wird
-    //[SerializeField] GameObject obj; // Das Objekt mit dem Animator
+    [SerializeField] GameObject map;
+
+    [Header("Window Settings")]
+    [SerializeField] private WindowType windowType = WindowType.Console;
 
     private Material[] originalMaterials;
     private Renderer objectRenderer;
     private Animator animator;
 
-    private bool isWindowOpen = false; // Status des Fensters (offen/geschlossen)
+    // Lokaler Status wird durch den PauseMenuController verwaltet
+    private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
 
     public void Awake()
     {
         objectRenderer = GetComponent<Renderer>();
-        originalMaterials = objectRenderer.materials;
         animator = GetComponent<Animator>();
-
-        if (animator == null)
-        {
-            Debug.LogError("Animator-Komponente nicht gefunden!");
-        }
-        if (map != null)
-        {
-            map.SetActive(false);
-        }
+        originalMaterials = objectRenderer.materials;
     }
+
     public void Update()
     {
+        // Synchronisiere das GameObject mit dem Window-Status
+        if (map != null && map.activeSelf != IsActive)
+        {
+            map.SetActive(IsActive);
+        }
     }
 
     public void Interact()
     {
-        if (!isWindowOpen)
+        bool wasOpened = PauseMenuController.Instance.ToggleWindow(windowType);
+
+        // Optional: Zusätzliche Aktionen beim Öffnen/Schließen
+        if (wasOpened)
         {
-            isWindowOpen = true;
-            if (map != null)
-            {
-                map.SetActive(true);
-                animator.SetBool("Open", isWindowOpen);
-            }
+            //Debug.Log($"Console {windowType} geöffnet");
         }
         else
         {
-            isWindowOpen = false;
-            if (map != null)
-            {
-                map.SetActive(false);
-            }
+            //Debug.Log($"Console {windowType} geschlossen");
         }
     }
     public void Apply()
