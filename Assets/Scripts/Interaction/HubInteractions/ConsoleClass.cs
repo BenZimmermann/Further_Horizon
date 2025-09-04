@@ -12,6 +12,7 @@ public class ConsoleClass : MonoBehaviour, Interactable
 
     [Header("Trigger Events")]
     [SerializeField] GameObject map;
+    [SerializeField, Tooltip("the globe")] GameObject globe;
 
     [Header("Window Settings")]
     [SerializeField] private WindowType windowType = WindowType.Console;
@@ -19,14 +20,14 @@ public class ConsoleClass : MonoBehaviour, Interactable
     private Material[] originalMaterials;
     private Renderer objectRenderer;
     private Animator animator;
-
+    private bool isOpen = false;
     // Lokaler Status wird durch den PauseMenuController verwaltet
     private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
 
     public void Awake()
     {
         objectRenderer = GetComponent<Renderer>();
-        animator = GetComponent<Animator>();
+        animator = globe.GetComponentInChildren<Animator>();
         originalMaterials = objectRenderer.materials;
     }
 
@@ -42,10 +43,11 @@ public class ConsoleClass : MonoBehaviour, Interactable
     public void Interact()
     {
         bool wasOpened = PauseMenuController.Instance.ToggleWindow(windowType);
-
+        
         // Optional: Zusätzliche Aktionen beim Öffnen/Schließen
         if (wasOpened)
         {
+            animator.SetBool("Open", isOpen);
             //Debug.Log($"Console {windowType} geöffnet");
         }
         else
@@ -53,6 +55,7 @@ public class ConsoleClass : MonoBehaviour, Interactable
             //Debug.Log($"Console {windowType} geschlossen");
         }
     }
+
     public void Apply()
     {
         if (highlightMaterial == null) return;

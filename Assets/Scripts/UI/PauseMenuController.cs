@@ -9,10 +9,9 @@ public enum WindowType
 {
     PauseMenu,
     Console,
-    Map,
-    Inventory,
+   // Map,
+   //Inventory,
     Settings
-    // Hier können beliebig viele neue Fenstertypen hinzugefügt werden
 }
 
 public class PauseMenuController : MonoBehaviour
