@@ -16,7 +16,7 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI line7;
     [SerializeField] private TextMeshProUGUI line8;
 
-    private GameSaveData saveData;
+    private GameSaveData saveData; //Behälter 
 
     private void Start()
     {
