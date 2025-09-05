@@ -20,6 +20,8 @@ public class PauseMenuController : MonoBehaviour
     public static PauseMenuController Instance { get; private set; }
     public static bool IsPaused { get; private set; }
 
+    public event System.Action OnWindowsClosed;
+
     [Header("Pause Menu Settings")]
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GameObject pauseCanvas;
@@ -56,23 +58,16 @@ public class PauseMenuController : MonoBehaviour
 
     private void onPause(CallbackContext ctx)
     {
-        Debug.Log("Pause gedrückt");
+        Debug.Log("ESC gedrückt");
 
-        // ESC hat höchste Priorität
         if (isAnyWindowOpen)
         {
-            if (currentActiveWindow == WindowType.PauseMenu)
-            {
-                CloseWindow();
-            }
-            else
-            {
-                CloseWindow();
-                OpenWindow(WindowType.PauseMenu);
-            }
+            // egal welches Fenster offen ist -> ESC schließt alles
+            CloseWindow();
         }
         else
         {
+            // wenn kein Fenster offen -> Pause öffnen
             OpenWindow(WindowType.PauseMenu);
         }
     }

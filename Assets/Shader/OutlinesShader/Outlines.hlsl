@@ -7,11 +7,24 @@ ScharrOperators GetEdgeDetectionKernels()
 {
     ScharrOperators kernels;
     kernels.x = float3x3(
-        -3, -10, -3, 0, 0, 0, 3, 10, 3
+        -3, -10, -3,
+         0,   0,  0, 
+         3,  10,  3
     );
     kernels.y = float3x3(
         -3, 0, 3, -10, 0, 10, -3, 0, 3
     );
+ /*   kernels.x = float3x3(
+    -2, -5, -2,
+     0, 0, 0,
+     2, 5, 2
+);
+    kernels.y = float3x3(
+    -2, 0, 2,
+    -5, 0, 5,
+    -2, 0, 2
+);
+*/
     return kernels;
 }
 
@@ -36,8 +49,8 @@ void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
 
     }
     float g = sqrt(gx * gx + gy * gy);
-    outlines = step(.02, g);
-    #endif
+outlines = smoothstep(0.01, 0.03, g);
+#endif
 }
 void NormalBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
 {
@@ -60,6 +73,6 @@ void NormalBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
         }
     }
     float g = sqrt(gx * gx + gy * gy);
-    outlines = step(2, g);
+    outlines = smoothstep(1, 6, g);
 #endif
 }

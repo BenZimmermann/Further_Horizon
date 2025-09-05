@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Outlines
-  m_Shader: {fileID: -6465566751694194690, guid: 8b7fa5cc3d5d4e74783bdbee3906169b, type: 3}
+  m_Name: OutlineSmooth
+  m_Shader: {fileID: -6465566751694194690, guid: a575689efe266f54aa83eb205501c594, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OutlineThickness: 0.61
+    - _Thickness: 0.129
     m_Colors:
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

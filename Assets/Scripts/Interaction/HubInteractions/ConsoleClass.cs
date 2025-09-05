@@ -1,5 +1,7 @@
 using UnityEngine;
-
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
 public class ConsoleClass : MonoBehaviour, Interactable
 {
     [Header("General Settings")]
@@ -27,8 +29,10 @@ public class ConsoleClass : MonoBehaviour, Interactable
     public void Awake()
     {
         objectRenderer = GetComponent<Renderer>();
-        animator = globe.GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        animator.SetBool("Idle", true);
         originalMaterials = objectRenderer.materials;
+        if (animator == null) Debug.LogError("Animator not found on globe!");
     }
 
     public void Update()
@@ -38,22 +42,70 @@ public class ConsoleClass : MonoBehaviour, Interactable
         {
             map.SetActive(IsActive);
         }
+        Debug.Log($"offen:"+ isOpen);
+
     }
 
     public void Interact()
     {
-        bool wasOpened = PauseMenuController.Instance.ToggleWindow(windowType);
+        // Wenn mein Fenster schon offen ist -> schließen
+        if (PauseMenuController.Instance.IsWindowOpen(windowType))
+        {
+            Debug.Log($"Console {windowType} geschlossen");
+            PauseMenuController.Instance.CloseWindow();
+            animator.SetBool("Open", false);
+            animator.SetBool("Idle", true);
+            isOpen = false;
+            return;
+
         
-        // Optional: Zusätzliche Aktionen beim Öffnen/Schließen
-        if (wasOpened)
-        {
-            animator.SetBool("Open", isOpen);
-            //Debug.Log($"Console {windowType} geöffnet");
         }
-        else
-        {
-            //Debug.Log($"Console {windowType} geschlossen");
-        }
+
+        isOpen = true;
+        // Fenster noch nicht offen -> erst Animation abspielen
+        Debug.Log($"Console {windowType} wird geöffnet");
+        PlayAnimation();
+        StartCoroutine(OpenWindowAfterAnimation());
+    }
+    private IEnumerator OpenWindowAfterAnimation()
+    {
+        // Warte bis die Open-Animation durchgelaufen ist
+        //float length = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(1.3f);
+        PauseMenuController.Instance.OpenWindow(windowType);
+        Debug.Log($"Console {windowType} geöffnet");
+    }
+    //private IEnumerator OpenWindow()
+    //{
+    //    yield return new WaitForSeconds(1);
+    //    bool wasOpened = PauseMenuController.Instance.ToggleWindow(windowType);
+
+    //    // Animation abspielen
+
+    //    // Optional: Zusätzliche Aktionen beim Öffnen/Schließen
+    //    if (wasOpened)
+    //    {
+    //        Debug.Log($"Console {windowType} geöffnet");
+
+    //        // Hier können weitere Aktionen beim Öffnen hinzugefügt werden
+    //    }
+    //    else
+    //    {
+    //        Debug.Log($"Console {windowType} geschlossen");
+    //        // Hier können weitere Aktionen beim Schließen hinzugefügt werden
+    //    }
+    //}
+
+    private void PlayAnimation()
+    {
+            // Bool-Parameter Methode (empfohlen)
+        animator.SetBool("Idle", false);
+        animator.SetBool("Open", true);
+            Debug.Log("Play Open Animation");
+
+        // Alternative: Direkte Animation-Kontrolle
+        // string animationName = isOpening ? "OpenAnimation" : "CloseAnimation";
+        // childAnimator.Play(animationName, 0, 0f); // Start von Beginn an
     }
 
     public void Apply()
