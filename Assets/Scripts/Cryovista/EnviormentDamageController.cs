@@ -3,12 +3,24 @@ using System.Collections;
 
 public class EnviormentDamageController : MonoBehaviour
 {
+    public static EnviormentDamageController Instance { get; private set; }
     public bool IsWarm = false;
     public int EnviormentDamage = 5;
     public float DamageTick = 5f;
 
     private bool isDamaging = false; // Verhindert mehrfaches Starten der Coroutine
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void Update()
     {
         if (!IsWarm && !isDamaging)

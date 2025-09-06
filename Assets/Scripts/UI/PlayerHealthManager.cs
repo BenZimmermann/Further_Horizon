@@ -27,11 +27,6 @@ public class PlayerHealthManager : MonoBehaviour
         // Optional: DontDestroyOnLoad(gameObject); // Falls das Objekt zwischen Szenen bestehen bleiben soll
     }
 
-    void Update()
-    {
-        Debug.Log("Player Health: " + health);
-    }
-
     private void Start()
     {
         health = maxHealth;
