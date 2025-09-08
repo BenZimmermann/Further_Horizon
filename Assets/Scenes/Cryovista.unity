@@ -1757,6 +1757,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8079584966832038136, guid: 7d68d8b79b6410542b53e769a9762874, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8079584966832038136, guid: 7d68d8b79b6410542b53e769a9762874, type: 3}
       propertyPath: InitialModule.rotation3D
       value: 1
       objectReference: {fileID: 0}
