@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LaserMaterial
+  m_Name: LaserOriginMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 49e173ae21432df4db3f3e2c84d79cf0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: 56e47f232edcd9542a5e13ab9e2d768a, type: 3}
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: c5c273ff67d1c00408299ddb05f0bfae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -50,7 +50,7 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - _LaserColor: {r: 21.067896, g: 1341.3252, b: 1272.4999, a: 1}
-    - _MainSpeed: {r: 2, g: 0, b: 0, a: 0}
+    - _MainSpeed: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &4108636242042109128

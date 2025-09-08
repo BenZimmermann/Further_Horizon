@@ -6,7 +6,7 @@ public class EnviormentDamageController : MonoBehaviour
     public static EnviormentDamageController Instance { get; private set; }
     public bool IsWarm = false;
     public int EnviormentDamage = 5;
-    public float DamageTick = 5f;
+    public float DamageTick = 1f;
 
     private bool isDamaging = false; // Verhindert mehrfaches Starten der Coroutine
 
