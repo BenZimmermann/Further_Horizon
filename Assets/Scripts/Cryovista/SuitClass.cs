@@ -1,35 +1,37 @@
 using UnityEngine;
 
-public class ButtonClass : MonoBehaviour, Interactable
+//erbt von Interactable, um Interaktionen zu ermöglichen
+public class SuitClass : MonoBehaviour, Interactable
 {
     [Header("General Settings")]
     public bool isInteractable;
     public bool isEnabled = true;
+    private bool used = false;
 
     [Header("Interaction Settings")]
-    public string interactionText = "(F) Activate";
+    public string interactionText = "(E) Equip";
     public Material highlightMaterial;
 
     [Header("Trigger Events")]
-    [SerializeField] GameObject obj;
-
+    public GameObject suit;
     private Material[] originalMaterials;
     private Renderer objectRenderer;
-    private bool used = false;
-
     public void Awake()
     {
         objectRenderer = GetComponent<Renderer>();
         originalMaterials = objectRenderer.materials;
     }
+    public void Update() {}
     public void Interact()
     {
         if (used) return;
         if (!isEnabled) return;
-        used = true;
+        used = true; // Assuming 'used' is a field in this class to track interaction state
         isEnabled = false;
-        Destroy(obj);
+        Debug.Log("Interacted with: Button");
+        EnviormentDamageController.Instance.IsWarm = true;
         Remove();
+        Destroy(suit);
     }
     public void Apply()
     {
@@ -51,12 +53,10 @@ public class ButtonClass : MonoBehaviour, Interactable
             objectRenderer.materials = originalMaterials;
         }
     }
-
     public string GetInteractionText()
     {
         return interactionText;
     }
-
     public bool IsInteractable()
     {
         return !used;
