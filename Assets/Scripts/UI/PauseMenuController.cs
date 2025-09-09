@@ -9,6 +9,7 @@ public enum WindowType
 {
     PauseMenu,
     Console,
+    Crafting,
    // Map,
    //Inventory,
     Settings

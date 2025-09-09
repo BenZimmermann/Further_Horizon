@@ -1,26 +1,15 @@
+
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
-public enum RotateDirection
-{
-    X,
-    Y
-}
-
-// erbt von Interactable, um Interaktionen zu ermöglichen
-public class LaserRotateClass : MonoBehaviour, Interactable
+//erbt von Interactable, um Interaktionen zu ermöglichen
+public class CollectClass : MonoBehaviour, Interactable
 {
     [Header("General Settings")]
     public bool isInteractable;
     public bool isEnabled = true;
 
-    [Header("Rotation Settings")]
-    [SerializeField] private float rotateAngle = 45f;          // Winkel pro Interaktion
-    [SerializeField] private RotateDirection rotationDirection; // Auswahl im Inspector
-
     [Header("Interaction Settings")]
-    public string interactionText = "(F) Rotate";
+    public string interactionText = "(F) Collect";
     public Material highlightMaterial;
 
     private bool used = false;
@@ -32,27 +21,15 @@ public class LaserRotateClass : MonoBehaviour, Interactable
         objectRenderer = GetComponent<Renderer>();
         originalMaterials = objectRenderer.materials;
     }
-
     public void Update() { }
-
     public void Interact()
     {
+        if (used) return;
         if (!isEnabled) return;
-
-        Vector3 rotation = Vector3.zero;
-
-        switch (rotationDirection)
-        {
-            case RotateDirection.X:
-                rotation = new Vector3(rotateAngle, 0, 0);
-                break;
-            case RotateDirection.Y:
-                rotation = new Vector3(0, rotateAngle, 0);
-                break;
-        }
-
-        transform.Rotate(rotation, Space.Self);
+        used = true; // Assuming 'used' is a field in this class to track interaction state
+        isEnabled = false;
         Remove();
+        Destroy(gameObject);
     }
     public void Apply()
     {
