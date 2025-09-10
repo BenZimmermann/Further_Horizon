@@ -98,7 +98,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         gameData = loaded;
 #if UNITY_EDITOR
-        Debug.Log($"[DPM] Loaded. LastScene={gameData.lastSceneName}");
+        Debug.Log($"[DPM] Loaded. LastScene={gameData.selectedPlanetScene}");
 #endif
         dataObjects = FindAllDataPersistenceObjects();
         foreach (var obj in dataObjects)

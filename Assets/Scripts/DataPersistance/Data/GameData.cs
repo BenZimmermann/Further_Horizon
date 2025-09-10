@@ -6,19 +6,16 @@ using System.Collections.Generic;
 [Serializable]
 public class GameData
 {
-    // Beispiel: Szene/Level → Items (mappe das später Umbra/Cryovista/Singara)
-    public List<LevelSaveData> levels = new List<LevelSaveData>();
-
-    public string lastSceneName = "Inventory";
-    public DateTime lastSavedUtc;
+    public string selectedPlanetScene; // aktuell ausgewählter Planet
+    public List<string> unlockedPlanets = new List<string>();
 
     public GameData()
     {
-        // Default-Werte (falls noch kein Save existiert)
-        lastSceneName = "Inventory";
-        lastSavedUtc = DateTime.UtcNow;
+        // Standard: Umbra + Cryovista freigeschaltet
+        unlockedPlanets.Add("Umbra");
+        unlockedPlanets.Add("Cryovista");
 
-        // → Hier unsere drei Planeten als Startzustand anlegen
-        //   Oder du machst das woanders (z. B. in einem "New Game" Flow).
+        // Singara bleibt gesperrt
+        selectedPlanetScene = "Umbra"; // Startauswahl
     }
 }

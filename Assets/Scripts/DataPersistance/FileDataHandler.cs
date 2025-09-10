@@ -53,8 +53,6 @@ public class FileDataHandler
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);
 
-            data.lastSavedUtc = System.DateTime.UtcNow;
-
             string json = JsonUtility.ToJson(data, true);
             if (useEncryption) json = XOR(json, encryptionKeyword);
 

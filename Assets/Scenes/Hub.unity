@@ -520,7 +520,7 @@ GameObject:
   - component: {fileID: 98520640}
   - component: {fileID: 98520639}
   m_Layer: 5
-  m_Name: Description
+  m_Name: PlanetDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,10 +978,10 @@ RectTransform:
   - {fileID: 1870087393}
   m_Father: {fileID: 419606838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -250}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &166161133
 MonoBehaviour:
@@ -1755,7 +1755,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -2115,7 +2115,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 358456030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 657395658}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &358912336 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7292067759279890560, guid: 7a40ca920e5718d4dae536c21ac7fbf7, type: 3}
@@ -2914,13 +2926,14 @@ GameObject:
   - component: {fileID: 657395661}
   - component: {fileID: 657395660}
   - component: {fileID: 657395659}
+  - component: {fileID: 657395662}
   m_Layer: 5
   m_Name: MapSelection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &657395659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2982,6 +2995,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -120, y: -120}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &657395662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 657395658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b8ab1da4d67e547b39fadb348d5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planetNameTMP: {fileID: 1359921601}
+  planetDescriptionTMP: {fileID: 98520639}
+  startMissionButton: {fileID: 358456032}
+  planetDefinitions:
+  - {fileID: 11400000, guid: 3faa3f92ba29f05468f8dfc7025befeb, type: 2}
+  - {fileID: 11400000, guid: 61038c694c291304b8979c009e17300d, type: 2}
+  - {fileID: 11400000, guid: 874b0956ff8daa74cb42def8a6a1cf65, type: 2}
+  planetButtons:
+  - {fileID: 1431506102}
+  - {fileID: 865075432}
+  - {fileID: 1382263038}
 --- !u!1 &660522102
 GameObject:
   m_ObjectHideFlags: 0
@@ -3539,8 +3575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416f31e4ff2591949a879c40005f53db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  line1: {fileID: 112568355}
-  line2: {fileID: 2035596338}
 --- !u!4 &748581154
 Transform:
   m_ObjectHideFlags: 0
@@ -3995,7 +4029,7 @@ GameObject:
   - component: {fileID: 865075433}
   - component: {fileID: 865075432}
   m_Layer: 5
-  m_Name: Cryostasia
+  m_Name: Cryovista
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6482,10 +6516,10 @@ RectTransform:
   - {fileID: 300587089}
   m_Father: {fileID: 419606838}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -150}
+  m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472269330
 MonoBehaviour:
@@ -8053,7 +8087,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4281479730
   m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -8066,7 +8100,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -8777,7 +8811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2053414588
 RectTransform:
   m_ObjectHideFlags: 0
