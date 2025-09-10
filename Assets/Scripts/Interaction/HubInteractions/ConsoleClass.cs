@@ -53,6 +53,7 @@ public class ConsoleClass : MonoBehaviour, Interactable
         {
             Debug.Log($"Console {windowType} geschlossen");
             PauseMenuController.Instance.CloseWindow();
+            //PauseMenuController.Instance.CloseWindow(windowType);
             animator.SetBool("Open", false);
             animator.SetBool("Idle", true);
             isOpen = false;

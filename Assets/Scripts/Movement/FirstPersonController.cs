@@ -56,7 +56,7 @@ public class FirstPersonController : MonoBehaviour
     #region Update
     void Update()
     {
-        
+        if (Time.timeScale == 0) return;
         HandleCoyoteTime();
         HandleJumpBuffer();
         HandleMovement();
@@ -185,8 +185,8 @@ public class FirstPersonController : MonoBehaviour
         {
             // In der Luft: mische alte Richtung mit Input
             Vector3 airMove = worldDirection * currentSpeed;
-            currentMovement.x = Mathf.Lerp(currentMovement.x, airMove.x, airControl * Time.deltaTime * 10f);
-            currentMovement.z = Mathf.Lerp(currentMovement.z, airMove.z, airControl * Time.deltaTime * 10f);
+            currentMovement.x = Mathf.Lerp(currentMovement.x, airMove.x, airControl);
+            currentMovement.z = Mathf.Lerp(currentMovement.z, airMove.z, airControl);
         }
 
         HandleJump();
@@ -208,8 +208,8 @@ public class FirstPersonController : MonoBehaviour
 
     private void HandleRotation()
     {
-        float mouseXRotation = playerInputHandler.RotationInput.x * mouseSensitivity;
-        float mouseYRotation = playerInputHandler.RotationInput.y * mouseSensitivity;
+        float mouseXRotation = playerInputHandler.RotationInput.x * mouseSensitivity * Time.deltaTime;
+        float mouseYRotation = playerInputHandler.RotationInput.y * mouseSensitivity * Time.deltaTime;
 
         ApplyHorizontalRotation(mouseXRotation);
         ApplyVerticalRotation(mouseYRotation);

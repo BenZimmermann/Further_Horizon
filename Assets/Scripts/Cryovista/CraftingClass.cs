@@ -12,12 +12,11 @@ public class CraftingClass : MonoBehaviour, Interactable
     public string interactionText = "(F) Craft";
     public Material highlightMaterial;
 
-    [Header("Trigger Events")]
-    [SerializeField] GameObject caftingUI;
-    //[SerializeField, Tooltip("Tabble")] GameObject CraftingTable;
+    //[Header("Trigger Events")]
+    //[SerializeField] GameObject craftingUI;
 
     [Header("Window Settings")]
-    [SerializeField] private WindowType windowType = WindowType.Console;
+    [SerializeField] private WindowType windowType = WindowType.Crafting;
 
     private Material[] originalMaterials;
     private Renderer objectRenderer;
@@ -36,30 +35,31 @@ public class CraftingClass : MonoBehaviour, Interactable
     public void Update()
     {
         // Synchronisiere das GameObject mit dem Window-Status
-        if (caftingUI != null && caftingUI.activeSelf != IsActive)
-        {
-            caftingUI.SetActive(IsActive);
-        }
-        Debug.Log($"offen:" + isOpen);
+        //if (caftingUI != null && caftingUI.activeSelf != IsActive)
+        //{
+        //    caftingUI.SetActive(IsActive);
+        //}
+        //Debug.Log($"offen:" + isOpen);
 
     }
 
     public void Interact()
     {
-        // Wenn mein Fenster schon offen ist -> schließen
         if (PauseMenuController.Instance.IsWindowOpen(windowType))
         {
             Debug.Log($"Console {windowType} geschlossen");
             PauseMenuController.Instance.CloseWindow();
+            //PauseMenuController.Instance.CloseWindow(windowType);
             isOpen = false;
             return;
-
-
         }
 
-        isOpen = true;
         Debug.Log($"Console {windowType} wird geöffnet");
+        PauseMenuController.Instance.OpenWindow(windowType);
+        isOpen = true;
     }
+
+
 
     public void Apply()
     {
