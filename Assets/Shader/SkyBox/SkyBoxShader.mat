@@ -27,23 +27,27 @@ Material:
     m_Floats:
     - NadirBlend: 1.3
     - NadirBlend_1: 41.9
-    - _AuroraBlend: 16
+    - _AuroraBlend: 2
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _GradientOffset: -0.35
-    - _Intensity: 1.7
-    - _NoiseScale: 100
+    - _DistortionSpeed: 1.28
+    - _GradientOffset: -0.583
+    - _Intensity: 1
+    - _NoiseScale: 530
     - _StarHeight: 250
     - _StarIntensity: 225
     - _StarPower: 44
+    - _TwirlStrength: 0.85
     - _ZenitBlend: 0.01
-    - _auroraPower: 16
+    - _auroraPower: 4
     m_Colors:
+    - _DistortionMinMax: {r: 10, g: 12, b: 0, a: 0}
     - _GroundColor: {r: 0.374466, g: 0.81584644, b: 0.9339623, a: 1}
     - _HorizonColor: {r: 1, g: 0.6650944, b: 0.6650944, a: 1}
-    - _ScrollSpeed: {r: 0, g: 0, b: 0, a: 0}
+    - _ScrollSpeed: {r: 0, g: 0.05, b: 0, a: 0}
     - _SkyColor: {r: 0.022828398, g: 0.230598, b: 0.5377358, a: 1}
-    - _Tiling: {r: 1, g: 6.3, b: 0, a: 0}
+    - _Tiling: {r: 1, g: 6, b: 0, a: 0}
+    - _TwirlOffset: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2816438545729602793

@@ -145,6 +145,7 @@ public class PauseMenuController : MonoBehaviour
 
     [Header("Window Settings")]
     [SerializeField] private List<WindowEntry> windows;
+    [SerializeField] private List<GUI> guis;
 
     [SerializeField] private MonoBehaviour cameraController;
 
@@ -154,7 +155,11 @@ public class PauseMenuController : MonoBehaviour
         public WindowType type;
         public GameObject windowObject;
     }
-
+    [System.Serializable]
+    public struct GUI
+    {
+        public GameObject guiObject;
+    }
     private WindowType? currentActiveWindow = null;
 
     private void Awake()
@@ -236,7 +241,12 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;
-
+        //alle fenster die in GUI list sind deaktivieren
+        foreach (var gui in guis)
+        {
+            if (gui.guiObject != null)
+                gui.guiObject.SetActive(false);
+        }
         if (cameraController != null)
             cameraController.enabled = false;
     }
@@ -246,7 +256,12 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1f;
-
+        //alle fenster die in GUI list sind aktivieren
+        foreach (var gui in guis)
+        {
+            if (gui.guiObject != null)
+                gui.guiObject.SetActive(true);
+        }
         if (cameraController != null)
             cameraController.enabled = true;
     }

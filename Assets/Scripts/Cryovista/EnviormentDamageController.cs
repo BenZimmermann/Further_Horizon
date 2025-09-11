@@ -61,6 +61,7 @@ public class EnviormentDamageController : MonoBehaviour
         IsWarm = warm;
         if (warm)
         {
+            FreezeEffectManager.Instance.SetFullScreenPass(false);
             Debug.Log("Player is now warm - stopping environment damage");
         }
     }

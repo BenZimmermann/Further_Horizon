@@ -522,7 +522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 34ab7a4c96f2d9240a4d6c4b1fd4838e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1403,6 +1403,7 @@ GameObject:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
+  - component: {fileID: 330585549}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
   m_Layer: 0
@@ -1562,6 +1563,19 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &330585549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 232cd2aab3d16524f91837e5560fbf25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullScreenPassFeature: {fileID: -1509888942966917880, guid: f288ae1f4751b564a96ac7587541f7a2, type: 2}
 --- !u!1 &365390950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,12 +1703,12 @@ RectTransform:
   m_Children:
   - {fileID: 673639464}
   - {fileID: 378126581}
-  - {fileID: 510981397}
-  - {fileID: 83643962}
-  - {fileID: 449741982}
   - {fileID: 491255250}
+  - {fileID: 510981397}
+  - {fileID: 449741982}
   - {fileID: 625892525}
   - {fileID: 1598089144}
+  - {fileID: 83643962}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2010,7 +2024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &419606839
@@ -10547,7 +10561,7 @@ MonoBehaviour:
   airControl: 0.185
   coyoteTime: 0.2
   jumpBufferTime: 0.2
-  mouseSensitivity: 4
+  mouseSensitivity: 6
   upDownLookRange: 80
   sphereRadius: 0.505
   groundCheckDistance: 0.3
@@ -11221,6 +11235,10 @@ MonoBehaviour:
     windowObject: {fileID: 1598089143}
   - type: 0
     windowObject: {fileID: 83643961}
+  guis:
+  - guiObject: {fileID: 673639463}
+  - guiObject: {fileID: 378126580}
+  - guiObject: {fileID: 491255249}
   cameraController: {fileID: 1123680831}
 --- !u!114 &1954903212
 MonoBehaviour:
