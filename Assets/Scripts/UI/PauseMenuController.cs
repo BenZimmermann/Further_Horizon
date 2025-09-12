@@ -136,7 +136,8 @@ public enum WindowType
     PauseMenu,
     Console,
     Crafting,
-    Settings
+    Settings,
+    SnakeMinigame
 }
 
 public class PauseMenuController : MonoBehaviour
