@@ -34,6 +34,7 @@ public class HeadBobController : MonoBehaviour
     private void Update()
     {
         if (!_enable) return;
+        if (Time.timeScale == 0) return;
         CheckMotion();
         HandleJumpBob();
         ResetPosition();

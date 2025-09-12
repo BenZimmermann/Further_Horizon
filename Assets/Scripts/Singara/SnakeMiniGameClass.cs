@@ -7,13 +7,12 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
     [Header("General Settings")]
     public bool isInteractable;
     public bool isEnabled = true;
+    private bool used = false;
+    public bool isCompleted { get; private set; } = false;
 
     [Header("Interaction Settings")]
     public string interactionText = "(F) Craft";
     public Material highlightMaterial;
-
-    //[Header("Trigger Events")]
-    //[SerializeField] GameObject craftingUI;
 
     [Header("Window Settings")]
     [SerializeField] private WindowType windowType = WindowType.SnakeMinigame;
@@ -40,7 +39,6 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
         //    caftingUI.SetActive(IsActive);
         //}
         //Debug.Log($"offen:" + isOpen);
-
     }
 
     public void Interact()
@@ -68,8 +66,17 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
 
         isOpen = true;
     }
-
-
+    public void EndGame()
+    {
+        if (!isCompleted)
+        {
+            SnakeGameCountManager.Instance.AddCompletedGame();
+            isCompleted = true;
+            used = true; // Assuming 'used' is a field in this class to track interaction state
+            isEnabled = false;
+            Remove();
+        }
+    }
 
     public void Apply()
     {

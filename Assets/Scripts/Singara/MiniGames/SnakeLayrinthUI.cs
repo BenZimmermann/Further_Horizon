@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using static PauseMenuController;
 public class SnakeLabyrinthUI : MonoBehaviour
 {
     [Header("Grid Settings")]
@@ -27,7 +28,6 @@ public class SnakeLabyrinthUI : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI countdownText;   // TMP statt UI.Text
 
-
     private Image[,] grid;
     private HashSet<Vector2Int> obstacles = new HashSet<Vector2Int>();
     private Vector2Int headPos;
@@ -37,12 +37,15 @@ public class SnakeLabyrinthUI : MonoBehaviour
     private bool isPlaying = false;
     private bool isPreview = false;
 
+    public SnakeMiniGameClass snakeManager;
+    //public SnakeMiniGameClass _snakeManager;
     private PlayerInput playerInput;
     private Vector2 moveInput;
 
     void Awake()
     {
         playerInput = FindObjectOfType<PlayerInput>();
+        //_snakeManager = GetComponentInParent<SnakeMiniGameClass>();
     }
 
     void OnEnable()
@@ -215,11 +218,18 @@ public class SnakeLabyrinthUI : MonoBehaviour
         {
             Debug.Log("Level geschafft!");
             isPlaying = false;
+            StartCoroutine(CloseWindow());
             if (countdownText != null)
                 countdownText.text = "Modul Active!";
+           
         }
     }
-
+    IEnumerator CloseWindow()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        PauseMenuController.Instance.CloseWindow();
+        snakeManager.EndGame();
+    }
     // Hilfsmethode: Nachbarfelder
     IEnumerable<Vector2Int> GetNeighbors(Vector2Int pos)
     {
@@ -228,4 +238,5 @@ public class SnakeLabyrinthUI : MonoBehaviour
         yield return pos + Vector2Int.left;
         yield return pos + Vector2Int.right;
     }
+
 }
