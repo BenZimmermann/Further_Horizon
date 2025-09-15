@@ -7,8 +7,7 @@ public class PictureGameClass : MonoBehaviour, Interactable
     [Header("General Settings")]
     public bool isInteractable;
     public bool isEnabled = true;
-    private bool used = false;
-    public static PictureGameClass ActiveInstance { get; private set; }
+    //private bool used = false;
     public bool isCompleted { get; private set; } = false;
 
     [Header("Interaction Settings")]
@@ -21,7 +20,7 @@ public class PictureGameClass : MonoBehaviour, Interactable
     private Material[] originalMaterials;
     private Renderer objectRenderer;
     private Animator animator;
-    private bool isOpen = false;
+   // private bool isOpen = false;
     // Lokaler Status wird durch den PauseMenuController verwaltet
     private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
 
@@ -44,33 +43,16 @@ public class PictureGameClass : MonoBehaviour, Interactable
 
     public void Interact()
     {
-        if (isCompleted)
-        {
-            Debug.Log($"{gameObject.name} Puzzle bereits abgeschlossen.");
-            return;
-        }
-
         if (PauseMenuController.Instance.IsWindowOpen(windowType))
         {
             PauseMenuController.Instance.CloseWindow();
-            isOpen = false;
+           // isOpen = false;
             return;
         }
-
-        // Fenster öffnen
         PauseMenuController.Instance.OpenWindow(windowType);
+        PictureGameManager.Instance.InitGame(this);
 
-        // Diese Instanz merken
-        ActiveInstance = this;
-
-        // PuzzleGameManager starten
-        PictureGameManager ui = FindObjectOfType<PictureGameManager>(true);
-        if (ui != null)
-        {
-            ui.InitGame();
-        }
-
-        isOpen = true;
+        //isOpen = true;
     }
     public void EndGame()
     {
@@ -83,13 +65,9 @@ public class PictureGameClass : MonoBehaviour, Interactable
         interactionText = "";
         PictureGameCountManager.Instance.AddCompletedPuzzle();
 
-        // Aktive Instanz zurücksetzen
-        if (ActiveInstance == this)
-            ActiveInstance = null;
-
         // Fenster schließen (optional)
         isCompleted = true;
-        used = true; // Assuming 'used' is a field in this class to track interaction state
+       // used = true; // Assuming 'used' is a field in this class to track interaction state
         isEnabled = false;
         Remove();
         PauseMenuController.Instance.CloseWindow();

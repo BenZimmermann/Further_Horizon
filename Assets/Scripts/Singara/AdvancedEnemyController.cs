@@ -1,37 +1,48 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 
 public class AdvancedEnemyController : MonoBehaviour
 {
     [Header("Patrol Settings")]
-    public Transform[] patrolPoints;
-    public float speed = 2f;
-    public float waitTime = 2f;
-    public float rotationSpeed = 5f;
+    public Transform[] patrolPoints;   // feste Punkte im Inspector zuweisen
+    public float waitTime = 2f;        // Pause an jedem Punkt
 
     [Header("Combat Settings")]
     public int EnemyDamage;
 
     [Header("Vision Settings")]
-    public float viewDistance = 10f;   // Sichtweite
-    public float viewAngle = 45f;      // halber Sichtwinkel
-    public float sphereRadius = 0.5f;  // SphereCast-Radius
-    public LayerMask visionMask;       // z. B. nur "Player"
+    public float viewDistance; // maximale Sichtweite
+    public float viewAngle;     // Sichtwinkel in Grad
+    public float sphereRadius;  // Radius für den SphereCast
+    public LayerMask visionMask = ~0;  // standardmäßig Everything
 
     [Header("Follow Settings")]
-    public float followRange = 15f;    // maximale Verfolgungsreichweite
+    public float loseSightDistance = 20f;   // maximale Verfolgungsreichweite in Metern
 
-    private int targetPoint;
+    private int targetPoint = 0;
     private bool isWaiting = false;
 
     private Transform player;
+    private NavMeshAgent agent;
+
     private enum State { Patrol, Chase }
     private State currentState = State.Patrol;
 
     void Start()
     {
-        targetPoint = 0;
+        agent = GetComponent<NavMeshAgent>();
+        if (agent == null)
+        {
+            Debug.LogError("Kein NavMeshAgent auf dem Gegner gefunden!");
+            enabled = false;
+            return;
+        }
+
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if (patrolPoints.Length > 0)
+            agent.SetDestination(patrolPoints[targetPoint].position);
     }
 
     void Update()
@@ -40,7 +51,12 @@ public class AdvancedEnemyController : MonoBehaviour
         {
             case State.Patrol:
                 Patrol();
-                CheckVision();
+
+                if (CheckVision())
+                {
+                    currentState = State.Chase;
+                    Debug.Log("Spieler gesehen → Chase");
+                }
                 break;
 
             case State.Chase:
@@ -49,24 +65,11 @@ public class AdvancedEnemyController : MonoBehaviour
         }
     }
 
-    // -------------------
-    // PATROL LOGIK
-    // -------------------
     private void Patrol()
     {
-        if (isWaiting) return;
+        if (isWaiting || patrolPoints.Length == 0) return;
 
-        Vector3 targetPos = patrolPoints[targetPoint].position;
-
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPos,
-            speed * Time.deltaTime
-        );
-
-        RotateTowards(targetPos);
-
-        if (Vector3.Distance(transform.position, targetPos) < 0.1f)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             StartCoroutine(WaitAtPoint());
         }
@@ -75,96 +78,54 @@ public class AdvancedEnemyController : MonoBehaviour
     private IEnumerator WaitAtPoint()
     {
         isWaiting = true;
+        yield return new WaitForSeconds(waitTime);
 
-        int nextPoint = (targetPoint + 1) % patrolPoints.Length;
+        targetPoint = (targetPoint + 1) % patrolPoints.Length;
+        agent.SetDestination(patrolPoints[targetPoint].position);
 
-        float timer = 0f;
-        while (timer < waitTime)
-        {
-            RotateTowards(patrolPoints[nextPoint].position);
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        targetPoint = nextPoint;
         isWaiting = false;
     }
 
-    // -------------------
-    // CHASE LOGIK
-    // -------------------
     private void Chase()
     {
         if (player == null) return;
 
-        Vector3 targetPos = player.position;
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            targetPos,
-            speed * Time.deltaTime
-        );
+        agent.SetDestination(player.position);
 
-        RotateTowards(targetPos);
-
-        // Spieler außer Follow Range? → zurück zu Patrol
         float distance = Vector3.Distance(transform.position, player.position);
-        if (distance > followRange)
+
+        if (distance > loseSightDistance)
         {
-            Debug.Log("Spieler außer Reichweite, zurück zu Patrol.");
+            Debug.Log("Spieler außer Reichweite → zurück zu Patrol");
             currentState = State.Patrol;
+            agent.SetDestination(patrolPoints[targetPoint].position);
         }
     }
 
-    private void RotateTowards(Vector3 targetPos)
+    private bool CheckVision()
     {
-        Vector3 direction = (targetPos - transform.position).normalized;
-        direction.y = 0f;
+        if (player == null) return false;
 
-        if (direction.sqrMagnitude > 0.001f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
-            );
-        }
-    }
+        Vector3 origin = transform.position + Vector3.up * 1f;
+        Vector3 toPlayer = player.position - origin;
+        Vector3 dirToPlayer = toPlayer.normalized;
 
-    // -------------------
-    // SICHT PRÜFUNG
-    // -------------------
-    private void CheckVision()
-    {
-        if (player == null) return;
-
-        Vector3 origin = transform.position + Vector3.up * 1.8f;
-        Vector3 forward = transform.forward;
-
-        // SphereCast nach vorne
-        if (Physics.SphereCast(origin, sphereRadius, forward, out RaycastHit hit, viewDistance, visionMask))
+        // SphereCast in Richtung Spieler
+        if (Physics.SphereCast(origin, sphereRadius, dirToPlayer, out RaycastHit hit, viewDistance, visionMask))
         {
             if (hit.collider.CompareTag("Player"))
             {
-                // Richtung zum Spieler
-                Vector3 toPlayer = (player.position - origin).normalized;
+                // Sichtwinkel prüfen
+                float dot = Vector3.Dot(transform.forward, dirToPlayer);
 
-                // Skalarprodukt (cos(θ))
-                float dot = Vector3.Dot(forward, toPlayer);
-
-                // innerhalb des Sichtwinkels?
-                if (dot >= Mathf.Cos(viewAngle * Mathf.Deg2Rad))
+                if (dot >= Mathf.Cos(viewAngle * Mathf.Deg2Rad * 0.5f))
                 {
-                    OnPlayerSeen();
+                    return true;
                 }
             }
         }
-    }
 
-    private void OnPlayerSeen()
-    {
-        Debug.Log("Spieler entdeckt → Verfolgung gestartet!");
-        currentState = State.Chase;
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -174,28 +135,28 @@ public class AdvancedEnemyController : MonoBehaviour
             PlayerHealthManager.Instance.TakeDamage(EnemyDamage);
         }
     }
-    // -------------------
-    // DEBUG-GIZMOS
-    // -------------------
+
+
     private void OnDrawGizmosSelected()
     {
-        Vector3 origin = transform.position + Vector3.up * 1.8f;
+        if (player == null) return;
+
+        Vector3 origin = transform.position + Vector3.up * 1f;
         Vector3 forward = transform.forward;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(origin, forward * viewDistance);
-
         // Sichtfeldgrenzen
-        Quaternion leftRot = Quaternion.AngleAxis(-viewAngle, Vector3.up);
-        Quaternion rightRot = Quaternion.AngleAxis(viewAngle, Vector3.up);
-
         Gizmos.color = Color.cyan;
+        Quaternion leftRot = Quaternion.AngleAxis(-viewAngle * 0.5f, Vector3.up);
+        Quaternion rightRot = Quaternion.AngleAxis(viewAngle * 0.5f, Vector3.up);
         Gizmos.DrawRay(origin, leftRot * forward * viewDistance);
         Gizmos.DrawRay(origin, rightRot * forward * viewDistance);
 
-        // SphereCast Endpunkt
-        Vector3 endPoint = origin + forward * viewDistance;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(endPoint, sphereRadius);
+        // SphereCast Start
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(origin, sphereRadius);
+
+        // Linie zum Spieler
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(origin, player.position);
     }
 }

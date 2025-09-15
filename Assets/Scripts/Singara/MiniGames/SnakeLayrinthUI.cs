@@ -37,15 +37,20 @@ public class SnakeLabyrinthUI : MonoBehaviour
     private bool isPlaying = false;
     private bool isPreview = false;
 
-    public SnakeMiniGameClass snakeManager;
+    public static SnakeLabyrinthUI Instance { get; private set; }
+
+    private SnakeMiniGameClass snakeMinigameClass;
     //public SnakeMiniGameClass _snakeManager;
     private PlayerInput playerInput;
     private Vector2 moveInput;
 
     void Awake()
     {
-        playerInput = FindObjectOfType<PlayerInput>();
-        //_snakeManager = GetComponentInParent<SnakeMiniGameClass>();
+        playerInput = GetComponent<PlayerInput>();
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     void OnEnable()
@@ -72,8 +77,9 @@ public class SnakeLabyrinthUI : MonoBehaviour
         }
     }
 
-    public void InitGame()
+    public void InitGame(SnakeMiniGameClass _snakeMiniGameClass)
     {
+        snakeMinigameClass = _snakeMiniGameClass;
         GenerateGrid();
         StartCoroutine(PreviewAndStart());
     }
@@ -228,7 +234,8 @@ public class SnakeLabyrinthUI : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1f);
         PauseMenuController.Instance.CloseWindow();
-        snakeManager.EndGame();
+        if (snakeMinigameClass != null)
+            snakeMinigameClass.EndGame();
     }
     // Hilfsmethode: Nachbarfelder
     IEnumerable<Vector2Int> GetNeighbors(Vector2Int pos)

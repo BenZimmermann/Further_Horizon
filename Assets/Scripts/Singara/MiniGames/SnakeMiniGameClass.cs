@@ -7,7 +7,7 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
     [Header("General Settings")]
     public bool isInteractable;
     public bool isEnabled = true;
-    private bool used = false;
+    //private bool used = false;
     public bool isCompleted { get; private set; } = false;
 
     [Header("Interaction Settings")]
@@ -20,7 +20,7 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
     private Material[] originalMaterials;
     private Renderer objectRenderer;
     private Animator animator;
-    private bool isOpen = false;
+   // private bool isOpen = false;
     // Lokaler Status wird durch den PauseMenuController verwaltet
     private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
 
@@ -48,23 +48,15 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
             Debug.Log($"Console {windowType} geschlossen");
             PauseMenuController.Instance.CloseWindow();
             //PauseMenuController.Instance.CloseWindow(windowType);
-            isOpen = false;
+            //isOpen = false;
             return;
         }
 
         Debug.Log($"Console {windowType} wird geöffnet");
         PauseMenuController.Instance.OpenWindow(windowType);
-        SnakeLabyrinthUI ui = FindObjectOfType<SnakeLabyrinthUI>(true);
-        if (ui != null)
-        {
-            ui.InitGame();
-        }
-        else
-        {
-            Debug.LogWarning("SnakeLabyrinthUI wurde nicht gefunden!");
-        }
+        SnakeLabyrinthUI.Instance.InitGame(this);
 
-        isOpen = true;
+       // isOpen = true;
     }
     public void EndGame()
     {
@@ -72,7 +64,7 @@ public class SnakeMiniGameClass : MonoBehaviour, Interactable
         {
             SnakeGameCountManager.Instance.AddCompletedGame();
             isCompleted = true;
-            used = true; // Assuming 'used' is a field in this class to track interaction state
+            //used = true; 
             isEnabled = false;
             Remove();
         }

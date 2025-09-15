@@ -5,6 +5,7 @@ public class PictureGameManager : MonoBehaviour
 {
     public static PictureGameManager Instance { get; private set; }
 
+    private PictureGameClass pictureGameClass;
     public PuzzleRow[] rows;   // Im Inspector mit den 5 UI-Reihen verknüpfen
     public Sprite[] allParts;  // Die 5 Bild-Segmente in richtiger Reihenfolge
 
@@ -16,8 +17,9 @@ public class PictureGameManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void InitGame()
+    public void InitGame(PictureGameClass _pictureGameClass)
     {
+        pictureGameClass = _pictureGameClass;
         for (int i = 0; i < rows.Length; i++)
         {
             rows[i].Init(allParts, i);
@@ -42,6 +44,9 @@ public class PictureGameManager : MonoBehaviour
     IEnumerator WaitSec()
     {
         yield return new WaitForSecondsRealtime(2f);
-        PictureGameClass.ActiveInstance.EndGame();
+        if(pictureGameClass != null)
+            pictureGameClass.EndGame();
+        //PictureGameClass.ActiveInstance.EndGame();
+
     }
 }
