@@ -32,6 +32,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: c5c273ff67d1c00408299ddb05f0bfae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FireTexture:
+        m_Texture: {fileID: 2800000, guid: 54cecc68b0b79614fb6351ac28e0090b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_ceab39a34c05492499d280421679d9d0_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 8ccf4fd648514c44aa820a38142c3474, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -46,13 +54,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorMultiplier: 2
     - _DisplacementIntensety: 0.74
+    - _EnginePower: 1
     - _Erotion: -1.43
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _TextureTiling: 1
+    - _Thrust: 0.242
+    - _noiseSpeed: 2
+    - _scrollSpeed: 10
     m_Colors:
-    - _Color: {r: 19.893204, g: 144.54796, b: 0, a: 1}
+    - _Color: {r: 0, g: 5.7884693, b: 40.304256, a: 1}
     - _DisplacementSpeed: {r: 3, g: 0, b: 0, a: 0}
+    - _ScrollDirection2: {r: 1, g: 1, b: 1, a: 0}
+    - _scrollDirection: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2428870353961908494
