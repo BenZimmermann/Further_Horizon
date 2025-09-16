@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 
 
-// Kompletter Spielstand als GameData
 [Serializable]
 public class GameData
 {
-    public string selectedPlanetScene; // aktuell ausgewählter Planet
+    public string selectedPlanetScene;       // aktuell ausgewählter Planet
     public List<string> unlockedPlanets = new List<string>();
+
+    // Inventar
+    public List<ItemSaveData> items = new List<ItemSaveData>();
 
     public GameData()
     {
@@ -16,6 +18,10 @@ public class GameData
         unlockedPlanets.Add("Cryovista");
 
         // Singara bleibt gesperrt
-        selectedPlanetScene = "Umbra"; // Startauswahl
+        selectedPlanetScene = "Umbra";
+
+        // Beispiel/Testeinträge
+        items.Add(new ItemSaveData { itemId = "potion_01", collected = 5 });
+        items.Add(new ItemSaveData { itemId = "wood_01", collected = 20 });
     }
 }

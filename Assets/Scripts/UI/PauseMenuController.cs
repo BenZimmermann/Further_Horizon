@@ -58,16 +58,16 @@ public class PauseMenuController : MonoBehaviour
 
     private void onPause(CallbackContext ctx)
     {
-        Debug.Log("ESC gedrückt");
+        Debug.Log("ESC gedrï¿½ckt");
 
         if (isAnyWindowOpen)
         {
-            // egal welches Fenster offen ist -> ESC schließt alles
+            // egal welches Fenster offen ist -> ESC schlieï¿½t alles
             CloseWindow();
         }
         else
         {
-            // wenn kein Fenster offen -> Pause öffnen
+            // wenn kein Fenster offen -> Pause ï¿½ffnen
             OpenWindow(WindowType.PauseMenu);
         }
     }
@@ -78,13 +78,13 @@ public class PauseMenuController : MonoBehaviour
         if (currentActiveWindow == windowType)
             return false;
 
-        // Schließe aktuelles Fenster falls offen
+        // Schlieï¿½e aktuelles Fenster falls offen
         if (isAnyWindowOpen)
         {
             CloseCurrentWindow();
         }
 
-        // Öffne neues Fenster
+        // ï¿½ffne neues Fenster
         currentActiveWindow = windowType;
 
         // Fenster-spezifische Aktionen
@@ -94,7 +94,7 @@ public class PauseMenuController : MonoBehaviour
                 if (pauseCanvas != null)
                     pauseCanvas.SetActive(true);
                 break;
-                // Hier können weitere Fenstertypen hinzugefügt werden
+                // Hier kï¿½nnen weitere Fenstertypen hinzugefï¿½gt werden
                 // case WindowType.Inventory:
                 //     if (inventoryCanvas != null)
                 //         inventoryCanvas.SetActive(true);
@@ -146,8 +146,8 @@ public class PauseMenuController : MonoBehaviour
 
     public bool CanOpenWindow(WindowType windowType)
     {
-        // Zusätzliche Logik kann hier hinzugefügt werden
-        // z.B. Prüfung auf spezielle Bedingungen für bestimmte Fenstertypen
+        // Zusï¿½tzliche Logik kann hier hinzugefï¿½gt werden
+        // z.B. Prï¿½fung auf spezielle Bedingungen fï¿½r bestimmte Fenstertypen
         return true;
     }
 
@@ -156,14 +156,14 @@ public class PauseMenuController : MonoBehaviour
         if (!currentActiveWindow.HasValue)
             return;
 
-        // Fenster-spezifische Schließ-Aktionen
+        // Fenster-spezifische Schlieï¿½-Aktionen
         switch (currentActiveWindow.Value)
         {
             case WindowType.PauseMenu:
                 if (pauseCanvas != null)
                     pauseCanvas.SetActive(false);
                 break;
-                // Hier können weitere Fenstertypen hinzugefügt werden
+                // Hier kï¿½nnen weitere Fenstertypen hinzugefï¿½gt werden
         }
     }
 
@@ -207,7 +207,7 @@ public class PauseMenuController : MonoBehaviour
     {
         if (open)
         {
-            OpenWindow(WindowType.Console); // Standard für externe Fenster
+            OpenWindow(WindowType.Console); // Standard fï¿½r externe Fenster
         }
         else
         {

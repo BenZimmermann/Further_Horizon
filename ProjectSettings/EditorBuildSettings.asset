@@ -14,6 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hub.unity
     guid: f9323c480b33bc44a835befa4c02e4b4
+  - enabled: 1
+    path: Assets/Scenes/Cryovista.unity
+    guid: 32952a4dcf1a4c14cb9ab3903cd0e47c
+  - enabled: 1
+    path: Assets/Scenes/Singara.unity
+    guid: f84e30e95032b514fbe1e5c47cab400b
+  - enabled: 1
+    path: Assets/Scenes/Umbra.unity
+    guid: 03b0c9dc7814f1147b4b86fb7be16c73
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

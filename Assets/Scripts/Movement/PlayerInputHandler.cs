@@ -54,6 +54,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         sprintAction.performed += inputInfo => SprintPressed = true;
         sprintAction.canceled += inputInfo => SprintPressed = false;
+
     }
 
     private void OnEnable()

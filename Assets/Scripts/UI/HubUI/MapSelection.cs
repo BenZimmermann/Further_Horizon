@@ -28,6 +28,9 @@ public class MapSelection : MonoBehaviour, IDataPersistence
         }
 
         startMissionButton.onClick.AddListener(StartMission);
+
+        // Falls kein Planet direkt geladen wird -> leeres UI
+        UpdateUI();
     }
 
     public void LoadData(GameData data)
@@ -46,7 +49,10 @@ public class MapSelection : MonoBehaviour, IDataPersistence
     public void SaveData(GameData data)
     {
         if (selectedPlanet != null)
+        {
             data.selectedPlanetScene = selectedPlanet.sceneName;
+            Debug.Log($"[SaveData] Letzter Planet gespeichert: {selectedPlanet.displayName} ({selectedPlanet.sceneName})");
+        }
     }
 
     private void SelectPlanet(PlanetDefinition planet)
@@ -59,12 +65,19 @@ public class MapSelection : MonoBehaviour, IDataPersistence
         }
 
         selectedPlanet = planet;
+        Debug.Log($"Planet {selectedPlanet.displayName} ausgewählt.");
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        if (selectedPlanet == null) return;
+        if (selectedPlanet == null)
+        {
+            planetNameTMP.text = "Kein Planet ausgewählt";
+            planetDescriptionTMP.text = "";
+            startMissionButton.interactable = false;
+            return;
+        }
 
         planetNameTMP.text = selectedPlanet.displayName;
         planetDescriptionTMP.text = selectedPlanet.description;
@@ -82,7 +95,9 @@ public class MapSelection : MonoBehaviour, IDataPersistence
         // Speichern vor Szenenwechsel
         DataPersistenceManager.Instance.SaveGame();
 
-        Debug.Log($"Lade Mission: {selectedPlanet.sceneName}");
+        Debug.Log($"[StartMission] Lade Mission: {selectedPlanet.displayName} ({selectedPlanet.sceneName})");
+
+        // Szene laden
         SceneManager.LoadScene(selectedPlanet.sceneName);
     }
 }
