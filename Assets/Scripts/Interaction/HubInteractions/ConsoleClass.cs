@@ -12,16 +12,16 @@ public class ConsoleClass : MonoBehaviour, Interactable
     public string interactionText = "(F) Use";
     public Material highlightMaterial;
 
-    [Header("Trigger Events")]
-    [SerializeField] GameObject map;
-    [SerializeField, Tooltip("the globe")] GameObject globe;
+    //[Header("Trigger Events")]
+    //[SerializeField] GameObject map;
+    //[SerializeField, Tooltip("the globe")] GameObject globe;
 
     [Header("Window Settings")]
     [SerializeField] private WindowType windowType = WindowType.Console;
 
     private Material[] originalMaterials;
     private Renderer objectRenderer;
-    private Animator animator;
+    //private Animator animator;
     private bool isOpen = false;
     // Lokaler Status wird durch den PauseMenuController verwaltet
     private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
@@ -29,20 +29,20 @@ public class ConsoleClass : MonoBehaviour, Interactable
     public void Awake()
     {
         objectRenderer = GetComponent<Renderer>();
-        animator = GetComponentInChildren<Animator>();
-        animator.SetBool("Idle", true);
+        //animator = GetComponentInChildren<Animator>();
+        //animator.SetBool("Idle", true);
         originalMaterials = objectRenderer.materials;
-        if (animator == null) Debug.LogError("Animator not found on globe!");
+        //if (animator == null) Debug.LogError("Animator not found on globe!");
     }
 
     public void Update()
     {
         // Synchronisiere das GameObject mit dem Window-Status
-        if (map != null && map.activeSelf != IsActive)
-        {
-            map.SetActive(IsActive);
-        }
-        Debug.Log($"offen:"+ isOpen);
+        //if (map != null && map.activeSelf != IsActive)
+        //{
+        //    map.SetActive(IsActive);
+        //}
+        //Debug.Log($"offen:"+ isOpen);
 
     }
 
@@ -54,8 +54,8 @@ public class ConsoleClass : MonoBehaviour, Interactable
             Debug.Log($"Console {windowType} geschlossen");
             PauseMenuController.Instance.CloseWindow();
             //PauseMenuController.Instance.CloseWindow(windowType);
-            animator.SetBool("Open", false);
-            animator.SetBool("Idle", true);
+            //animator.SetBool("Open", false);
+            //animator.SetBool("Idle", true);
             isOpen = false;
             return;
 
@@ -64,50 +64,50 @@ public class ConsoleClass : MonoBehaviour, Interactable
 
         isOpen = true;
         // Fenster noch nicht offen -> erst Animation abspielen
-        Debug.Log($"Console {windowType} wird geöffnet");
-        PlayAnimation();
-        StartCoroutine(OpenWindowAfterAnimation());
-    }
-    private IEnumerator OpenWindowAfterAnimation()
-    {
-        // Warte bis die Open-Animation durchgelaufen ist
-        //float length = animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(1.3f);
         PauseMenuController.Instance.OpenWindow(windowType);
         Debug.Log($"Console {windowType} geöffnet");
+        //PlayAnimation();
+        //StartCoroutine(OpenWindowAfterAnimation());
     }
-    //private IEnumerator OpenWindow()
+    //private IEnumerator OpenWindowAfterAnimation()
     //{
-    //    yield return new WaitForSeconds(1);
-    //    bool wasOpened = PauseMenuController.Instance.ToggleWindow(windowType);
+    //    // Warte bis die Open-Animation durchgelaufen ist
+    //    //float length = animator.GetCurrentAnimatorStateInfo(0).length;
+    //    //yield return new WaitForSeconds(1.3f);
 
-    //    // Animation abspielen
-
-    //    // Optional: Zusätzliche Aktionen beim Öffnen/Schließen
-    //    if (wasOpened)
-    //    {
-    //        Debug.Log($"Console {windowType} geöffnet");
-
-    //        // Hier können weitere Aktionen beim Öffnen hinzugefügt werden
-    //    }
-    //    else
-    //    {
-    //        Debug.Log($"Console {windowType} geschlossen");
-    //        // Hier können weitere Aktionen beim Schließen hinzugefügt werden
-    //    }
     //}
+    ////private IEnumerator OpenWindow()
+    ////{
+    ////    yield return new WaitForSeconds(1);
+    ////    bool wasOpened = PauseMenuController.Instance.ToggleWindow(windowType);
 
-    private void PlayAnimation()
-    {
-            // Bool-Parameter Methode (empfohlen)
-        animator.SetBool("Idle", false);
-        animator.SetBool("Open", true);
-            Debug.Log("Play Open Animation");
+    ////    // Animation abspielen
 
-        // Alternative: Direkte Animation-Kontrolle
-        // string animationName = isOpening ? "OpenAnimation" : "CloseAnimation";
-        // childAnimator.Play(animationName, 0, 0f); // Start von Beginn an
-    }
+    ////    // Optional: Zusätzliche Aktionen beim Öffnen/Schließen
+    ////    if (wasOpened)
+    ////    {
+    ////        Debug.Log($"Console {windowType} geöffnet");
+
+    ////        // Hier können weitere Aktionen beim Öffnen hinzugefügt werden
+    ////    }
+    ////    else
+    ////    {
+    ////        Debug.Log($"Console {windowType} geschlossen");
+    ////        // Hier können weitere Aktionen beim Schließen hinzugefügt werden
+    ////    }
+    ////}
+
+    //private void PlayAnimation()
+    //{
+    //        // Bool-Parameter Methode (empfohlen)
+    //    //animator.SetBool("Idle", false);
+    //    //animator.SetBool("Open", true);
+    //    //    Debug.Log("Play Open Animation");
+
+    //    // Alternative: Direkte Animation-Kontrolle
+    //    // string animationName = isOpening ? "OpenAnimation" : "CloseAnimation";
+    //    // childAnimator.Play(animationName, 0, 0f); // Start von Beginn an
+    //}
 
     public void Apply()
     {

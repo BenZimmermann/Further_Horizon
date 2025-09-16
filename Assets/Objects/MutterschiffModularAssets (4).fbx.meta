@@ -1,0 +1,267 @@
+fileFormatVersion: 2
+guid: 0f9046f493881d444a1ebe78d7362240
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Component_Base_MT
+    second: {fileID: 2100000, guid: d9ef2b62331081c4596047c74bbc5bf2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Component_Cabel_MT
+    second: {fileID: 2100000, guid: d18fae22dbbc86140b5bdee044db666b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Component_Glass_MT
+    second: {fileID: 2100000, guid: 9faaf44229f62164bae703b2ba446179, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Component_Pipe_MT
+    second: {fileID: 2100000, guid: 1a3517958eda9a84daa2357ae7f1ffd6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Component_Small_1_Base_MT
+    second: {fileID: 2100000, guid: e9c072cc073215149a12c3131b049116, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door_Frame_Base_MT
+    second: {fileID: 2100000, guid: 3b1711e304046e0408bdb4c055a62165, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door_Panel_Base_MT
+    second: {fileID: 2100000, guid: 1ba39fde8a6142047a36489bc08be635, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Door_Panel_Display_MT
+    second: {fileID: 2100000, guid: a3ee33d3329e4264da66806adcf8048d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor_Base_MT
+    second: {fileID: 2100000, guid: 7f235124d883ea247a22cfecd34dfa60, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor_Corner_Base_MT
+    second: {fileID: 2100000, guid: 3d0ea7e600aee0942be58784af69a102, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MapGlobe_Wireframe_MT
+    second: {fileID: 2100000, guid: 8d962e1d4a0806941a755f0ebe0a990d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Bass_MT
+    second: {fileID: 2100000, guid: d7fa22bb186a67d43a7303a31ef4d0cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Cable_MT
+    second: {fileID: 2100000, guid: 3e01366f506777c4992e8fcdb9e90c68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Emission_MT
+    second: {fileID: 2100000, guid: 02b4f45d8e2bb7f4991b1724c58ad783, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roof_Pipe_MT
+    second: {fileID: 2100000, guid: 400e86a984d226b44b97d70587c51a30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipComponent_Small_2_Base_MT
+    second: {fileID: 2100000, guid: 30a20da7f715d0b4e818f34f35deb617, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipComponent_Small_2_Cabel_MT
+    second: {fileID: 2100000, guid: 6d0f6d7c23763cc4da3417058a49c37d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipComponent_Small_2_Glass_MT
+    second: {fileID: 2100000, guid: 67316319871e0db4ebdb3ed77a54d7e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipComponent_Small_2_Pipe_MT
+    second: {fileID: 2100000, guid: 2d0ea4347f9334446b7fd311dbb3287b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipConsole_Base_MT
+    second: {fileID: 2100000, guid: 67bb043f4721e564eaba2477be722833, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_1_Comps_Base_MT
+    second: {fileID: 2100000, guid: 41d3e7b75233a0a4fa453ce41ae980a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_2_Comps_Base_MT
+    second: {fileID: 2100000, guid: 97c2c2804fa453a44aa42efc834f9277, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_Cable_MT
+    second: {fileID: 2100000, guid: ec1f71def7d721e43bc33a9523e0e2f9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_Corner_Large_Base_MT
+    second: {fileID: 2100000, guid: 983369ac090778a4db9faea984230019, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_Corner_Small_Base_MT
+    second: {fileID: 2100000, guid: 5c374b0016c1b5c4d96f57e966f175e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_Emission
+    second: {fileID: 2100000, guid: d6ec82702ac0f9e4591462042ef626ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ShipWall_Large_Base_MT
+    second: {fileID: 2100000, guid: da026ed5668f90b4c901b774813e9980, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ship_Front_Frame_Base_MT
+    second: {fileID: 2100000, guid: 3fc2daf8097fe0c4c808341be9b08eb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tabellight_Base_MT
+    second: {fileID: 2100000, guid: c6fce360f1f10844ea1b96b140b1d6be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TableLight_Base_MT
+    second: {fileID: 2100000, guid: 58843ca60ee408e46959ad868ce47cb5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindShield_Base_MT
+    second: {fileID: 2100000, guid: aefc149cecc650040894720b50b21721, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WindShield_Glass_MT
+    second: {fileID: 2100000, guid: ea3ca4e1a54f4bb4883aa31bd2c543ce, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
