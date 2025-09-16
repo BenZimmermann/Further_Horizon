@@ -1,39 +1,170 @@
-using Unity.VisualScripting;
-using UnityEditor;
+//using System.Collections.Generic;
+//using Unity.VisualScripting;
+//using UnityEditor;
+//using UnityEngine;
+//using UnityEngine.InputSystem;
+//using UnityEngine.SceneManagement;
+//using static UnityEngine.InputSystem.InputAction;
+
+//public enum WindowType
+//{
+//    PauseMenu,
+//    Console,
+//    Crafting,
+//    Settings
+//}
+
+//public class PauseMenuController : MonoBehaviour
+//{
+//    [Header("Singleton")]
+//    public static PauseMenuController Instance { get; private set; }
+//    public static bool IsPaused { get; private set; }
+
+//    public event System.Action OnWindowsClosed;
+
+//    [Header("Pause Menu Settings")]
+//    [SerializeField] private Camera mainCamera;
+//    [SerializeField] private MonoBehaviour cameraController;
+
+//    [Header("Window Settings")]
+//    [SerializeField] private List<WindowEntry> windows;
+
+//    [System.Serializable]
+//    public struct WindowEntry
+//    {
+//        public WindowType type;
+//        public GameObject windowObject;
+//    }
+
+//    private WindowType? currentActiveWindow = null;
+//    private bool isAnyWindowOpen => currentActiveWindow.HasValue;
+//    private bool isWindowOpen = false;
+//    void Awake()
+//    {
+//        if (Instance != null && Instance != this)
+//        {
+//            Destroy(gameObject);
+//            return;
+//        }
+//        Instance = this;
+//        DontDestroyOnLoad(gameObject);
+//    }
+
+//    void Start()
+//    {
+//        Cursor.lockState = CursorLockMode.Locked;
+//        Cursor.visible = false;
+//        isWindowOpen = false;
+//    }
+
+
+//    public bool OpenWindow(WindowType windowType)
+//    {
+
+//        if (currentActiveWindow == windowType)
+//            return false;
+
+//        PauseGame();
+
+//        currentActiveWindow = windowType;
+//        GameObject obj = GetWindowByType(windowType);
+//        if (obj != null)
+//            Debug.Log("Opening window: " + windowType);
+//        obj.SetActive(true);
+
+//        return true;
+//    }
+
+//    public bool CloseWindow(WindowType windowType)
+//    {
+//        currentActiveWindow = windowType;
+//        GameObject obj = GetWindowByType(windowType);
+//        if (obj != null)
+//            Debug.Log("Closing window: " + windowType);
+//        obj.SetActive(false);
+//        currentActiveWindow = null;
+//        ResumeGame();
+
+//        return true;
+//    }
+
+
+//    public bool IsWindowOpen(WindowType windowType)
+//    {
+//        return currentActiveWindow == windowType;
+//    }
+
+//    public GameObject GetWindowByType(WindowType type)
+//    {
+//        foreach (var pair in windows)
+//        {
+//            if (pair.type == type)
+//                return pair.windowObject;
+//        }
+//        return null;
+//    }
+
+
+
+//    public void PauseGame()
+//    {
+//        Cursor.lockState = CursorLockMode.None;
+//        Cursor.visible = true;
+//        Time.timeScale = 0f;
+
+//        if(cameraController != null)
+//            cameraController.enabled = true;
+
+//    }
+
+//    private void ResumeGame()
+//    {
+//        Cursor.lockState = CursorLockMode.Locked;
+//        Cursor.visible = false;
+//        Time.timeScale = 1f;
+
+//        if (cameraController != null)
+//            cameraController.enabled = true;
+//    }
+//}
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using static UnityEngine.InputSystem.InputAction;
 
 public enum WindowType
 {
     PauseMenu,
     Console,
-   // Map,
-   //Inventory,
-    Settings
+    Crafting,
+    Settings,
+    SnakeMinigame,
+    PictureMinigame
 }
 
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("Singleton")]
     public static PauseMenuController Instance { get; private set; }
-    public static bool IsPaused { get; private set; }
 
-    public event System.Action OnWindowsClosed;
+    [Header("Window Settings")]
+    [SerializeField] private List<WindowEntry> windows;
+    [SerializeField] private List<GUI> guis;
 
-    [Header("Pause Menu Settings")]
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private MonoBehaviour cameraController;
 
-    private PlayerInput playerInput;
-
-    // Skalierbare Fensterverwaltung
+    [System.Serializable]
+    public struct WindowEntry
+    {
+        public WindowType type;
+        public GameObject windowObject;
+    }
+    [System.Serializable]
+    public struct GUI
+    {
+        public GameObject guiObject;
+    }
     private WindowType? currentActiveWindow = null;
-    private bool isAnyWindowOpen => currentActiveWindow.HasValue;
 
-    void Awake()
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -42,91 +173,54 @@ public class PauseMenuController : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // alle Fenster beim Start deaktivieren
+        foreach (var entry in windows)
+        {
+            if (entry.windowObject != null)
+                entry.windowObject.SetActive(false);
+        }
     }
 
-    void Start()
+    private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.actions["Pause"].performed += onPause;
-
-        if (pauseCanvas != null)
-            pauseCanvas.SetActive(false);
-
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    private void onPause(CallbackContext ctx)
-    {
-        Debug.Log("ESC gedr�ckt");
-
-        if (isAnyWindowOpen)
-        {
-            // egal welches Fenster offen ist -> ESC schlie�t alles
-            CloseWindow();
-        }
-        else
-        {
-            // wenn kein Fenster offen -> Pause �ffnen
-            OpenWindow(WindowType.PauseMenu);
-        }
-    }
-
     public bool OpenWindow(WindowType windowType)
     {
-        // Wenn bereits dasselbe Fenster offen ist, tue nichts
-        if (currentActiveWindow == windowType)
+        // Öffne nur, wenn aktuell kein Fenster offen ist
+        if (currentActiveWindow != null)
             return false;
 
-        // Schlie�e aktuelles Fenster falls offen
-        if (isAnyWindowOpen)
+        var obj = GetWindowByType(windowType);
+        if (obj != null)
         {
-            CloseCurrentWindow();
+            obj.SetActive(true);
+            currentActiveWindow = windowType;
+            PauseGame();
+            Debug.Log("Opening window: " + windowType);
+            return true;
         }
-
-        // �ffne neues Fenster
-        currentActiveWindow = windowType;
-
-        // Fenster-spezifische Aktionen
-        switch (windowType)
-        {
-            case WindowType.PauseMenu:
-                if (pauseCanvas != null)
-                    pauseCanvas.SetActive(true);
-                break;
-                // Hier k�nnen weitere Fenstertypen hinzugef�gt werden
-                // case WindowType.Inventory:
-                //     if (inventoryCanvas != null)
-                //         inventoryCanvas.SetActive(true);
-                //     break;
-        }
-
-        PauseGame();
-        return true;
+        return false;
     }
 
     public bool CloseWindow()
     {
-        if (!isAnyWindowOpen)
+        if (currentActiveWindow == null)
             return false;
 
-        CloseCurrentWindow();
+        var obj = GetWindowByType(currentActiveWindow.Value);
+        if (obj != null)
+        {
+            obj.SetActive(false);
+            Debug.Log("Closing window: " + currentActiveWindow.Value);
+        }
+
         currentActiveWindow = null;
         ResumeGame();
         return true;
-    }
-
-    public bool ToggleWindow(WindowType windowType)
-    {
-        if (currentActiveWindow == windowType)
-        {
-            CloseWindow();
-            return false;
-        }
-        else
-        {
-            return OpenWindow(windowType);
-        }
     }
 
     public bool IsWindowOpen(WindowType windowType)
@@ -134,84 +228,43 @@ public class PauseMenuController : MonoBehaviour
         return currentActiveWindow == windowType;
     }
 
-    public bool IsAnyWindowOpen()
+    private GameObject GetWindowByType(WindowType type)
     {
-        return isAnyWindowOpen;
-    }
-
-    public WindowType? GetCurrentActiveWindow()
-    {
-        return currentActiveWindow;
-    }
-
-    public bool CanOpenWindow(WindowType windowType)
-    {
-        // Zus�tzliche Logik kann hier hinzugef�gt werden
-        // z.B. Pr�fung auf spezielle Bedingungen f�r bestimmte Fenstertypen
-        return true;
-    }
-
-    private void CloseCurrentWindow()
-    {
-        if (!currentActiveWindow.HasValue)
-            return;
-
-        // Fenster-spezifische Schlie�-Aktionen
-        switch (currentActiveWindow.Value)
+        foreach (var entry in windows)
         {
-            case WindowType.PauseMenu:
-                if (pauseCanvas != null)
-                    pauseCanvas.SetActive(false);
-                break;
-                // Hier k�nnen weitere Fenstertypen hinzugef�gt werden
+            if (entry.type == type)
+                return entry.windowObject;
         }
+        return null;
     }
 
     private void PauseGame()
     {
-        IsPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         Time.timeScale = 0f;
-
+        //alle fenster die in GUI list sind deaktivieren
+        foreach (var gui in guis)
+        {
+            if (gui.guiObject != null)
+                gui.guiObject.SetActive(false);
+        }
         if (cameraController != null)
             cameraController.enabled = false;
     }
 
     private void ResumeGame()
     {
-        IsPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1f;
-
+        //alle fenster die in GUI list sind aktivieren
+        foreach (var gui in guis)
+        {
+            if (gui.guiObject != null)
+                gui.guiObject.SetActive(true);
+        }
         if (cameraController != null)
             cameraController.enabled = true;
-    }
-
-    // UI Button Methods
-    public void ContinoueButtonPressed()
-    {
-        CloseWindow();
-    }
-
-    public void QuitButtonPressed()
-    {
-        Debug.Log("QuitButtonPressed aufgerufen");
-        Time.timeScale = 1f;
-    }
-
-
-    //UI Button Methods ende
-    public void RegisterExternalWindow(bool open)
-    {
-        if (open)
-        {
-            OpenWindow(WindowType.Console); // Standard f�r externe Fenster
-        }
-        else
-        {
-            CloseWindow();
-        }
     }
 }
