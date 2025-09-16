@@ -6,7 +6,7 @@ public class EnviormentDamageController : MonoBehaviour
     public static EnviormentDamageController Instance { get; private set; }
     public bool IsWarm = false;
     public int EnviormentDamage = 5;
-    public float DamageTick = 5f;
+    public float DamageTick = 1f;
 
     private bool isDamaging = false; // Verhindert mehrfaches Starten der Coroutine
 
@@ -61,6 +61,7 @@ public class EnviormentDamageController : MonoBehaviour
         IsWarm = warm;
         if (warm)
         {
+            FreezeEffectManager.Instance.SetFullScreenPass(false);
             Debug.Log("Player is now warm - stopping environment damage");
         }
     }
