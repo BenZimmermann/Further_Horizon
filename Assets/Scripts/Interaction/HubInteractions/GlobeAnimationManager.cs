@@ -16,8 +16,6 @@ public class GlobeAnimationManager : MonoBehaviour
         {
             animator.SetBool("Open", true);
             animator.SetBool("Idle", false);
-            if (globe != null)
-                globe.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -26,8 +24,6 @@ public class GlobeAnimationManager : MonoBehaviour
         {
             animator.SetBool("Open", false);
             animator.SetBool("Idle", true);
-            if (globe != null)
-                globe.SetActive(false);
         }
     }
 }

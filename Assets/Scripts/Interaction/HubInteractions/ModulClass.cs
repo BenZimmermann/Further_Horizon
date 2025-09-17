@@ -28,13 +28,18 @@ public class ModulClass : MonoBehaviour, Interactable
 
     [Header("Activation Permissions")]
      private bool canActivateUmbra = true;
-     private bool canActivateSingara = false;
+     private bool canActivateSingara = true;
      private bool canActivateCryovista = true;
 
     private bool used = false;
     private static int useCount = 0; // globaler Zähler für alle Module
     //private float useCount;
+    [Header("Text Objects")]
+    [SerializeField] GameObject UmbraTxtObj;
+    [SerializeField] GameObject SingaraTxtObj;
+    [SerializeField] GameObject CryovistaTxtObj;
 
+    [Header("3D Module Objects")]
     [SerializeField] GameObject UmbraObj;
     [SerializeField] GameObject SingaraObj;
     [SerializeField] GameObject CryovistaObj;
@@ -111,10 +116,22 @@ public class ModulClass : MonoBehaviour, Interactable
 
         Remove();
         Apply();
-    
-        if (_ModuleType == ModuleType.Umbra && UmbraObj != null) Destroy(UmbraObj);
-        if (_ModuleType == ModuleType.Singara && SingaraObj != null) Destroy(SingaraObj);
-        if (_ModuleType == ModuleType.Cryovista && CryovistaObj != null) Destroy(CryovistaObj);
+
+        if (_ModuleType == ModuleType.Umbra && UmbraObj != null)
+        {
+            Destroy(UmbraTxtObj);
+            UmbraObj.SetActive(true);
+        }
+        if (_ModuleType == ModuleType.Singara && SingaraObj != null)
+        {
+            Destroy(SingaraTxtObj);
+            SingaraObj.SetActive(true);
+        }
+        if (_ModuleType == ModuleType.Cryovista && CryovistaObj != null)
+        {
+            Destroy(CryovistaTxtObj);
+            CryovistaObj.SetActive(true);
+        }
         // ...
     }
     private bool CheckActivationPermission(ModuleType type)
