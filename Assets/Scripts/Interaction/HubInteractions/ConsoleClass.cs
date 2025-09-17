@@ -18,7 +18,7 @@ public class ConsoleClass : MonoBehaviour, Interactable
 
     [Header("Window Settings")]
     [SerializeField] private WindowType windowType = WindowType.Console;
-
+   // private QuestEventChannel QuestEventChannel; //mal schauen ob DAS funktioniert
     private Material[] originalMaterials;
     private Renderer objectRenderer;
     //private Animator animator;
