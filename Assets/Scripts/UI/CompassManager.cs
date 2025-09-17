@@ -7,7 +7,9 @@ public class CompassManager : MonoBehaviour
     public RectTransform compassBar;        // Die UI-Leiste für den Kompass
     public RectTransform directionMarkerPrefab; // Prefab für N/E/S/W Marker (mit Text)
     public RectTransform objectiveMarker;   // Marker für das Quest-Objective
-    public TMP_Text distanceText;           // Distanzanzeige für Objective
+    public TMP_Text distanceText;
+    [SerializeField] private Transform spawnPoint;
+    // Distanzanzeige für Objective
 
     [Header("World References")]
     public Transform playerCamera;          // Kamera oder Spieler
@@ -38,7 +40,7 @@ public class CompassManager : MonoBehaviour
         // Marker im UI instanziieren
         foreach (var dir in directions)
         {
-            RectTransform marker = Instantiate(directionMarkerPrefab, compassBar);
+            RectTransform marker = Instantiate(directionMarkerPrefab, spawnPoint);
             dir.uiMarker = marker;
             dir.text = marker.GetComponentInChildren<TMP_Text>();
             dir.text.text = dir.label;
@@ -81,6 +83,6 @@ public class CompassManager : MonoBehaviour
         float normalized = angle / 180f;
         float xPos = (compassBar.rect.width) * normalized;
 
-        marker.anchoredPosition = new Vector2(xPos, 0);
+        marker.anchoredPosition = new Vector2(xPos, marker.anchoredPosition.y);
     }
 }
