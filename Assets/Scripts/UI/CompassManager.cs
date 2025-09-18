@@ -44,16 +44,13 @@ public class CompassManager : MonoBehaviour
             dir.uiMarker = marker;
             dir.text = marker.GetComponentInChildren<TMP_Text>();
             dir.text.text = dir.label;
+            SetMarkerPosition(dir.uiMarker, dir.worldDir);
         }
     }
 
     private void Update()
     {
-        // Himmelsrichtungen aktualisieren
-        foreach (var dir in directions)
-        {
-            SetMarkerPosition(dir.uiMarker, dir.worldDir);
-        }
+
 
         // Objective aktualisieren
         if (objective != null && objectiveMarker != null)
@@ -66,6 +63,12 @@ public class CompassManager : MonoBehaviour
                 float dist = Vector3.Distance(playerCamera.position, objective.position);
                 distanceText.text = $"{dist:F0}m";
             }
+        }
+
+        // Himmelsrichtungen aktualisieren
+        foreach (var dir in directions)
+        {
+            SetMarkerPosition(dir.uiMarker, dir.worldDir);
         }
     }
 

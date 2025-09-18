@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class QuestObject : MonoBehaviour, Interactable
+public class WeQuestObject : MonoBehaviour, Interactable
 {
     [Header("Quest Info")]
     [SerializeField] private string questName;
