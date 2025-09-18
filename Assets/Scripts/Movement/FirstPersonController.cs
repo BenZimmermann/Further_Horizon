@@ -64,7 +64,7 @@ public class FirstPersonController : MonoBehaviour
         GroundCheck(); // Call ground check first to update isGround
         WallCheck();
         //   Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
-        Debug.Log("Ist auf boden?(custom) " + isGround);
+        //Debug.Log("Ist auf boden?(custom) " + isGround);
     }
     #endregion
 

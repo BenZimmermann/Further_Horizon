@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec5ffd5a8504834f924711b5fef6d72, type: 3}
+  m_Name: Fusionkonduktor
+  m_EditorClassIdentifier: 
+  itemId: fusionkonduktor
+  displayName: Fusionkonduktor
+  description: "Ein Fusionsreaktor. M\xE4chtig genug, um eine Bremsspur mit einem
+    Shuttle zu hinterlassen."
+  itemModelSprite: {fileID: 21300000, guid: 06c2b4b43ffb4b2498b7f0aee7068425, type: 3}
+  associatedPlanet: {fileID: 11400000, guid: 874b0956ff8daa74cb42def8a6a1cf65, type: 2}
+  itemType: 0
+  isCraftable: 0
+  maxStack: 99

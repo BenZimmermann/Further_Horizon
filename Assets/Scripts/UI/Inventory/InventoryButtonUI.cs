@@ -10,10 +10,6 @@ public class InventoryButtonUI : MonoBehaviour
 
     public Button Button { get; private set; }        // Damit InventoryManager auf den Button zugreifen kann
 
-    private void Awake()
-    {
-        Button = GetComponent<Button>();
-    }
 
     /// <summary>
     /// Initialisiert den Button mit Item-Daten.
@@ -22,6 +18,11 @@ public class InventoryButtonUI : MonoBehaviour
     {
         itemData = data;
         itemCount = count;
+
+        Button = GetComponent<Button>();
+        if (Button == null)
+            Debug.LogError("[InventoryButtonUI] Button-Komponente am Prefab-Root fehlt!");
+
         RefreshUI();
     }
 
@@ -36,6 +37,18 @@ public class InventoryButtonUI : MonoBehaviour
 
     private void RefreshUI()
     {
+        if (itemText == null)
+        {
+            Debug.LogError("[InventoryButtonUI] itemText (TMP) ist NICHT zugewiesen! Prefab: " + name);
+            return; // Zweck: NullReference verhindern und Ursache sichtbar machen
+        }
+
+        if (itemData == null)
+        {
+            Debug.LogError("[InventoryButtonUI] itemData ist null – Setup wurde nicht korrekt aufgerufen?");
+            return;
+        }
+
         itemText.text = $"{itemData.displayName} x{itemCount}";
     }
 

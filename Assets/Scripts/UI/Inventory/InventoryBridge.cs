@@ -47,7 +47,7 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
             GameObject uiItem = Instantiate(itemUIPrefab, itemListParent);
 
             // TMPs & Icon setzen (Prefab muss vorbereitet sein)
-            uiItem.transform.Find("Icon").GetComponent<Image>().sprite = itemDef.icon;
+            uiItem.transform.Find("Icon").GetComponent<Image>().sprite = itemDef.itemModelSprite;
             uiItem.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemDef.displayName;
             uiItem.transform.Find("Description").GetComponent<TextMeshProUGUI>().text = itemDef.description;
             uiItem.transform.Find("Count").GetComponent<TextMeshProUGUI>().text = $"{collected}/{itemDef.maxStack}";

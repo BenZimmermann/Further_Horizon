@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fec5ffd5a8504834f924711b5fef6d72, type: 3}
-  m_Name: Coin
+  m_Name: Gravimetall
   m_EditorClassIdentifier: 
-  itemId: coin_01
-  displayName: Gold
-  description: 'Des isch kein Gold, sieht nur so aus aber trotzdem MONEY IS MONEY '
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  itemId: gravimetall
+  displayName: Gravimetall
+  description: "Entsprang den Gedanken eines 17 J\xE4hrigen der dieses Universum
+    erschuff. "
+  itemModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}
+  associatedPlanet: {fileID: 11400000, guid: 3faa3f92ba29f05468f8dfc7025befeb, type: 2}
+  itemType: 0
+  isCraftable: 1
   maxStack: 99
-  isQuestItem: 0

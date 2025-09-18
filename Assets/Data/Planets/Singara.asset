@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Singara
   m_EditorClassIdentifier: 
   displayName: Singara
-  description: Planet Singara
+  description: "Planet Singara isch der letzte. Bissle mehr Text f\xFCr Bla bla bla
+    bla bla bla bla bla bla."
+  temperature: "-270\xB0"
   sceneName: Singara
   isLocked: 1
+  planetModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}
