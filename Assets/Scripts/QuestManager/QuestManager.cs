@@ -76,53 +76,67 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor.PackageManager.Requests;
 
 public class QuestManager : MonoBehaviour
 {
+    //public static QuestManager Instance { get; private set; }
     [SerializeField] private List<Quest> quests = new List<Quest>();
     public QuestUIManager questUIManager;
 
     private Quest Current => quests.Count > 0 ? quests[0] : null;
 
+    private int questProgress;
+
     private void Start()
     {
+        questProgress = 0;
         UpdateUI();
     }
 
-    public void OnInteract(GameObject target)
+    public bool OnInteract(Quest quest)
     {
-        if (Current == null) return;
+        if (Current == null) return false;
 
-        if (DoQuestProgress(Current, target))
+        if (DoQuestProgress(quest))
         {
-            CompleteQuest(Current);
+            CompleteQuest(quest);
+            return true;
         }
+        return false;
     }
 
-    private void CompleteQuest(Quest questData)
+    private void CompleteQuest(Quest _quest)
     {
         if (quests.Count == 0) return;
 
-        quests.RemoveAt(0);
-
-        while (quests.Count > 0 && !quests[0].isRequired && (quests[0].Requirements == null || quests[0].Requirements.Count == 0))
+        var questIndex = quests.IndexOf(_quest);
+        quests.RemoveRange(0, questIndex);
+        if(_quest.Amount <= questProgress)
         {
+            questProgress = 0;
             quests.RemoveAt(0);
         }
-
         UpdateUI();
     }
 
-    private bool DoQuestProgress(Quest questData, GameObject target)
+    private bool DoQuestProgress(Quest _quest)
     {
-        if (questData == null || questData.Requirements == null) return true;
+        if (_quest == null) return false;
+        foreach (Quest quest in quests)
+        {
+            
+            if (quest == _quest)
+            {
+                
+                questProgress++;
+                return true;
+            }
+            if (quest.isRequired) return false;
 
-        var questObj = target.GetComponent<QuestObject>();
-        if (questObj == null) return false;
-
-        questData.DoQuestProgress(questObj);
-
-        return questData.IsComplete();
+        }
+        return false;
     }
 
     private void UpdateUI()

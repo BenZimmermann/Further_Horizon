@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821fe301ef2482a4bae94f490929b0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  quest: {fileID: 11400000, guid: a7280d0e06ed4b34d8f01a458175c80c, type: 2}
 --- !u!65 &233680340
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6908,6 +6908,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -3011669674804927748, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1562349990}
+    - targetCorrespondingSourceObject: {fileID: -3011669674804927748, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1562350000}
     - targetCorrespondingSourceObject: {fileID: -1760714182489039777, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1748597535}
@@ -7447,6 +7450,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.009999999
   m_Center: {x: 0.0000000041909516, y: 0.0000000032596288, z: 0}
+--- !u!114 &1562350000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562349986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821fe301ef2482a4bae94f490929b0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: 5ff3476692b82fc45b473230313a4db9, type: 2}
 --- !u!65 &1567227939
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7958,6 +7974,7 @@ GameObject:
   - component: {fileID: 1697628129}
   - component: {fileID: 1697628128}
   - component: {fileID: 1697628131}
+  - component: {fileID: 1697628132}
   m_Layer: 7
   m_Name: Txt_Modul_Cryovista
   m_TagString: Interactable
@@ -8168,6 +8185,19 @@ MonoBehaviour:
   UmbraObj: {fileID: 857142366}
   SingaraObj: {fileID: 1909207614}
   CryovistaObj: {fileID: 1737550338}
+--- !u!114 &1697628132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697628126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821fe301ef2482a4bae94f490929b0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: a7280d0e06ed4b34d8f01a458175c80c, type: 2}
 --- !u!1 &1698956254
 GameObject:
   m_ObjectHideFlags: 0
@@ -8229,8 +8259,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quests:
-  - {fileID: 11400000, guid: a7280d0e06ed4b34d8f01a458175c80c, type: 2}
   - {fileID: 11400000, guid: 5ff3476692b82fc45b473230313a4db9, type: 2}
+  - {fileID: 11400000, guid: a7280d0e06ed4b34d8f01a458175c80c, type: 2}
+  - {fileID: 11400000, guid: 57f47364e1ea54140bebf5b11bad3f82, type: 2}
   questUIManager: {fileID: 1698956257}
 --- !u!1 &1721482089
 GameObject:
@@ -9808,6 +9839,7 @@ GameObject:
   - component: {fileID: 2139656728}
   - component: {fileID: 2139656724}
   - component: {fileID: 2139656729}
+  - component: {fileID: 2139656730}
   m_Layer: 7
   m_Name: Txt_Modul_Umbra
   m_TagString: Interactable
@@ -10018,6 +10050,19 @@ MonoBehaviour:
   UmbraObj: {fileID: 857142366}
   SingaraObj: {fileID: 1909207614}
   CryovistaObj: {fileID: 1737550338}
+--- !u!114 &2139656730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139656723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821fe301ef2482a4bae94f490929b0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quest: {fileID: 11400000, guid: a7280d0e06ed4b34d8f01a458175c80c, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

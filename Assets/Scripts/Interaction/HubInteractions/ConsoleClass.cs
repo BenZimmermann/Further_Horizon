@@ -63,9 +63,16 @@ public class ConsoleClass : MonoBehaviour, Interactable
         }
 
         isOpen = true;
+        var questManager = GetComponent<QuestObject>();
+        if (questManager != null)
+        {
+            if (!questManager.IsInteracted()) return;
+        }
         // Fenster noch nicht offen -> erst Animation abspielen
         PauseMenuController.Instance.OpenWindow(windowType);
         Debug.Log($"Console {windowType} geöffnet");
+        //QuestManager
+
         //PlayAnimation();
         //StartCoroutine(OpenWindowAfterAnimation());
     }

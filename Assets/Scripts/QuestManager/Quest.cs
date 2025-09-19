@@ -65,7 +65,7 @@ public class Quest : ScriptableObject
 
     [Tooltip("Diese Quest muss abgeschlossen werden, um fortzufahren.")]
     public bool isRequired;
-
+    public int Amount;
     public Dictionary<QuestObject, Requirements> Requirements = new Dictionary<QuestObject, Requirements>();
 
     public Dictionary<QuestObject, int> Progress = new Dictionary<QuestObject, int>();
@@ -95,7 +95,7 @@ public class Quest : ScriptableObject
     /// </summary>
     public bool IsComplete()
     {
-        if (Requirements == null || Requirements.Count == 0)
+        if (Requirements == null || Requirements.Count == Amount)
             return true;
 
         foreach (var kvp in Requirements)
