@@ -139,7 +139,8 @@ public enum WindowType
     Settings,
     SnakeMinigame,
     PictureMinigame,
-    Inventar
+    Inventar,
+    GameOver
 }
 
 public class PauseMenuController : MonoBehaviour
