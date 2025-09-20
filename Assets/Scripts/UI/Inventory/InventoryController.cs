@@ -46,17 +46,17 @@ public class InventoryController : MonoBehaviour
 
     private void onInv(CallbackContext ctx)
     {
-        Debug.Log("Inv gedrückt");
+        //Debug.Log("Inv gedrückt");
         if (PauseMenuController.Instance.IsWindowOpen(windowType))
         {
-            Debug.Log($"Console {windowType} geschlossen");
+           // Debug.Log($"Console {windowType} geschlossen");
             PauseMenuController.Instance.CloseWindow();
             //PauseMenuController.Instance.CloseWindow(windowType);
             isOpen = false;
             return;
         }
 
-        Debug.Log($"Console {windowType} wird geöffnet");
+        //Debug.Log($"Console {windowType} wird geöffnet");
         PauseMenuController.Instance.OpenWindow(windowType);
         isOpen = true;
     }

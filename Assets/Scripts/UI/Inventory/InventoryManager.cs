@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;   // <- für Image
 using TMPro;            // <- für TextMeshPro
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IDataPersistence
 {
     [Header("UI References")]
     [SerializeField] private Transform itemListPanel;     // Parent für die Buttons
@@ -20,6 +20,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI planetTemperatureTMP;
     [SerializeField] private Image planetModel_Imageholder;
 
+    // ganz oben in InventoryManager.cs, neben deinen anderen SerializedFields
+    [SerializeField] private InventoryBridge bridge;
 
 
     // Daten
@@ -66,7 +68,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[Inventory] AddItem: {itemData.displayName}, Amount: {amount}");
+        //Debug.Log($"[Inventory] AddItem: {itemData.displayName}, Amount: {amount}");
 
         switch (itemData.itemType)
         {
@@ -115,7 +117,7 @@ public class InventoryManager : MonoBehaviour
 
         if (items.ContainsKey(key))
         {
-            Debug.Log($"Einmaliges Item {key.displayName} ist schon im Inventar – ignoriert.");
+            //Debug.Log($"Einmaliges Item {key.displayName} ist schon im Inventar – ignoriert.");
             return;
         }
         items[key] = 1;
@@ -142,12 +144,12 @@ public class InventoryManager : MonoBehaviour
         // 1) Vorbedingung prüfen (Inspector-Referenzen)
         if (itemButtonPrefab == null)
         {
-            Debug.LogError("[Inventory] itemButtonPrefab ist NICHT zugewiesen!");
+            //Debug.LogError("[Inventory] itemButtonPrefab ist NICHT zugewiesen!");
             return; // Zweck: Crash verhindern & klare Fehlermeldung liefern
         }
         if (itemListPanel == null)
         {
-            Debug.LogError("[Inventory] itemListPanel ist NICHT zugewiesen!");
+            //Debug.LogError("[Inventory] itemListPanel ist NICHT zugewiesen!");
             return; // Zweck: s.o.
         }
 
@@ -197,9 +199,6 @@ public class InventoryManager : MonoBehaviour
             Debug.LogWarning("[Inventory] itemButtons hatte bereits einen Eintrag für " + itemData.displayName);
     }
 
-
-
-
     //wenn button angeklickt wird
     private void OnItemClicked(InventoryButtonUI buttonUI)
     {
@@ -226,7 +225,7 @@ public class InventoryManager : MonoBehaviour
         if (itemDescriptionTMP != null)
             itemDescriptionTMP.text = data.description;
 
-        // Planetendetails prüfen (falls dieses Item einen Bezug zu einem Planet hat)
+        // Planetendetails prüfen
         if (data.associatedPlanet != null) // NEU: Feld in ItemDefinition
         {
             if (planetNameTMP != null)
@@ -240,8 +239,56 @@ public class InventoryManager : MonoBehaviour
 
             if (planetModel_Imageholder != null)
                 planetModel_Imageholder.sprite = data.itemModelSprite;
-            
-            
+        }
+    }
+    private void ClearUIAndState()
+    {
+        // UI-Buttons unter dem List-Parent leeren
+        var parent = bridge.ItemListParent;         // bridge: dein InventoryBridge-Ref
+        for (int i = parent.childCount - 1; i >= 0; i--)
+            Destroy(parent.GetChild(i).gameObject);
+
+        // Laufzeit-Maps leeren
+        items.Clear();          // Dictionary<ItemDefinition,int>
+        itemButtons.Clear();    // Dictionary<ItemDefinition, InventoryButtonUI>
+    }
+
+    public void LoadData(GameData data)
+    {
+        ClearUIAndState();
+        
+        if (data == null || data.inventory == null) return;
+
+        // Für jede gespeicherte Zeile passenden ItemDefinition finden und hinzufügen
+        foreach (var row in data.inventory)
+        {
+            var def = bridge.AllItems.FirstOrDefault(d => d.itemId == row.itemId);
+            if (def == null)
+            {
+                Debug.LogWarning($"[INV/Load] Unbekannte itemId '{row.itemId}' – übersprungen.");
+                continue;
+            }
+
+            // deine bestehende Logik nutzen, damit UI & Zähler korrekt aufgebaut werden
+            AddItem(def, row.collected);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.inventory == null)
+            data.inventory = new List<ItemSaveData>();
+        else
+            data.inventory.Clear();
+
+        // Laufzeit-Map -> List<ItemSaveData>
+        foreach (var kvp in items) // kvp.Key: ItemDefinition, kvp.Value: count
+        {
+            data.inventory.Add(new ItemSaveData
+            {
+                itemId = kvp.Key.itemId,
+                collected = kvp.Value
+            });
         }
     }
 

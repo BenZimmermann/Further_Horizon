@@ -50,7 +50,7 @@ public class PlayerHealthManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         SetHealth(health - damage);
-        Debug.Log("Player took " + damage + " damage. Current health: " + health);
+        //Debug.Log("Player took " + damage + " damage. Current health: " + health);
     }
 
     private void UpdateHealthUI()
