@@ -81,7 +81,7 @@ public class DataPersistenceManager : MonoBehaviour
         dataObjects = FindAllDataPersistenceObjects();
         foreach (var obj in dataObjects)
             obj.LoadData(gameData);
-        SaveGame();
+        SaveGame();  // Gleich zu Beginn abspeichern
     }
 
     public void LoadGame()
@@ -89,17 +89,14 @@ public class DataPersistenceManager : MonoBehaviour
         if (!dataHandler.TryLoad(out var loaded))
         {
             // Kein Save vorhanden → neues Spiel
-#if UNITY_EDITOR
-            Debug.Log("[DPM] No save file. Creating new GameData.");
-#endif
+            Debug.Log("[DPM] Kein Save gefunden → NewGame wird gestartet.");
             NewGame(new GameData());
             return;
         }
 
         gameData = loaded;
-#if UNITY_EDITOR
-        Debug.Log($"[DPM] Loaded. LastScene={gameData.selectedPlanetScene}");
-#endif
+        Debug.Log($"[DPM] Save geladen. LastScene={gameData.selectedPlanetScene}");
+
         dataObjects = FindAllDataPersistenceObjects();
         foreach (var obj in dataObjects)
             obj.LoadData(gameData);
@@ -109,7 +106,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (gameData == null)
         {
-            Debug.LogWarning("[DPM] SaveGame called without GameData.");
+            Debug.LogWarning("[DPM] SaveGame aufgerufen, aber GameData ist null!");
             return;
         }
 
@@ -119,6 +116,7 @@ public class DataPersistenceManager : MonoBehaviour
             obj.SaveData(gameData);
 
         dataHandler.Save(gameData);
+        Debug.Log("[DPM] Game doch gespeichert baby.");
     }
 
     public GameData GetGameData() => gameData;

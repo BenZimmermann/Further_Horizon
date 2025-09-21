@@ -20,7 +20,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI planetTemperatureTMP;
     [SerializeField] private Image planetModel_Imageholder;
 
-    // ganz oben in InventoryManager.cs, neben deinen anderen SerializedFields
+    // Kommunikation, isch meine Brücke damits läuft
     [SerializeField] private InventoryBridge bridge;
 
 

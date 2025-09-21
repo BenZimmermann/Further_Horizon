@@ -28,7 +28,7 @@ public class GameData
         // Sinnvolle Defaults, aber KEINE Test-Items mehr!
         unlockedPlanets.Add("Umbra");
         unlockedPlanets.Add("Cryovista");
-        selectedPlanetScene = "Umbra";
+        selectedPlanetScene = "Cryovista";
     }
 
     // ---------- Convenience-Helpers ----------
