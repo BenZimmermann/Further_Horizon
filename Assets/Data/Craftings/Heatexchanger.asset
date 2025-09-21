@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e134b28f3563f7c44b663168a1c873f6, type: 3}
+  m_Name: Heatexchanger
+  m_EditorClassIdentifier: 
+  outputItem: {fileID: 11400000, guid: cf9f4a5c55056004aa0441bea5eb3744, type: 2}
+  outputAmount: 1
+  ingredients:
+  - item: {fileID: 11400000, guid: 6853a01f1d1e4a2478a01d05a35dea64, type: 2}
+    amount: 10
+  - item: {fileID: 11400000, guid: d15b126db8bbbef4a8ff23808388dee7, type: 2}
+    amount: 1

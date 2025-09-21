@@ -44,7 +44,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     private ItemDefinition Canonical(ItemDefinition incoming)
     {
         if (incoming == null) return null;
-
+        // gleiche itemId -> gleiche "kanonische" Instanz verwenden
         foreach (var k in items.Keys)
             if (k != null && k.itemId == incoming.itemId)
                 return k;
@@ -56,17 +56,15 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         return incoming;
     }
 
-
-    // Item ins Inventar und wenn nötig hochzählen
+    #region Item Handling Zeugs
+    // ---------------------------
+    //  Item-Handling
+    // ---------------------------
     public void AddItem(ItemDefinition itemData, int amount = 1)
     {
         Debug.LogWarning($"[INV] AddItem {itemData.displayName}  id:{itemData.itemId}  inst:{itemData.GetInstanceID()}");
 
-        if (itemData == null)
-        {
-            Debug.LogError("AddItem wurde mit null aufgerufen!");
-            return;
-        }
+        if (itemData == null) return;
 
         //Debug.Log($"[Inventory] AddItem: {itemData.displayName}, Amount: {amount}");
 
@@ -142,15 +140,11 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         Debug.LogWarning($"[INV] CreateButton key inst:{itemData.GetInstanceID()} -> {itemData.displayName}");
 
         // 1) Vorbedingung prüfen (Inspector-Referenzen)
-        if (itemButtonPrefab == null)
+        if (itemButtonPrefab == null || itemListPanel == null)
         {
             //Debug.LogError("[Inventory] itemButtonPrefab ist NICHT zugewiesen!");
-            return; // Zweck: Crash verhindern & klare Fehlermeldung liefern
-        }
-        if (itemListPanel == null)
-        {
             //Debug.LogError("[Inventory] itemListPanel ist NICHT zugewiesen!");
-            return; // Zweck: s.o.
+            return; // Zweck: Crash verhindern & klare Fehlermeldung liefern
         }
 
         // 2) Instanziieren
@@ -181,7 +175,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             return; // Zweck: du siehst sofort, wenn z.B. itemText im Prefab nicht verlinkt ist
         }
 
-        // 5) Button-Objekt prüfen
+        // 5) Button-Objekt prüfen, als zwischenprüfung ob überhaupt was drin liegt
         if (buttonUI.Button == null)
         {
             Debug.LogError("[Inventory] Im Prefab fehlt die Button-Komponente am Root!");
@@ -207,7 +201,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
         Debug.Log($"Item geklickt: {data.displayName}");
 
-        // Item Details
+        // Item Infos setzen
         if (itemModel_Imageholder != null)
         {
             if (data.itemModelSprite != null)
@@ -252,7 +246,12 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         items.Clear();          // Dictionary<ItemDefinition,int>
         itemButtons.Clear();    // Dictionary<ItemDefinition, InventoryButtonUI>
     }
+#endregion
 
+    #region Speichern+Laden
+    // ---------------------------
+    //  Save / Load
+    // ---------------------------
     public void LoadData(GameData data)
     {
         ClearUIAndState();
@@ -291,5 +290,54 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             });
         }
     }
+    #endregion
+
+    #region Crafting-Zeugs
+    // ---------------------------
+    //  Crafting-Helfer
+    // ---------------------------
+    // Prüfen, ob ein Item in ausreichender Menge vorhanden ist
+    public bool HasEnoughItems(ItemDefinition item, int amount)
+    {
+        var key = Canonical(item);
+        return items.TryGetValue(key, out var current) && current >= amount;
+    }
+
+    // Entfernt eine bestimmte Menge an Items
+    public bool RemoveItem(ItemDefinition item, int amount)
+    {
+        var key = Canonical(item);
+        if (!items.TryGetValue(key, out var current)) return false;
+        if (current < amount) return false;
+
+        int newCount = current - amount;
+
+        if (newCount > 0)
+        {
+            // Button-Zähler aktualisieren
+            items[key] = newCount;
+            if (itemButtons.TryGetValue(key, out var btn))
+                btn.UpdateCount(newCount);
+        }
+        else
+        {
+            // vollständig entfernt: Dict + UI-Button cleanup
+            items.Remove(key);
+            if (itemButtons.TryGetValue(key, out var btn))
+            {
+                Destroy(btn.gameObject);
+                itemButtons.Remove(key);
+            }
+        }
+
+        return true;
+    }
+    // Für UI am CraftItemButton 
+    public int GetCount(ItemDefinition item)
+    {
+        var key = Canonical(item);
+        return items.TryGetValue(key, out var value) ? value : 0;
+    }
+    #endregion
 
 }
