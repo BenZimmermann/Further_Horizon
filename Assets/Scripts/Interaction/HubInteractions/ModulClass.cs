@@ -83,8 +83,15 @@ public class ModulClass : MonoBehaviour, Interactable
     }
     public void Interact()
     {
-        if (used) return;
 
+        if (used) return;
+        // QuestManager benachrichtigen
+        var questManager = GetComponent<QuestObject>();
+        if (questManager != null)
+        {
+            // required 
+            if (!questManager.IsInteracted()) return;
+        }
         // Spieler darf Modul noch nicht aktivieren
         if (!CheckActivationPermission(_ModuleType))
         {
@@ -113,6 +120,8 @@ public class ModulClass : MonoBehaviour, Interactable
         activatedModules.Add(_ModuleType);
         useCount++;
         used = true;
+
+
 
         Remove();
         Apply();

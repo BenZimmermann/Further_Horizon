@@ -9,6 +9,8 @@ public class PlayerHealthManager : MonoBehaviour
     //public Slider healthSlider;
     public int maxHealth = 10;
     public int health;
+    private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
+    [SerializeField] private WindowType windowType = WindowType.Console;
 
     [Header("UI Settings")]
     [SerializeField] private List<Image> healthImages = new List<Image>(); // hier die 10 Images im Inspector reinziehen
@@ -43,7 +45,7 @@ public class PlayerHealthManager : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("Player is dead!");
-            // Game Over Logik
+            PauseMenuController.Instance.OpenWindow(windowType);
         }
     }
 
