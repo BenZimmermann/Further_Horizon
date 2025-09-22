@@ -20,14 +20,21 @@ public class GameData
     //// NEU: letzter Spawnpunkt je Szene (sceneName -> spawnId)
     //public Dictionary<string, string> lastSpawnByScene = new Dictionary<string, string>();
 
+    // Vorbereitung zum Initialisieren der Module Items im Schiff später
+    // Die listen müssen ausgelesen werden, damit ma die Items im Schiff später platzieren kann
+    public List<string> pendingInstallModuleIds = new List<string>(); // ItemIds werden hier hinterlegt vom jeweiligen Level -> kann man später auslese zum Modul abgeben
+    public List<string> installedModuleIds = new List<string>(); // schon platzierte Module -> zum level freischalten später
+    public string lastReturnFromScene; // von wo bin ich gekommen -> falls im debug nötig 
+    // Ende vorbereitung
+
 
     // Optional: Versionierung (hilfreich für Migrationen)
     public int saveVersion = 1;
     public GameData()
     {
         // Sinnvolle Defaults, aber KEINE Test-Items mehr!
-        unlockedPlanets.Add("Umbra");
         unlockedPlanets.Add("Cryovista");
+        unlockedPlanets.Add("Umbra");
         selectedPlanetScene = "Cryovista";
     }
 
