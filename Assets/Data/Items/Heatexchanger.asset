@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec5ffd5a8504834f924711b5fef6d72, type: 3}
+  m_Name: Heatexchanger
+  m_EditorClassIdentifier: 
+  itemId: heatexchanger
+  displayName: Heatexchanger
+  description: "Das Ger\xE4t zur W\xE4rmemanipulation im All und in einem Schwarten
+    Loch ;)."
+  itemModelSprite: {fileID: 21300000, guid: 06c2b4b43ffb4b2498b7f0aee7068425, type: 3}
+  associatedPlanet: {fileID: 11400000, guid: 61038c694c291304b8979c009e17300d, type: 2}
+  itemType: 2
+  isCraftable: 0
+  maxStack: 1

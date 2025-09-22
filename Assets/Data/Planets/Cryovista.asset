@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Cryovista
   m_EditorClassIdentifier: 
   displayName: Cryovista
-  description: Isch der PLanet mit dem Ma anfange
+  description: "Isch der PLanet mit dem Ma anfange. Bisschen mehr Bla Bla f\xFCrs
+    Inventar, um einfach text zu haben."
+  temperature: "-50\xB0"
   sceneName: Cryovista
   isLocked: 0
+  planetModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}

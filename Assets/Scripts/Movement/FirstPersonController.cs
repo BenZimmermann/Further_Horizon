@@ -64,7 +64,7 @@ public class FirstPersonController : MonoBehaviour
         GroundCheck(); // Call ground check first to update isGround
         WallCheck();
         //   Debug.Log("Ist auf boden?(cc´s) " + characterController.isGrounded);
-        Debug.Log("Ist auf boden?(custom) " + isGround);
+        //Debug.Log("Ist auf boden?(custom) " + isGround);
     }
     #endregion
 
@@ -280,7 +280,7 @@ public class FirstPersonController : MonoBehaviour
             else
             {
                 isGround = false; // Treat as not grounded on steep slopes
-                Debug.LogWarning("ALARM!!!!Steiler ground erkannt.(GroundCheck)");
+                //Debug.LogWarning("ALARM!!!!Steiler ground erkannt.(GroundCheck)");
                 SlideOnSlope();
 
             }
@@ -378,7 +378,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 isNearWall = true;
                 GroundCheck();
-                Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(WallCheck)");
+                //Debug.LogWarning("ALARM!!!!Steile Wand erkannt.(WallCheck)");
             }
             else
             {
@@ -416,7 +416,7 @@ public class FirstPersonController : MonoBehaviour
         if (groundNormal == Vector3.up) return;
         // Richtung "nach unten entlang der Fläche"
         Vector3 slideDir = Vector3.ProjectOnPlane(Vector3.down, groundNormal).normalized;
-        Debug.LogWarning("ich slide");
+        //Debug.LogWarning("ich slide");
         characterController.Move(slideDir * gravityMultiplier * Time.deltaTime);
 #if UNITY_EDITOR
         Debug.DrawRay(transform.position, slideDir * 2f, Color.cyan);

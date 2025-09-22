@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec5ffd5a8504834f924711b5fef6d72, type: 3}
+  m_Name: Luminesenz
+  m_EditorClassIdentifier: 
+  itemId: luminesenz
+  displayName: Luminesenz
+  description: Enspringt der Fantasie einer Blonden Lady des Universums.
+  itemModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}
+  associatedPlanet: {fileID: 11400000, guid: 61038c694c291304b8979c009e17300d, type: 2}
+  itemType: 0
+  isCraftable: 1
+  maxStack: 99

@@ -67,6 +67,6 @@ public class LaserController : MonoBehaviour
         // Punkte an den LineRenderer geben
         lr.positionCount = points.Count;
         lr.SetPositions(points.ToArray());
-        Debug.Log(points.Count);
+        //Debug.Log(points.Count);
     }
 }

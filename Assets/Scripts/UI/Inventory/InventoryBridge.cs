@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,11 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
     [SerializeField] private Transform itemListParent; // Container für Items in der UI
     [SerializeField] private GameObject itemUIPrefab;  // UI-Element-Vorlage für ein Item
     [SerializeField] private ItemDefinition[] allItems; // Alle verfügbaren Items
+
+    // >>> Öffentliche, schreibgeschützte Zugriffspunkte (werden von InventoryManager benutzt)
+    public Transform ItemListParent => itemListParent;
+    public GameObject ItemButtonPrefab => itemUIPrefab;
+    public List<ItemDefinition> AllItems => allItems != null ? allItems.ToList() : new List<ItemDefinition>();
 
     private GameData gameData;
 
@@ -47,7 +53,7 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
             GameObject uiItem = Instantiate(itemUIPrefab, itemListParent);
 
             // TMPs & Icon setzen (Prefab muss vorbereitet sein)
-            uiItem.transform.Find("Icon").GetComponent<Image>().sprite = itemDef.icon;
+            uiItem.transform.Find("Icon").GetComponent<Image>().sprite = itemDef.itemModelSprite;
             uiItem.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = itemDef.displayName;
             uiItem.transform.Find("Description").GetComponent<TextMeshProUGUI>().text = itemDef.description;
             uiItem.transform.Find("Count").GetComponent<TextMeshProUGUI>().text = $"{collected}/{itemDef.maxStack}";

@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Umbra
   m_EditorClassIdentifier: 
   displayName: Umbra
-  description: Des isch der Planet Umbra
+  description: Des isch der Planet Umbra. Da fehlt noch bissle text zum test und
+    bissle bla bla bla.
+  temperature: "15\xB0"
   sceneName: Umbra
   isLocked: 0
+  planetModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}
