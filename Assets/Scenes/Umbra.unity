@@ -4836,6 +4836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   health: 0
+  windowType: 1
   healthImages:
   - {fileID: 812742568}
   - {fileID: 1194541412}

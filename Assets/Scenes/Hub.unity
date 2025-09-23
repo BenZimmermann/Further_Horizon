@@ -7943,6 +7943,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 762968767855679522, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: edff02f7e7bf92e418dc720c81ae1d8a, type: 2}
     - target: {fileID: 919132149155446097, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
       propertyPath: m_Name
       value: MutterschiffModularAssets (5)

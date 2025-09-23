@@ -41,11 +41,19 @@ Material:
         m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_6314c1328b8c484690d42dcd5126684c_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 81a4c211b24952d4ba03d3578dfb0cf1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_897fda75e28c488c9274b1401e924a3d_Texture_1_Texture2D:
         m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_db7032abf4ce4f0d85aa39817e6d1f77_Texture_1_Texture2D:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_faf07eef9af3486ba96ff02f2ac3d432_Texture_1_Texture2D:
         m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -69,7 +77,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _scrollSpeed: 3
+    - _scrollSpeed: 1.11
     - _tiling: 1
     m_Colors:
     - _Color: {r: 0, g: 4096, b: 0, a: 1}
