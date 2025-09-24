@@ -25,7 +25,11 @@ public class GameData
     public List<string> pendingInstallModuleIds = new List<string>(); // ItemIds werden hier hinterlegt vom jeweiligen Level -> kann man später auslese zum Modul abgeben
     public List<string> installedModuleIds = new List<string>(); // schon platzierte Module -> zum level freischalten später
     public string lastReturnFromScene; // von wo bin ich gekommen -> falls im debug nötig 
-    // Ende vorbereitung
+                                       // Ende vorbereitung
+
+    // Für Module Funktion, damits mit dem QuestManager passt
+    public List<string> completedQuestIds = new List<string>();   // abgeschlossene Quests (IDs oder Namen)
+
 
 
     // Optional: Versionierung (hilfreich für Migrationen)
