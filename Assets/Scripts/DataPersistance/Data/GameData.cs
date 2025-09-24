@@ -36,9 +36,8 @@ public class GameData
     public int saveVersion = 1;
     public GameData()
     {
-        // Sinnvolle Defaults, aber KEINE Test-Items mehr!
-        unlockedPlanets.Add("Cryovista");
-        unlockedPlanets.Add("Umbra");
+        // Default Planet ist unser Startplanet Cryovista
+        unlockedPlanets = new List<string> { "Cryovista" };
         selectedPlanetScene = "Cryovista";
     }
 

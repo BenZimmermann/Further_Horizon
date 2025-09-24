@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public enum WindowType
 {
@@ -140,4 +142,50 @@ public class PauseMenuController : MonoBehaviour
         if (cameraController != null)
             cameraController.enabled = true;
     }
+
+    #region Szenen Wechsel Verwaltung 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Egal was vorher war: Spiel aktivieren
+        ForceResumeAndClear();
+
+        // Alle eventuell noch referenzierten Fenster aus alter Szene sicherheitshalber deaktivieren
+        if (windows != null)
+        {
+            foreach (var entry in windows)
+            {
+                if (entry.windowObject != null)
+                    entry.windowObject.SetActive(false);
+            }
+        }
+    }
+
+    public void ForceResumeAndClear()
+    {
+        currentActiveWindow = null;   // kein Fenster als offen markieren
+                                      // Cursor/Timescale/Kamera sauber setzen
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+
+        if (guis != null)
+        {
+            foreach (var gui in guis)
+                if (gui.guiObject != null) gui.guiObject.SetActive(true);
+        }
+        if (cameraController != null)
+            cameraController.enabled = true;
+    }
+    #endregion
+
 }
