@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -33,7 +34,17 @@ public class ItemPickup : MonoBehaviour, Interactable
         // Item ins Inventar geben
         if (InventoryManager.Instance != null)
         {
+            // Blockierte Items nicht ins Inventar aufnehmen
+            if (InventoryManager.Instance.IsItemBlocked(itemDefinition)) return;
+
+            // Item ins Inventar hinzufügen
             InventoryManager.Instance.AddItem(itemDefinition, amount);
+
+            // Fortschritt für Quests melden
+            if (QuestManager.Instance != null)
+            {
+                QuestManager.Instance.ReportItemCollected(itemDefinition.itemId, amount);
+            }
         }
         else
         {

@@ -246,7 +246,22 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         items.Clear();          // Dictionary<ItemDefinition,int>
         itemButtons.Clear();    // Dictionary<ItemDefinition, InventoryButtonUI>
     }
-#endregion
+
+    public bool IsItemBlocked(ItemDefinition item)
+    {
+        if (item == null) return false;
+
+        // Nur Quest-/Modul-Items relevant (ItemType musst du ggf. an euren Enum anpassen)
+        if (item.itemType != ItemType.QuestItem && item.itemType != ItemType.ModulItem)
+            return false;
+
+        var dpm = DataPersistenceManager.Instance;
+        var gd = dpm != null ? dpm.GetGameData() : null;
+
+        // Wenn dieses Item als Modul bereits installiert wurde, nicht erneut zulassen
+        return gd != null && gd.installedModuleIds.Contains(item.itemId);
+    }
+    #endregion
 
     #region Speichern+Laden
     // ---------------------------
@@ -267,8 +282,20 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
                 Debug.LogWarning($"[INV/Load] Unbekannte itemId '{row.itemId}' – übersprungen.");
                 continue;
             }
+            // NEU: Prüfen, ob dieses Item zu einem bereits installierten Modul gehört
+            if (data.installedModuleIds.Contains(def.itemId))
+            {
+                Debug.Log($"[INV/Load] Item '{def.itemId}' übersprungen – Modul bereits installiert.");
+                continue; // nicht ins Inventar laden
+            }
+            // Skippen, wenn das Item zu einem bereits installierten Modul gehört
+            if (data.installedModuleIds != null && data.installedModuleIds.Contains(def.itemId))
+            {
+                Debug.Log($"[INV/Load] '{def.itemId}' übersprungen – Modul bereits installiert.");
+                continue;
+            }
 
-            // deine bestehende Logik nutzen, damit UI & Zähler korrekt aufgebaut werden
+            // bestehende Logik nutzen, damit UI & Zähler korrekt aufgebaut werden
             AddItem(def, row.collected);
         }
     }
@@ -338,6 +365,23 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
         var key = Canonical(item);
         return items.TryGetValue(key, out var value) ? value : 0;
     }
+    #endregion
+
+    #region Hier wird getestet für Modul einfügen im HUB
+    // --- Add-on: einfache Helfer für "habe Item" und "konsumiere Item" ---
+
+    /// True, wenn mindestens eins des Items im Inventar liegt.
+    public bool HasItem(ItemDefinition item) => GetCount(item) > 0;
+
+    /// Versucht 'amount' Stück zu verbrauchen. Liefert true bei Erfolg.
+    public bool TryConsume(ItemDefinition item, int amount = 1)
+    {
+        Debug.LogWarning("Hier soll ein Item abgezogen werden");
+        if (!HasEnoughItems(item, amount)) return false;
+        // RemoveItem kümmert sich bereits um UI-Update / Button löschen etc.
+        return RemoveItem(item, amount);
+    }
+
     #endregion
 
 }

@@ -1,30 +1,3 @@
-//using UnityEngine;
-//using UnityEngine.UI;
-
-//public class QuestObject : MonoBehaviour
-//{
-//    Quest quest;
-
-//    Requirements requirements;
-
-//    [SerializeField] private QuestType Type = QuestType.Interact;
-
-//    bool isActive = false;
-//    public void Activate()
-//    {
-//        isActive = true;
-//    }
-
-//    public bool Interact(Quest _quest)
-//    {
-//        if (isActive)
-//        {
-//            isActive = false;
-//            return true;
-//        }
-//        return false;
-//    }
-//}
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
@@ -49,7 +22,7 @@ public class QuestObject : MonoBehaviour
     public bool IsInteracted()
     {
         Debug.Log("Interacted with QuestObject" + quest);
-        if (questManager.OnInteract(quest))
+        if (questManager.ProgressQuest(quest.questId))
         { 
             Activate();
             return true;
