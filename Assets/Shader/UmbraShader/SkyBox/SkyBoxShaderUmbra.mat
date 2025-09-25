@@ -31,7 +31,7 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _DistortionSpeed: 1.28
-    - _GradientOffset: -0.76
+    - _GradientOffset: -0.393
     - _Intensity: 10
     - _NoiseScale: 4
     - _StarHeight: 50
@@ -43,9 +43,9 @@ Material:
     m_Colors:
     - _DistortionMinMax: {r: 10.1, g: 10, b: 0, a: 0}
     - _GroundColor: {r: 1, g: 0.11694199, b: 0, a: 1}
-    - _HorizonColor: {r: 0.48584908, g: 0.92995185, b: 1, a: 1}
+    - _HorizonColor: {r: 1, g: 0.48627448, b: 0.5191493, a: 1}
     - _ScrollSpeed: {r: 0, g: 0.05, b: 0, a: 0}
-    - _SkyColor: {r: 0.8349056, g: 1, b: 0.9745127, a: 1}
+    - _SkyColor: {r: 0.41037738, g: 1, b: 0.91576827, a: 1}
     - _Tiling: {r: 2.19, g: 6, b: 0, a: 0}
     - _TwirlOffset: {r: 3, g: 3, b: 0, a: 0}
   m_BuildTextureStacks: []

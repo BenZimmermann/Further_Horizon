@@ -46,7 +46,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Steps: 8.21
-    - _Transparency: 0.929
+    - _Transparency: 1
     - _metallic: 11
     - _smoothness: 0.529
     m_Colors:
