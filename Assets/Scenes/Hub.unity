@@ -6395,6 +6395,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5353202132248991652, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4615660599101278400, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -6439,10 +6443,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: MutterschiffModularAssets (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1860514004608987425, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: d098e92bf8a51954f99a7e6d1f8e1ccb, type: 2}
+    - target: {fileID: 2051576044142357828, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2368900897102127387, guid: 0f9046f493881d444a1ebe78d7362240, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
