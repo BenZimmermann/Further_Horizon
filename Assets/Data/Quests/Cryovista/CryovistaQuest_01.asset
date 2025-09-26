@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4596be4a3b955942a68cfbaf188f8fc, type: 3}
-  m_Name: ConsoleQuest
+  m_Name: CryovistaQuest_01
   m_EditorClassIdentifier: 
-  questId: 
-  questName: Beginn the adventure
-  description: Go to the Console and start a Mission
+  questId: CryovistaQuest_01
+  questName: Ich friere
+  description: "Ich rieche eine M\xFCtze die mich warm halten wird!\n(Sammle Ausr\xFCstung
+    ein)"
   requirements: []
   rewardItemId: 
   rewardAmount: 1

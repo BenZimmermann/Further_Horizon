@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4596be4a3b955942a68cfbaf188f8fc, type: 3}
-  m_Name: ConsoleQuest
+  m_Name: CryovistaQuest_05
   m_EditorClassIdentifier: 
-  questId: 
-  questName: Beginn the adventure
-  description: Go to the Console and start a Mission
+  questId: CryovistaQuest_05
+  questName: Mir friert der Hintern
+  description: "Deine Ausr\xFCstung versagt. Es ist zu kalt.\n(Kehre zum Raumschiff
+    zur\xFCck)"
   requirements: []
   rewardItemId: 
   rewardAmount: 1

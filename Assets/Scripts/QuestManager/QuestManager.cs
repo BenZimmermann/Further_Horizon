@@ -14,13 +14,15 @@ using System.Linq;
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
-    //public QuestUIManager questUIManager;
+
+    [Header("UI Manager")]
+    [SerializeField] private QuestUIManager questUIManager;  // Referenz zum UI Manager
 
     [Header("Quest Liste")]
-    [SerializeField] private List<Quest> allQuests = new List<Quest>();
+    [SerializeField] private List<Quest> allQuests = new List<Quest>(); // Alle verfügbaren Quests im Spiel -> im Inspector setzen
 
     // Aktive Quests, die noch nicht abgeschlossen sind
-    private List<Quest> activeQuests = new List<Quest>();
+    private List<Quest> activeQuests = new List<Quest>(); // Wird in Awake/Start initialisiert
 
     private void Awake()
     {
@@ -30,15 +32,20 @@ public class QuestManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        // Starte mit allen Quests oder nur bestimmten – hier alle
-        activeQuests = allQuests.Where(q => !q.isCompleted).ToList();
+        DontDestroyOnLoad(gameObject);        
     }
 
-    /// <summary>
+    private void Start()
+    {
+        // Initialisiere den Quest UI Manager, falls nicht gesetzt
+        if (questUIManager == null)
+            questUIManager = GetComponent<QuestUIManager>();
+        // Starte mit allen Quests oder nur bestimmten – hier alle
+        activeQuests = allQuests.Where(q => !q.isCompleted).ToList();
+        UpdateUI();
+    }
+
     /// Wird aufgerufen, wenn der Spieler ein Item einsammelt.
-    /// </summary>
     public void ReportItemCollected(string itemId, int amount)
     {
         foreach (var quest in activeQuests.ToList()) // Kopie, weil Liste sich ändern kann
@@ -53,6 +60,8 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
+    #region Quest Prozesse
     // Schließt eine reine Interaktions-Quest ab (z. B. Konsole drücken, Hebel betätigen).
     public bool ProgressQuest(string questId)
     {
@@ -72,56 +81,71 @@ public class QuestManager : MonoBehaviour
         return true;
     }
 
-
-    /// <summary>
     /// Schließt eine Quest ab und entfernt sie aus der aktiven Liste.
-    /// </summary>
     private void CompleteQuest(Quest quest)
     {
-        if (quest == null) return;
+        if (quest == null) return; // Sicherheitscheck
 
-        quest.isCompleted = true;
-        activeQuests.Remove(quest);
+        quest.isCompleted = true; // Markiere die Quest als abgeschlossen
+        activeQuests.Remove(quest); // Entferne die Quest aus den aktiven Quests
 
         Debug.Log($"[QuestManager] Quest abgeschlossen: {quest.questId}");
         UpdateUI();
     }
 
-    /// <summary>
     /// Gibt dir Zugriff auf den Status einer bestimmten Quest.
-    /// </summary>
     public bool IsQuestCompleted(string questId)
     {
-        var quest = allQuests.FirstOrDefault(q => q.questId == questId);
-        return quest != null && quest.isCompleted;
+        var quest = allQuests.FirstOrDefault(q => q.questId == questId); // Suche die Quest
+        return quest != null && quest.isCompleted; // Rückgabe des Status 
     }
+    #endregion
 
-    /// <summary>
+    #region UI Aktualisierung
     /// Falls du UI-Updates hast → hier einhängen.
-    /// </summary>
     private void UpdateUI()
     {
-        Debug.Log("[QuestManager] UI Update triggered.");
-        // Platzhalter: später mit deinem QuestUIManager verbinden
-        //    if (Current != null)
-        //        questUIManager.ShowQuest(Current);
-        //    else
-        //        questUIManager.ClearQuest();
-    }
+        Debug.Log("[QuestManager] UpdateUI aufgerufen");
 
-    /// <summary>
+        if (questUIManager == null)
+        {
+            Debug.LogWarning("[QuestManager] Kein QuestUIManager verknüpft!");
+            return;
+        }
+
+        var currentQuest = activeQuests.FirstOrDefault();
+        if (currentQuest != null)
+        {
+            Debug.Log($"[QuestManager] Zeige Quest an: {currentQuest.questName}");
+            questUIManager.ShowQuest(currentQuest);
+        }
+        else
+        {
+            Debug.Log("[QuestManager] Keine aktive Quest gefunden");
+            questUIManager.ClearQuest();
+        }
+    }
+    #endregion
+
+    #region Quest Abfrage
     /// Gibt eine Liste aller aktiven Quests zurück (z. B. für UI).
-    /// </summary>
     public List<Quest> GetActiveQuests()
     {
         return activeQuests;
     }
 
-    /// <summary>
     /// Gibt eine Liste aller Quests zurück (z. B. für Save/Load).
-    /// </summary>
     public List<Quest> GetAllQuests()
     {
         return allQuests;
     }
+    #endregion
+
+    #region  Quest Management
+    // Methoden für jede einzelne Quest
+
+
+    #endregion
+
+
 }

@@ -10,12 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4596be4a3b955942a68cfbaf188f8fc, type: 3}
-  m_Name: ConsoleQuest
+  m_Name: HubQuest_01
   m_EditorClassIdentifier: 
-  questId: 
-  questName: Beginn the adventure
-  description: Go to the Console and start a Mission
-  requirements: []
+  questId: HubQuest_01
+  questName: Lerne Schiff kennen
+  description: 'Leere Bereiche im Raumschiff?
+
+    (Interagiere mit den 3 Modul Fenstern)'
+  requirements:
+  - itemId: Txt_Modul_Umbra
+    requiredAmount: 1
+    currentAmount: 0
+  - itemId: slot_umbra
+    requiredAmount: 1
+    currentAmount: 0
+  - itemId: slot_singa
+    requiredAmount: 1
+    currentAmount: 0
   rewardItemId: 
   rewardAmount: 1
   isCompleted: 0

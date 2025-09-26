@@ -58,6 +58,12 @@ public class ModulClass : MonoBehaviour, Interactable
     [SerializeField] private Button installButton;        // Button zum Installieren (optional)
     [SerializeField] private Sprite installedSprite;      // Sprite, wenn installiert
 
+    // --- Quest-Hook pro Modulslot ---
+    [Header("Quest1")]
+    [SerializeField] private string questItemId = ""; // z.B. "slot_cryo" / "slot_umbra" / "slot_singa"
+    private bool questProgressSent = false;           // verhindert Doppelmeldung innerhalb einer Session
+
+
     [Header("Erforderliches Modul-Item")]
     [Tooltip("Das fertige Modul-Item aus dem Inventar (z. B. Heatexchanger).")]
     [SerializeField] private ItemDefinition moduleItem;
@@ -182,6 +188,10 @@ public class ModulClass : MonoBehaviour, Interactable
         activatedModules.Add(_ModuleType);
         useCount++;
         used = true;
+
+        // 6b) Quest-Fortschritt melden
+        ReportQuestProgressOnce();
+
 
         // 7) NEU Yusuf -> auch in GameData hinterlegen
         var dpm = DataPersistenceManager.Instance;
@@ -397,4 +407,21 @@ public class ModulClass : MonoBehaviour, Interactable
         _isInstalled = (moduleItem != null) && gd.installedModuleIds.Contains(moduleItem.itemId);
         RefreshUI();
     }
+
+
+    // Methode für Quest Progress -> Quest 1
+    private void ReportQuestProgressOnce()
+    {
+        if (questProgressSent) return;
+        questProgressSent = true;
+
+        if (!string.IsNullOrEmpty(questItemId))
+        {
+            // Meldet 1x "dieser Slot wurde besucht"
+            QuestManager.Instance?.ReportItemCollected(questItemId, 1);
+            // Wenn du willst, sofort autosaven:
+            // DataPersistenceManager.Instance?.SaveGame();
+        }
+    }
+
 }
