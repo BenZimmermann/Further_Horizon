@@ -10,6 +10,8 @@ public class QuestUIManager : MonoBehaviour
     public void ShowQuest(Quest questData)
     {
         if (questData == null) return;
+
+        // Titel and Description
         questUIPanel.SetActive(true);
         questTitle.text = questData.questName;
         questDescription.text = questData.description;

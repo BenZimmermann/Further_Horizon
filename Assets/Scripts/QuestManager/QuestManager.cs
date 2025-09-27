@@ -11,7 +11,7 @@ using UnityEditor.PackageManager.Requests;
 using System.Linq;
 
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : MonoBehaviour, IDataPersistence
 {
     public static QuestManager Instance { get; private set; }
 
@@ -60,6 +60,35 @@ public class QuestManager : MonoBehaviour
             }
         }
     }
+
+    #region Persistence     // Speichert den Quest-Status ins GameData-Objekt.
+
+    public void LoadData(GameData data)
+    {
+        if (data == null || data.completedQuestIds == null) return;
+
+        foreach (var quest in allQuests)
+        {
+            quest.isCompleted = data.completedQuestIds.Contains(quest.questId);
+            if (!quest.isCompleted && !activeQuests.Contains(quest))
+                activeQuests.Add(quest);
+        }
+
+        UpdateUI();
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.completedQuestIds.Clear();
+        foreach (var quest in allQuests)
+        {
+            if (quest.isCompleted)
+                data.completedQuestIds.Add(quest.questId);
+        }
+    }
+  
+
+    #endregion
 
     #region Quest Prozesse
     // Schließt eine reine Interaktions-Quest ab (z. B. Konsole drücken, Hebel betätigen).
@@ -143,6 +172,11 @@ public class QuestManager : MonoBehaviour
 
     #region  Quest Management
     // Methoden für jede einzelne Quest
+    //var qm = FindFirstObjectByType<QuestManager>();
+    //    if (qm != null && qm.IsActive("HubQuest_02"))
+    //    {
+    //        // Aktion erlauben (z. B. Mission starten, Szene laden)
+    //    }
 
 
     #endregion

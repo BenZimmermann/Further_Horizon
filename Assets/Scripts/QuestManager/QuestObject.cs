@@ -22,11 +22,11 @@ public class QuestObject : MonoBehaviour
     public bool IsInteracted()
     {
         Debug.Log("Interacted with QuestObject" + quest);
-        if (questManager.ProgressQuest(quest.questId))
-        { 
-            Activate();
-            return true;
-        }
+        //if (questManager.ProgressQuest(quest.questId))
+        //{ 
+        //    Activate();
+        //    return true;
+        //}
         return false;
     }
 }

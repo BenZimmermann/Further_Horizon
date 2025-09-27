@@ -4225,6 +4225,83 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+--- !u!114 &655157250 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7084631429330183427, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655157251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3660060180492601812, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655157252 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6763351970809544165, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655157253 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 818482141004422148, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655157254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4750599148236144234, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655157255 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 188165418298973994, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &655157256 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+  m_PrefabInstance: {fileID: 655157249}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569851370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5a2e2899f815841b9602845f74d3ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &669509760 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4368808060462704385, guid: 4c7a86c50b4f5c5459da5c5070043bdc, type: 3}
@@ -9914,6 +9991,7 @@ GameObject:
   - component: {fileID: 1721482090}
   - component: {fileID: 1721482094}
   - component: {fileID: 1721482095}
+  - component: {fileID: 1721482097}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -10151,6 +10229,21 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1721482097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721482089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056c32287b7263a4ba4e85473cad8aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControls: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  actionMapName: Player
+  inventory: Inventar
 --- !u!1001 &1728038756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12267,35 +12360,35 @@ PrefabInstance:
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: bridge
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157256}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: itemListPanel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1569851371}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: planetInfoTMP
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157251}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: planetNameTMP
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157252}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: itemDescriptionTMP
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157250}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: planetTemperatureTMP
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157253}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: itemModel_Imageholder
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157255}
     - target: {fileID: 7911703298013456081, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: planetModel_Imageholder
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 655157254}
     - target: {fileID: 9166487357306050667, guid: f7b46a8469b6adf428880cc989ef8653, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.06964

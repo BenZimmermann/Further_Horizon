@@ -58,16 +58,6 @@ public class ModulClass : MonoBehaviour, Interactable
     [SerializeField] private Button installButton;        // Button zum Installieren (optional)
     [SerializeField] private Sprite installedSprite;      // Sprite, wenn installiert
 
-    // --- Quest-Hook pro Modulslot ---
-    [Header("Quest1")]
-    [SerializeField] private string questItemId = ""; // z.B. "slot_cryo" / "slot_umbra" / "slot_singa"
-    private bool questProgressSent = false;           // verhindert Doppelmeldung innerhalb einer Session
-
-
-    [Header("Erforderliches Modul-Item")]
-    [Tooltip("Das fertige Modul-Item aus dem Inventar (z. B. Heatexchanger).")]
-    [SerializeField] private ItemDefinition moduleItem;
-
     [Header("Optionale Quest-Abhängigkeiten")]
     [Tooltip("Alle diese Quests müssen abgeschlossen sein, damit installiert werden darf.")]
     [SerializeField] private string[] requiredQuestIds;
@@ -116,7 +106,7 @@ public class ModulClass : MonoBehaviour, Interactable
         {
             return $"{_ModuleType} cannot be activated";
         }
-        // NEU YUSUF: Wenn ein Item benötigt wird, aber nicht vorhanden ist -> Hinweis zurück 
+        // FIX UPDATE: Wenn ein Item benötigt wird, aber nicht vorhanden ist -> Hinweis zurück 
         if (requiredModuleItem != null)
         {
             var inv = InventoryManager.Instance;
@@ -133,108 +123,202 @@ public class ModulClass : MonoBehaviour, Interactable
     #region Interact Bereich für Moduls
     public void Interact()
     {
-        if (used) return;
-        // 1) QuestManager benachrichtigen
-        var questManager = GetComponent<QuestObject>();
-        if (questManager != null)
-        {
-            // required 
-            if (!questManager.IsInteracted()) return;
-        }
-        // 2) Spieler darf Modul noch nicht aktivieren
-        if (!CheckActivationPermission(_ModuleType))
-        {
-            Debug.Log($"{_ModuleType} kann nicht aktiviert werden!");
-            StartCoroutine(ShowDeniedWindow());
-            return;
-        }
-
-        /// Hab ich rausgemacht weils mir probleme gemacht hat, neue Variable neues Glück mein Motto
-        //// 3) Maximal 3 Module aktivierbar
-        //if (useCount >= 3)
+        //if (used) return;
+        //// 1) QuestManager benachrichtigen
+        //var questManager = GetComponent<QuestObject>();
+        //if (questManager != null)
         //{
-        //    Debug.Log("Es können keine weiteren Module aktiviert werden.");
-        //    used = true;
+        //    // required 
+        //    if (!questManager.IsInteracted()) return;
+        //}
+        //// 2) Spieler darf Modul noch nicht aktivieren
+        //if (!CheckActivationPermission(_ModuleType))
+        //{
+        //    Debug.Log($"{_ModuleType} kann nicht aktiviert werden!");
+        //    StartCoroutine(ShowDeniedWindow());
         //    return;
         //}
 
-        // 4) Prüfen ob dieses Modul schon aktiviert wurde
-        if (activatedModules.Contains(_ModuleType))
-        {
-            Debug.Log($"{_ModuleType} Modul wurde bereits aktiviert.");
-            return;
-        }
+        ////// 3) Maximal 3 Module aktivierbar
+        ////if (useCount >= 3)
+        ////{
+        ////    Debug.Log("Es können keine weiteren Module aktiviert werden.");
+        ////    used = true;
+        ////    return;
+        ////}
 
-        // 5) Inventar-Prüfung (NEU Yusuf): ohne Item keine Aktivierung
-        if (requiredModuleItem != null)
-        {
-            var inv = InventoryManager.Instance;
-            if (inv == null)
-            {
-                Debug.LogError("[Module] Kein InventoryManager gefunden!");
-                return;
-            }
+        //// 4) Prüfen ob dieses Modul schon aktiviert wurde
+        //if (activatedModules.Contains(_ModuleType))
+        //{
+        //    Debug.Log($"{_ModuleType} Modul wurde bereits aktiviert.");
+        //    return;
+        //}
 
-            if (!inv.TryConsume(requiredModuleItem, requiredAmount))
-            {
-                Debug.Log($"[Module] Benötigt: {requiredModuleItem.displayName} x{requiredAmount}");
-                StartCoroutine(ShowDeniedWindow());
-                return;
-            }
-        }
+        //// 5) Inventar-Prüfung (NEU Yusuf): ohne Item keine Aktivierung
+        //if (requiredModuleItem != null)
+        //{
+        //    var inv = InventoryManager.Instance;
+        //    if (inv == null)
+        //    {
+        //        Debug.LogError("[Module] Kein InventoryManager gefunden!");
+        //        return;
+        //    }
 
-        // 6) Modul aktivieren
-        Debug.Log($"{_ModuleType} Modul aktiviert");
-        activatedModules.Add(_ModuleType);
-        useCount++;
-        used = true;
+        //    if (!inv.TryConsume(requiredModuleItem, requiredAmount))
+        //    {
+        //        Debug.Log($"[Module] Benötigt: {requiredModuleItem.displayName} x{requiredAmount}");
+        //        StartCoroutine(ShowDeniedWindow());
+        //        return;
+        //    }
+        //}
 
-        // 6b) Quest-Fortschritt melden
-        ReportQuestProgressOnce();
+        //// 6) Modul aktivieren
+        //Debug.Log($"{_ModuleType} Modul aktiviert");
+        //activatedModules.Add(_ModuleType);
+        //useCount++;
+        //used = true;
 
+        //// Prüfen ob alle drei Module benutzt wurden -> Quest 1 abschließen
+        //if (useCount >= 3)
+        //{
+        //    var qm = QuestManager.Instance;
+        //    if (qm != null)
+        //    {
+        //        qm.ProgressQuest("HubQuest_01");
+        //        Debug.Log("[Module] Alle drei Module interagiert -> HubQuest_01 abgeschlossen");
+        //    }
+        //}
 
-        // 7) NEU Yusuf -> auch in GameData hinterlegen
-        var dpm = DataPersistenceManager.Instance;
-        if (dpm != null)
-        {
-            var gd = dpm.GetGameData();
-            if (gd != null && !gd.installedModuleIds.Contains(_ModuleType.ToString()))
-            {
-                gd.installedModuleIds.Add(_ModuleType.ToString());
+        //// 7) NEU Yusuf -> auch in GameData hinterlegen
+        //var dpm = DataPersistenceManager.Instance;
+        //if (dpm != null)
+        //{
+        //    var gd = dpm.GetGameData();
+        //    if (gd != null && !gd.installedModuleIds.Contains(_ModuleType.ToString()))
+        //    {
+        //        gd.installedModuleIds.Add(_ModuleType.ToString());
 
-                // Zusätzlich: QuestItem/ModulItem sperren -> Kommt cooler 
-                if (requiredModuleItem != null)
-                {
-                    gd.pendingInstallModuleIds.Remove(requiredModuleItem.itemId);
-                }
+        //        // Zusätzlich: QuestItem/ModulItem sperren -> Kommt cooler 
+        //        if (requiredModuleItem != null)
+        //        {
+        //            gd.pendingInstallModuleIds.Remove(requiredModuleItem.itemId);
+        //        }
 
-                dpm.SaveGame();
-            }
-        }
+        //        dpm.SaveGame();
+        //    }
+        //}
 
-        Remove();
-        Apply();
+        //Remove();
+        //Apply();
 
-        if (_ModuleType == ModuleType.Umbra && UmbraObj != null)
-        {
-            Destroy(UmbraTxtObj);
-            UmbraObj.SetActive(true);
-        }
-        if (_ModuleType == ModuleType.Singara && SingaraObj != null)
-        {
-            Destroy(SingaraTxtObj);
-            SingaraObj.SetActive(true);
-        }
-        if (_ModuleType == ModuleType.Cryovista && CryovistaObj != null)
-        {
-            Destroy(CryovistaTxtObj);
-            CryovistaObj.SetActive(true);
-        }
+        //if (_ModuleType == ModuleType.Umbra && UmbraObj != null)
+        //{
+        //    Destroy(UmbraTxtObj);
+        //    UmbraObj.SetActive(true);
+        //}
+        //if (_ModuleType == ModuleType.Singara && SingaraObj != null)
+        //{
+        //    Destroy(SingaraTxtObj);
+        //    SingaraObj.SetActive(true);
+        //}
+        //if (_ModuleType == ModuleType.Cryovista && CryovistaObj != null)
+        //{
+        //    Destroy(CryovistaTxtObj);
+        //    CryovistaObj.SetActive(true);
+        //}
 
         //// Hier wird sofort gespeichert, damit Aktivierung + Item-Entnahme sicher im Save landen
         /// Der Teil ist nicht mehr nötig hab ich in Schritt 7 eingebaut, nicht wundern
         //var dpm = DataPersistenceManager.Instance;
         //if (dpm != null) dpm.SaveGame();
+
+        // Neuer Interact Code von Yusuf
+        if (used) return;
+
+        // 1) Falls ein QuestObject am selben GameObject hängt:
+        //    Nur interagieren, wenn diese Interaktion laut Quest erlaubt ist.
+        var qo = GetComponent<QuestObject>();
+        if (qo != null)
+        {
+            if (!qo.IsInteracted()) return;
+        } 
+
+        // 2) Grundsätzliche Freigabe prüfen 
+        if (!CheckActivationPermission(_ModuleType))
+        {
+            Debug.Log($"{_ModuleType} kann aktuell nicht aktiviert werden.");
+            StartCoroutine(ShowDeniedWindow());
+            return;
+        }
+
+        // 3) Doppelaktivierung dieses Moduls verhindern
+        if (activatedModules.Contains(_ModuleType))
+            return;
+
+        // 4) Optionales Craft-/Inventar-Erfordernis
+        if (requiredModuleItem != null)
+        {
+            var inv = InventoryManager.Instance;
+            if (inv == null || !inv.TryConsume(requiredModuleItem, requiredAmount))
+            {
+                Debug.Log($"[{name}] Benötigt: {requiredModuleItem?.displayName} x{requiredAmount}");
+                StartCoroutine(ShowDeniedWindow());
+                return;
+            }
+        }
+
+        // 5) Modul lokal & global markieren
+        used = true;
+        activatedModules.Add(_ModuleType);
+        useCount++;                          // <-- globaler Zähler über alle drei TMPs
+        Debug.Log($"[Module] {gameObject.name} interagiert. useCount = {useCount}"); // weil der Zähler nicht funktioniert
+
+        // 6) Questmanager informieren, WENN alle drei Modul-TMPs benutzt wurden
+        if (useCount == 3)
+        {
+            var qm = QuestManager.Instance;
+            if (qm != null)
+                qm.ProgressQuest("HubQuest_01");
+            Debug.Log("[Module] Alle drei Modulfelder interagiert -> HubQuest_01 abgeschlossen.");
+        }
+
+        // 7) Persistenz: installiertes Modul in die Save schreiben
+        var dpm = DataPersistenceManager.Instance;
+        if (dpm != null)
+        {
+            var data = dpm.GetGameData();
+            if (data != null)
+            {
+                var id = _ModuleType.ToString();
+                if (!data.installedModuleIds.Contains(id))
+                    data.installedModuleIds.Add(id);
+
+                dpm.SaveGame(); // direkt sichern (Items wurden ggf. verbraucht)
+            }
+        }
+
+        
+
+        // 8) Visuelle Reaktion (deine bisherigen Objekte/Schriftzüge)
+        if (_ModuleType == ModuleType.Umbra)
+        {
+            if (UmbraTxtObj) Destroy(UmbraTxtObj);
+            if (UmbraObj) UmbraObj.SetActive(true);
+        }
+        else if (_ModuleType == ModuleType.Singara)
+        {
+            if (SingaraTxtObj) Destroy(SingaraTxtObj);
+            if (SingaraObj) SingaraObj.SetActive(true);
+        }
+        else if (_ModuleType == ModuleType.Cryovista)
+        {
+            if (CryovistaTxtObj) Destroy(CryovistaTxtObj);
+            if (CryovistaObj) CryovistaObj.SetActive(true);
+        }
+
+        // 9) Optionales Material-Feedback beibehalten
+        Remove();
+        Apply();
     }
 
     private bool CheckActivationPermission(ModuleType type)
@@ -247,7 +331,7 @@ public class ModulClass : MonoBehaviour, Interactable
             default: return false;
         }
     }
-    #endregion 
+    #endregion
 
     private IEnumerator ShowDeniedWindow()
     {
@@ -288,7 +372,7 @@ public class ModulClass : MonoBehaviour, Interactable
         return !used && !activatedModules.Contains(_ModuleType);
     }
 
-    // ---- Public API (falls du keinen Button nutzt, kannst du diesen Call z.B. über Interact auslösen)
+    #region Item Zusatz
     public void TryInstall()
     {
         if (_isInstalled) return;
@@ -298,7 +382,7 @@ public class ModulClass : MonoBehaviour, Interactable
         if (inv == null) return;
 
         // 1) Modul-Item konsumieren
-        if (!inv.TryConsume(moduleItem, requiredAmount))
+        if (!inv.TryConsume(requiredModuleItem, requiredAmount))
         {
             Debug.LogWarning("[Modul] Modul-Item konnte nicht verbraucht werden.");
             return;
@@ -323,14 +407,14 @@ public class ModulClass : MonoBehaviour, Interactable
         PersistInstalledModule();
         RefreshUI();
 
-        Debug.Log($"[Modul] '{moduleItem?.displayName}' installiert.");
+        Debug.Log($"[Modul] '{requiredModuleItem?.displayName}' installiert.");
     }
 
     // ---- intern
 
     private bool CanInstall()
     {
-        if (moduleItem == null) return false;
+        if (requiredModuleItem == null) return false;
         if (_isInstalled) return false;
 
         // a) Quests erfüllt? (wenn QuestManager existiert und IDs angegeben sind)
@@ -352,7 +436,7 @@ public class ModulClass : MonoBehaviour, Interactable
         var inv = InventoryManager.Instance;
         if (inv == null) return false;
 
-        if (!inv.HasEnoughItems(moduleItem, requiredAmount))
+        if (!inv.HasEnoughItems(requiredModuleItem, requiredAmount))
             return false;
 
         if (additionalRequiredItems != null)
@@ -377,12 +461,15 @@ public class ModulClass : MonoBehaviour, Interactable
         if (gd == null) return;
 
         // Modul per itemId merken
-        if (moduleItem != null && !gd.installedModuleIds.Contains(moduleItem.itemId))
-            gd.installedModuleIds.Add(moduleItem.itemId);
+        if (requiredModuleItem != null && !gd.installedModuleIds.Contains(requiredModuleItem.itemId))
+            gd.installedModuleIds.Add(requiredModuleItem.itemId);
 
         dpm.SaveGame();
     }
 
+    #endregion
+
+    #region UI
     private void RefreshUI()
     {
         // Bild
@@ -393,35 +480,5 @@ public class ModulClass : MonoBehaviour, Interactable
         if (installButton != null)
             installButton.interactable = !_isInstalled && CanInstall();
     }
-
-    // ---- Aufruf vom DataPersistenceManager nach dem Laden (optional, falls du IDataPersistence nutzt)
-    // Falls deine ModulClass NICHT IDataPersistence implementiert: ruf SetStateFromSave() einmal extern beim Laden auf.
-    public void SetStateFromSave()
-    {
-        var dpm = DataPersistenceManager.Instance;
-        if (dpm == null) { RefreshUI(); return; }
-
-        var gd = dpm.GetGameData();
-        if (gd == null) { RefreshUI(); return; }
-
-        _isInstalled = (moduleItem != null) && gd.installedModuleIds.Contains(moduleItem.itemId);
-        RefreshUI();
-    }
-
-
-    // Methode für Quest Progress -> Quest 1
-    private void ReportQuestProgressOnce()
-    {
-        if (questProgressSent) return;
-        questProgressSent = true;
-
-        if (!string.IsNullOrEmpty(questItemId))
-        {
-            // Meldet 1x "dieser Slot wurde besucht"
-            QuestManager.Instance?.ReportItemCollected(questItemId, 1);
-            // Wenn du willst, sofort autosaven:
-            // DataPersistenceManager.Instance?.SaveGame();
-        }
-    }
-
+    #endregion
 }

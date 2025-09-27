@@ -18,14 +18,8 @@ MonoBehaviour:
 
     (Interagiere mit den 3 Modul Fenstern)'
   requirements:
-  - itemId: Txt_Modul_Umbra
-    requiredAmount: 1
-    currentAmount: 0
-  - itemId: slot_umbra
-    requiredAmount: 1
-    currentAmount: 0
-  - itemId: slot_singa
-    requiredAmount: 1
+  - itemId: InteractModule
+    requiredAmount: 3
     currentAmount: 0
   rewardItemId: 
   rewardAmount: 1

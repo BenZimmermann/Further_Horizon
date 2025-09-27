@@ -27,7 +27,7 @@ public class GameData
     public string lastReturnFromScene; // von wo bin ich gekommen -> falls im debug nötig 
     // Ende vorbereitung
 
-    // Für Module Funktion, damits mit dem QuestManager passt
+    // Für die Speicherung von Quests
     public List<string> completedQuestIds = new List<string>();   // abgeschlossene Quests (IDs oder Namen)
 
 
@@ -37,8 +37,6 @@ public class GameData
         unlockedPlanets = new List<string> { "Cryovista" };
         selectedPlanetScene = "Cryovista";
     }
-
-    // ---------- Convenience-Helpers ----------
 
     // Schreib Zugriff: setze/überschreibe SpawnId für eine Szene
 
