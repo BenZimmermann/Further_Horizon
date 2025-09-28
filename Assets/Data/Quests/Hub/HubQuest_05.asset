@@ -16,7 +16,10 @@ MonoBehaviour:
   questName: Zweites Modul
   description: "Ein Fl\xFCssiger Tank mit dunkler Materie als Antrieb\n(Setze Modul
     in entsprechendes Feld)"
-  requirements: []
+  requirements:
+  - itemId: Fluiedtank
+    requiredAmount: 1
+    currentAmount: 0
   rewardItemId: 
   rewardAmount: 1
   isCompleted: 0

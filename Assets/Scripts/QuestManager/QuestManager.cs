@@ -32,7 +32,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);        
+        //DontDestroyOnLoad(gameObject);        
     }
 
     private void Start()

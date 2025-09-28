@@ -16,7 +16,10 @@ MonoBehaviour:
   questName: Energie Notwendig
   description: "Du brauchst Kristalle um Energie aufbringen zu k\xF6nnen.\n(Sammle
     10 Luminesenz)"
-  requirements: []
+  requirements:
+  - itemId: Luninesenz
+    requiredAmount: 10
+    currentAmount: 0
   rewardItemId: 
   rewardAmount: 1
   isCompleted: 0

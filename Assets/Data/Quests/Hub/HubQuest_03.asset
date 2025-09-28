@@ -16,7 +16,10 @@ MonoBehaviour:
   questName: Erstes Modul
   description: "Sorge f\xFCr einen Upgrade deines Energieumwandlers\n(Setze Modul
     in entsprechendes Feld)"
-  requirements: []
+  requirements:
+  - itemId: Heatexchanger
+    requiredAmount: 1
+    currentAmount: 0
   rewardItemId: 
   rewardAmount: 1
   isCompleted: 0

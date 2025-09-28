@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5130460302712034235}
   - component: {fileID: 6159604309857579067}
   - component: {fileID: 4726894166997706672}
-  - component: {fileID: 7911703298013456081}
   - component: {fileID: 5592287642048404447}
   m_Layer: 0
   m_Name: GameManager
@@ -117,27 +116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windowType: 6
---- !u!114 &7911703298013456081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5480695679002731107}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34effa1c66bfc1f48aae636734e89d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemListPanel: {fileID: 0}
-  itemButtonPrefab: {fileID: 8730352402786003955, guid: 466dfe10f4a50d64080389d84817b7ad, type: 3}
-  itemModel_Imageholder: {fileID: 0}
-  itemDescriptionTMP: {fileID: 0}
-  planetNameTMP: {fileID: 0}
-  planetInfoTMP: {fileID: 0}
-  planetTemperatureTMP: {fileID: 0}
-  planetModel_Imageholder: {fileID: 0}
-  bridge: {fileID: 0}
 --- !u!114 &5592287642048404447
 MonoBehaviour:
   m_ObjectHideFlags: 0

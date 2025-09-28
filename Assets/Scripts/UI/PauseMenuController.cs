@@ -47,7 +47,7 @@ public class PauseMenuController : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         // alle Fenster beim Start deaktivieren
         foreach (var entry in windows)
@@ -143,7 +143,7 @@ public class PauseMenuController : MonoBehaviour
             cameraController.enabled = true;
     }
 
-    #region Szenen Wechsel Verwaltung 
+    #region Szenen Wechsel Verwaltung Yusuf
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

@@ -37,6 +37,8 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             Destroy(gameObject);
             return;
         }
+        //Debug.LogWarning("[INV] InventoryManager Awake");
+        DontDestroyOnLoad(gameObject);
         Instance = this;
     }
     /// Liefert die bereits verwendete ItemDefinition-Instanz mit gleicher itemId,
