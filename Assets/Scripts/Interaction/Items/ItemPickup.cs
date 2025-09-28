@@ -5,10 +5,10 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour, Interactable
 {
     [Header("Item Reference")]
-    [SerializeField] private ItemDefinition itemDefinition;
-    [SerializeField] private int amount = 1;
+    [SerializeField] private ItemDefinition itemDefinition; // Referenz zum ItemDefinition-ScriptableObject
+    [SerializeField] private int amount = 1; // Menge des Items, standardmäßig 1
 
-    private bool collected = false;
+    private bool collected = false; // eingesammelt auf false
     public void Awake() { }
     public void Update() { }
 
@@ -30,7 +30,7 @@ public class ItemPickup : MonoBehaviour, Interactable
         if (collected) return;
         collected = true; // setz auf eingesammelt -> Verbindung in der ItemDefinition.cs
         // TODO: Inventar + SaveGame
-        Debug.LogWarning($"Picked up {itemDefinition.displayName}");// gucke ob der zählt
+        Debug.LogWarning($"Picked up {itemDefinition.displayName}"); // Debug Name des Items
         // Item ins Inventar geben
         if (InventoryManager.Instance != null)
         {

@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class FileDataHandler
 {
-    private readonly string dirPath;
+    private readonly string dirPath; 
     private readonly string fileName;
     private readonly bool useEncryption;
 
@@ -45,7 +45,7 @@ public class FileDataHandler
             return false;
         }
     }
-
+    
     public void Save(GameData data)
     {
         try

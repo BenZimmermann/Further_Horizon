@@ -28,7 +28,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     private Dictionary<ItemDefinition, int> items = new();                      // Item  Anzahl
     private Dictionary<ItemDefinition, InventoryButtonUI> itemButtons = new(); // Item  UI-Button
 
-    public static InventoryManager Instance { get; private set; }
+    public static InventoryManager Instance { get; private set; } //    
 
     private void Awake()
     {
@@ -57,6 +57,12 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
         return incoming;
     }
+    #region Brücke setzen
+    public void SetBridge(InventoryBridge newBridge)
+    {
+        bridge = newBridge;
+    }
+    #endregion Brücke setzen
 
     #region Item Handling Zeugs
     // ---------------------------
@@ -272,7 +278,9 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         ClearUIAndState();
-        
+        // Debug Test für NullRefs
+        Debug.Log($"[INV/Load] bridge is {(bridge == null ? "NULL" : "OK")}, itemsToLoad={data?.inventory?.Count ?? 0}");
+
         if (data == null || data.inventory == null) return;
 
         // Für jede gespeicherte Zeile passenden ItemDefinition finden und hinzufügen
@@ -282,7 +290,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             if (def == null)
             {
                 Debug.LogWarning($"[INV/Load] Unbekannte itemId '{row.itemId}' – übersprungen.");
-                continue;
+                continue; 
             }
             // NEU: Prüfen, ob dieses Item zu einem bereits installierten Modul gehört
             if (data.installedModuleIds.Contains(def.itemId))

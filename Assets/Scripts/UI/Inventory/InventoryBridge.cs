@@ -15,13 +15,21 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
     [SerializeField] private ItemDefinition[] allItems; // Alle verfügbaren Items
 
     // >>> Öffentliche, schreibgeschützte Zugriffspunkte (werden von InventoryManager benutzt)
-    public Transform ItemListParent => itemListParent;
-    public GameObject ItemButtonPrefab => itemUIPrefab;
-    public List<ItemDefinition> AllItems => allItems != null ? allItems.ToList() : new List<ItemDefinition>();
+    public Transform ItemListParent => itemListParent; // Container für Items in der UI
+    public GameObject ItemButtonPrefab => itemUIPrefab; // UI-Element-Vorlage für ein Item
+    public List<ItemDefinition> AllItems => allItems != null ? allItems.ToList() : new List<ItemDefinition>(); // Alle verfügbaren Items in Liste
 
-    private GameData gameData;
+    private GameData gameData; // Referenz auf die aktuellen Spieldaten
 
-
+    private void Awake()
+    {
+        // An InventoryManager melden
+        var inv = InventoryManager.Instance; // Singleton-Instanz holen
+        if (inv != null)
+        {
+            inv.SetBridge(this); // Bridge an InventoryManager übergeben
+        }
+    }
     public void LoadData(GameData data)
     {
         gameData = data;
@@ -30,8 +38,7 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        // Beispiel: Wenn man in der UI Items verändert, würde man sie hier zurückschreiben.
-        // In diesem Grundgerüst gehen wir davon aus, dass Items nur gesammelt werden.
+        
     }
 
     private void RefreshUI()
