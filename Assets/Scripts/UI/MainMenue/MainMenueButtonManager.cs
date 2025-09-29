@@ -14,7 +14,7 @@ public class MainMenuButtonManager : MonoBehaviour
         // Neue SaveGame anlegen erstmal vor Start
         DataPersistenceManager.Instance.NewGame();
 
-        // Jetzt kommt HUB Szene als newGameScene Inspector net vergessen
+        // Jetzt kommt HUB Szene als newGameScene, Inspector net vergessen
         SceneManager.LoadScene(newGameScene);
     }
     public void OptionsPressed()

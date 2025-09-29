@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Collider))]
 public class Checkpoint : MonoBehaviour
 {
-    [SerializeField] private string spawnId;   // z.B. "Cryo_Start", "Cryo_Mine_A"
+    [SerializeField] private string spawnId; 
     private string sceneName;
 
     private void Awake()
@@ -20,8 +20,7 @@ public class Checkpoint : MonoBehaviour
         // Passe das bei Bedarf an euer System an (Tag/Layer)
         if (!other.CompareTag("Player")) return;
 
-        // *** ACHTUNG: richtige Klasse/Schreibweise ***
-        var dpm = DataPersistenceManager.Instance;
+        var dpm = DataPersistenceManager.Instance; 
         if (dpm == null) return;
 
         var data = dpm.GetGameData();

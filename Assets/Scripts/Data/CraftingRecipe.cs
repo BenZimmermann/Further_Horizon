@@ -1,18 +1,18 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewRecipe", menuName = "Crafting/Recipe")]
-public class CraftingRecipe : ScriptableObject
+public class CraftingRecipe : ScriptableObject // Definiert ein Crafting-Rezept im Spiel  
 {
-    [Header("Crafting Output")] // Was raus kommt am ende
-    public ItemDefinition outputItem;
-    public int outputAmount = 1;
+    [Header("Crafting Output")]
+    public ItemDefinition outputItem;   // Das hergestellte Item
+    public int outputAmount = 1; // Menge des hergestellten Items
 
     [System.Serializable]
-    public struct Ingredient // Was ma neistecke muss
+    public struct Ingredient 
     {
-        public ItemDefinition item;
-        public int amount;
+        public ItemDefinition item; // Das benötigte Item
+        public int amount;          // Die benötigte Menge
     }
-    [Header("Crafting Materials")] // damits gut ausschaut
-    public Ingredient[] ingredients;
+    [Header("Crafting Materials")] 
+    public Ingredient[] ingredients; // Liste der benötigten Zutaten
 }

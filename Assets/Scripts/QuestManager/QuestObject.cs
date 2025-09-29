@@ -23,7 +23,7 @@ public class QuestObject : MonoBehaviour
     {
         Debug.Log("Interacted with QuestObject" + quest);
         if (questManager.ProgressQuest(quest.questId))
-        { 
+        {
             Activate();
             return true;
         }

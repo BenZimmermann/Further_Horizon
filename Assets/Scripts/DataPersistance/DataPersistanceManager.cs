@@ -4,34 +4,34 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Zentrale Steuerung: findet alle IDataPersistence-Objekte in der Szene,
-/// lädt zur Laufzeit GameData und verteilt sie; speichert auf Befehl/Exit.
-/// </summary>
+
+// Zentrale Steuerung: Hierrüber laufen alle Speicher- und Ladeaktionen.
+// Im Interface IDataPersistence implementieren alle Klassen, die Daten speichern/laden wollen.
 public class DataPersistenceManager : MonoBehaviour
 {
-    public static DataPersistenceManager Instance { get; private set; }
+    public static DataPersistenceManager Instance { get; private set; } // Singleton
 
     [Header("File Settings")]
-    [SerializeField] private string fileName = "savegame.json";
-    [SerializeField] private bool useEncryption = false;
+    [SerializeField] private string fileName = "savegame.json"; // Dateiname
+    [SerializeField] private bool useEncryption = false; // Verschlüsselung an/aus
 
-    private FileDataHandler dataHandler;
-    private GameData gameData;
-    private List<IDataPersistence> dataObjects;
+    private FileDataHandler dataHandler; // Datei-Handler
+    private GameData gameData; // Aktuelle Spieldaten
+    private List<IDataPersistence> dataObjects; // Alle IDataPersistence-Objekte in der Szene als Liste
 
-    private void Awake()
+    private void Awake() // Singleton 
     {
         if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
             return;
         }
+        transform.SetParent(null);
         Instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject); // Persistenz über Szenenwechsel
 
-        string dir = Application.persistentDataPath;
-        dataHandler = new FileDataHandler(dir, fileName, useEncryption);
+        string dir = Application.persistentDataPath; // Plattformunabhängiger Pfad  
+        dataHandler = new FileDataHandler(dir, fileName, useEncryption);   // Initialisiere FileDataHandler mit Verschlüsselung
 
         // Szenenwechsel-Callbacks
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -40,7 +40,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (Instance == this)
+        if (Instance == this) // Nur wenn es die Instanz ist    
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
@@ -52,49 +52,47 @@ public class DataPersistenceManager : MonoBehaviour
         // Beim ersten Start laden (oder NewGame fallback)
         LoadGame();
     }
-
+    #region Szenenwechsel
     // --- Scene events ---
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) // Nach dem Laden einer Szene
     {
-        // Finde alle Objekte, die IDataPersistence implementieren
-        dataObjects = FindAllDataPersistenceObjects();
+        dataObjects = FindAllDataPersistenceObjects(); // Finde alle Objekte, die IDataPersistence implementieren
 
-        // Re-dispatch Daten an sie (z. B. wenn man später Szenen wechselt)
+        // Lade gespeicherte Daten in diese Objekte
         if (gameData != null)
         {
-            foreach (var obj in dataObjects)
-                obj.LoadData(gameData);
+            foreach (var obj in dataObjects) // Jedes Objekt in der Szene
+                obj.LoadData(gameData); // lädt seine Daten aus gameData
         }
     }
 
     private void OnSceneUnloaded(Scene scene)
     {
-        // Optional: beim Szenenwechsel automatisch speichern
+        // Beim Verlassen der Szene speichern
         SaveGame();
     }
+    #endregion Szenenwechsel
 
-    // --- Public API ---
-    public void NewGame(GameData initial = null)
+    #region Speicher-Events
+    public void NewGame(GameData initial = null) 
     {
-        gameData = initial ?? new GameData();
-        // Direkt allen mitteilen
-        dataObjects = FindAllDataPersistenceObjects();
-        foreach (var obj in dataObjects)
-            obj.LoadData(gameData);
+        gameData = initial ?? new GameData(); // Neues GameData-Objekt, wenn keines übergeben wurde
+        dataObjects = FindAllDataPersistenceObjects(); // Finde alle IDataPersistence-Objekte
+        foreach (var obj in dataObjects) // Jedes Objekt in der Szene
+            obj.LoadData(gameData); // lädt seine Daten aus gameData
         SaveGame();  // Gleich zu Beginn abspeichern
     }
-
     public void LoadGame()
     {
-        if (!dataHandler.TryLoad(out var loaded))
+        if (!dataHandler.TryLoad(out var loaded)) // Versuche zu laden
         {
             // Kein Save vorhanden → neues Spiel
             Debug.Log("[DPM] Kein Save gefunden → NewGame wird gestartet.");
-            NewGame(new GameData());
+            NewGame(new GameData()); 
             return;
         }
 
-        gameData = loaded;
+        gameData = loaded; // Lade die Daten
         Debug.Log($"[DPM] Save geladen. LastScene={gameData.selectedPlanetScene}");
 
         dataObjects = FindAllDataPersistenceObjects();
@@ -107,7 +105,7 @@ public class DataPersistenceManager : MonoBehaviour
         if (gameData == null)
         {
             Debug.LogWarning("[DPM] SaveGame aufgerufen, aber GameData ist null!");
-            return;
+            return; // Zweck: NullReference verhindern und Ursache sichtbar machen
         }
 
         // Sammle Daten aus der Szene ein
@@ -115,18 +113,23 @@ public class DataPersistenceManager : MonoBehaviour
         foreach (var obj in dataObjects)
             obj.SaveData(gameData);
 
-        dataHandler.Save(gameData);
+        dataHandler.Save(gameData); // Speichere in Datei
         Debug.Log("[DPM] Game doch gespeichert baby.");
     }
+    #endregion Speicher-Events
 
-    public GameData GetGameData() => gameData;
+    #region Export GameData
+    public GameData GetGameData() => gameData; // Externer Zugriff auf GameData
+    #endregion Export GameData
 
-    // --- Helpers ---
+    #region IDataPersistence Zugriff
+    // Hilfsmethode: findet alle aktiven IDataPersistence-Objekte in der Szene
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
         // Findet alle aktiven MonoBehaviours in Szene, die IDataPersistence implementieren
         return FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-            .OfType<IDataPersistence>()
-            .ToList();
+            .OfType<IDataPersistence>() // Interface filtern
+            .ToList(); // als Liste zurückgeben
     }
+    #endregion IDataPersistence Zugriff
 }

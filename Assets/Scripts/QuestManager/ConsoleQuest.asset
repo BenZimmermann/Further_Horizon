@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4596be4a3b955942a68cfbaf188f8fc, type: 3}
   m_Name: ConsoleQuest
   m_EditorClassIdentifier: 
+  questId: 
   questName: Beginn the adventure
   description: Go to the Console and start a Mission
-  isRequired: 1
-  Amount: 1
+  requirements: []
+  rewardItemId: 
+  rewardAmount: 1
+  isCompleted: 0

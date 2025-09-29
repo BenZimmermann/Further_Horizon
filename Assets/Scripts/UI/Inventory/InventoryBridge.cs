@@ -14,14 +14,28 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject itemUIPrefab;  // UI-Element-Vorlage für ein Item
     [SerializeField] private ItemDefinition[] allItems; // Alle verfügbaren Items
 
+    // InventoryManager UI Info Referenzen
+    [SerializeField] private Transform itemListPanel;     // Parent für die Buttons
+    [SerializeField] private Image itemModel_Imageholder;
+    [SerializeField] private TextMeshProUGUI itemDescriptionTMP;
+    [SerializeField] private TextMeshProUGUI planetNameTMP;
+    [SerializeField] private TextMeshProUGUI planetInfoTMP;
+    [SerializeField] private TextMeshProUGUI planetTemperatureTMP;
+    [SerializeField] private Image planetModel_Imageholder;
+
     // >>> Öffentliche, schreibgeschützte Zugriffspunkte (werden von InventoryManager benutzt)
-    public Transform ItemListParent => itemListParent;
-    public GameObject ItemButtonPrefab => itemUIPrefab;
-    public List<ItemDefinition> AllItems => allItems != null ? allItems.ToList() : new List<ItemDefinition>();
+    public Transform ItemListParent => itemListParent; // Container für Items in der UI
+    public GameObject ItemButtonPrefab => itemUIPrefab; // UI-Element-Vorlage für ein Item
+    public List<ItemDefinition> AllItems => allItems != null ? allItems.ToList() : new List<ItemDefinition>(); // Alle verfügbaren Items in Liste
 
-    private GameData gameData;
+    private GameData gameData; // Referenz auf die aktuellen Spieldaten
+    
 
-
+    private void Awake()
+    {
+        // An InventoryManager melden
+        InventoryManager.Instance?.SetBridge(this, itemListPanel, itemModel_Imageholder, planetModel_Imageholder, itemDescriptionTMP, planetInfoTMP, planetNameTMP, planetTemperatureTMP);
+    }
     public void LoadData(GameData data)
     {
         gameData = data;
@@ -30,8 +44,7 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
 
     public void SaveData(GameData data)
     {
-        // Beispiel: Wenn man in der UI Items verändert, würde man sie hier zurückschreiben.
-        // In diesem Grundgerüst gehen wir davon aus, dass Items nur gesammelt werden.
+        
     }
 
     private void RefreshUI()
@@ -46,7 +59,7 @@ public class InventoryBridge : MonoBehaviour, IDataPersistence
         foreach (var itemDef in allItems)
         {
             // Gesammelte Anzahl aus GameData suchen
-            var itemSave = gameData.items.FirstOrDefault(i => i.itemId == itemDef.itemId);
+            var itemSave = gameData.inventory.FirstOrDefault(i => i.itemId == itemDef.itemId);
             int collected = itemSave != null ? itemSave.collected : 0;
 
             // UI-Element erstellen

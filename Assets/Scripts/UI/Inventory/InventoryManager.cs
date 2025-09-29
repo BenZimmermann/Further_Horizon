@@ -28,7 +28,8 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     private Dictionary<ItemDefinition, int> items = new();                      // Item  Anzahl
     private Dictionary<ItemDefinition, InventoryButtonUI> itemButtons = new(); // Item  UI-Button
 
-    public static InventoryManager Instance { get; private set; }
+    public static InventoryManager Instance { get; private set; } //
+                                                                  //  
 
     private void Awake()
     {
@@ -37,8 +38,19 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             Destroy(gameObject);
             return;
         }
+        //Debug.LogWarning("[INV] InventoryManager Awake");
+        transform.SetParent(null);
+        DontDestroyOnLoad(gameObject);
         Instance = this;
     }
+
+    //private void GetNewReferances()
+    //{
+    //    if (itemListPanel == null) itemListPanel = GameObject.FindFirstObjectByType<Transform>();
+
+    //    if (bridge == null) bridge = GameObject.FindFirstObjectByType<InventoryBridge>();
+    //}
+
     /// Liefert die bereits verwendete ItemDefinition-Instanz mit gleicher itemId,
     /// falls sie in items oder itemButtons schon bekannt ist. Sonst die übergebene Instanz.
     private ItemDefinition Canonical(ItemDefinition incoming)
@@ -55,6 +67,23 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
         return incoming;
     }
+    #region Brücke setzen
+    public void SetBridge(InventoryBridge newBridge, Transform itemListPanel,Image itemModel, Image planetModel,
+        TextMeshProUGUI itemDescription, TextMeshProUGUI planetInfo, TextMeshProUGUI planetName, TextMeshProUGUI planetTemperatur)
+    {
+        bridge = newBridge;
+        planetInfoTMP = planetInfo;
+        this.itemListPanel = itemListPanel;
+        itemModel_Imageholder = itemModel;
+        itemDescriptionTMP = itemDescription;
+        planetNameTMP = planetName;
+        planetTemperatureTMP = planetTemperatur;
+        planetModel_Imageholder = planetModel;
+
+        LoadData(DataPersistenceManager.Instance.GetGameData());
+    }
+ 
+    #endregion Brücke setzen
 
     #region Item Handling Zeugs
     // ---------------------------
@@ -237,10 +266,13 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     }
     private void ClearUIAndState()
     {
-        // UI-Buttons unter dem List-Parent leeren
-        var parent = bridge.ItemListParent;         // bridge: dein InventoryBridge-Ref
-        for (int i = parent.childCount - 1; i >= 0; i--)
-            Destroy(parent.GetChild(i).gameObject);
+        if(bridge != null)
+        {
+            // UI-Buttons unter dem List-Parent leeren
+            var parent = bridge.ItemListParent;         // bridge: dein InventoryBridge-Ref
+            for (int i = parent.childCount - 1; i >= 0; i--)
+                Destroy(parent.GetChild(i).gameObject);
+        }
 
         // Laufzeit-Maps leeren
         items.Clear();          // Dictionary<ItemDefinition,int>
@@ -264,13 +296,13 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     #endregion
 
     #region Speichern+Laden
-    // ---------------------------
-    //  Save / Load
-    // ---------------------------
+
     public void LoadData(GameData data)
     {
         ClearUIAndState();
-        
+        // Debug Test für NullRefs
+        Debug.Log($"[INV/Load] bridge is {(bridge == null ? "NULL" : "OK")}, itemsToLoad={data?.inventory?.Count ?? 0}");
+
         if (data == null || data.inventory == null) return;
 
         // Für jede gespeicherte Zeile passenden ItemDefinition finden und hinzufügen
@@ -280,7 +312,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
             if (def == null)
             {
                 Debug.LogWarning($"[INV/Load] Unbekannte itemId '{row.itemId}' – übersprungen.");
-                continue;
+                continue; 
             }
             // NEU: Prüfen, ob dieses Item zu einem bereits installierten Modul gehört
             if (data.installedModuleIds.Contains(def.itemId))
@@ -320,9 +352,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     #endregion
 
     #region Crafting-Zeugs
-    // ---------------------------
-    //  Crafting-Helfer
-    // ---------------------------
+ 
     // Prüfen, ob ein Item in ausreichender Menge vorhanden ist
     public bool HasEnoughItems(ItemDefinition item, int amount)
     {

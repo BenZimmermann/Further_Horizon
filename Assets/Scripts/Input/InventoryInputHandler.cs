@@ -15,7 +15,6 @@ public class InventoryInputHandler : MonoBehaviour
 
     private InputAction inventoryAction;
 
-    // Event, das ausgelöst wird wenn E gedrückt wird
     public event Action OnInventoryToggle;
 
     private void Awake()

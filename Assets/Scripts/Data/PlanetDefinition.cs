@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlanetDefinition", menuName = "Game/PlanetDefinition")]
-public class PlanetDefinition : ScriptableObject
+public class PlanetDefinition : ScriptableObject // Definiert einen Planeten im Spiel
 {
     [Header("Anzeige")]
     public string displayName;

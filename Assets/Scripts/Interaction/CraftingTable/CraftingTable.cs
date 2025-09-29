@@ -77,15 +77,15 @@ public class CraftingTable : MonoBehaviour
             int have = inventory.GetCount(ing.item);
 
             if (i == 0 && collectableLabel != null)
-                collectableLabel.text = $"{ing.item.displayName}  {have}/{ing.amount}";
+                collectableLabel.text = $"{ing.item.displayName}  {have}/{ing.amount}"; // CollectableItemButton
 
-            if (i == 1 && questLabel != null)
-                questLabel.text = $"{ing.item.displayName}  {have}/{ing.amount}";
+            if (i == 1 && questLabel != null) 
+                questLabel.text = $"{ing.item.displayName}  {have}/{ing.amount}"; // QuestItemButton
 
-            if (have >= ing.amount) ok++;
+            if (have >= ing.amount) ok++; // genug da
         }
 
         if (craftButton != null)
-            craftButton.interactable = (ok == recipe.ingredients.Length);
+            craftButton.interactable = (ok == recipe.ingredients.Length); // alle Zutaten da
     }
 }
