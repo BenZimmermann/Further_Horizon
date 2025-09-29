@@ -1368,6 +1368,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 375516879}
     m_Modifications:
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: itemListPanel
+      value: 
+      objectReference: {fileID: 251930816}
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: planetInfoTMP
+      value: 
+      objectReference: {fileID: 251930813}
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: planetNameTMP
+      value: 
+      objectReference: {fileID: 251930814}
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: itemDescriptionTMP
+      value: 
+      objectReference: {fileID: 251930812}
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: planetTemperatureTMP
+      value: 
+      objectReference: {fileID: 251930815}
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: itemModel_Imageholder
+      value: 
+      objectReference: {fileID: 251930818}
+    - target: {fileID: 1095400111720697137, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
+      propertyPath: planetModel_Imageholder
+      value: 
+      objectReference: {fileID: 251930817}
     - target: {fileID: 5140744765076737054, guid: 49accdef57fd3bb49af59a489bba7bd3, type: 3}
       propertyPath: m_Name
       value: Inventory

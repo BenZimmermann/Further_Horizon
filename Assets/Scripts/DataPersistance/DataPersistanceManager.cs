@@ -4,10 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Zentrale Steuerung: Hierrüber laufen alle Speicher- und Ladeaktionen.
-/// Im Interface IDataPersistence implementieren alle Klassen, die Daten speichern/laden wollen.
-/// </summary>
+
+// Zentrale Steuerung: Hierrüber laufen alle Speicher- und Ladeaktionen.
+// Im Interface IDataPersistence implementieren alle Klassen, die Daten speichern/laden wollen.
 public class DataPersistenceManager : MonoBehaviour
 {
     public static DataPersistenceManager Instance { get; private set; } // Singleton
@@ -27,6 +26,7 @@ public class DataPersistenceManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+        transform.SetParent(null);
         Instance = this;
         DontDestroyOnLoad(this.gameObject); // Persistenz über Szenenwechsel
 
@@ -113,7 +113,7 @@ public class DataPersistenceManager : MonoBehaviour
         foreach (var obj in dataObjects)
             obj.SaveData(gameData);
 
-        dataHandler.Save(gameData);
+        dataHandler.Save(gameData); // Speichere in Datei
         Debug.Log("[DPM] Game doch gespeichert baby.");
     }
     #endregion Speicher-Events

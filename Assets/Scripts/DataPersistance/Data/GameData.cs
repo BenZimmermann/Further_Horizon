@@ -9,7 +9,7 @@ public class GameData
     public List<string> unlockedPlanets = new();       // freigeschaltete Planeten
 
     // --- Inventar (flach: itemId + Anzahl) ---
-    public List<ItemSaveData> items = new();           // wird vom InventoryManager befüllt/ausgelesen
+    //public List<ItemSaveData> items = new();           // wird vom InventoryManager befüllt/ausgelesen
 
     // --- Checkpoints: JsonUtility-safe (kein Dictionary!) ---
     public List<SceneSpawnRecord> spawnRecords = new(); // (sceneName, spawnId) Paare

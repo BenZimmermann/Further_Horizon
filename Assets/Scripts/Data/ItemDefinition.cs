@@ -6,10 +6,10 @@ public enum ItemType
 {
     Collectable,  // zählbar (z.B. Luminesenz, Gravimetall)
     QuestItem,    // einmalig (z.B. Heatexchanger(kaputt), Fluiedtank(kaputt))
-    ModulItem     // Spezial-Quest-Item (z.B. Heatexchanger, Fluiedtank, Fusionkonduktor)
+    ModulItem     // Spezial-Quest-Item ( Heatexchanger, Fluiedtank, Fusionkonduktor)
 }
 
-[CreateAssetMenu(fileName = "ItemDefinition", menuName = "Game/Item Definition")]
+[CreateAssetMenu(fileName = "ItemDefinition", menuName = "Game/Item Definition")]   // Definiert ein Item im Spiel
 public class ItemDefinition : ScriptableObject
 {
     [Header("Identität")]
@@ -50,7 +50,7 @@ public class ItemDefinition : ScriptableObject
     // public float weight;
     // public string craftingRecipeId;
 
-#if UNITY_EDITOR
+    #region Sicherheitsabfrage
     private void OnValidate()
     {
         // Konsistenz sichern:
@@ -65,5 +65,5 @@ public class ItemDefinition : ScriptableObject
         if (!string.IsNullOrEmpty(itemId))
             itemId = itemId.Trim();
     }
-#endif
+    #endregion
 }

@@ -7,20 +7,20 @@ using UnityEngine;
 /// </summary>
 public class FileDataHandler
 {
-    private readonly string dirPath; 
-    private readonly string fileName;
-    private readonly bool useEncryption;
+    private readonly string dirPath;    // Verzeichnis-Pfad
+    private readonly string fileName;  // Dateiname 
+    private readonly bool useEncryption; // Verschlüsselung an/aus
 
     private const string encryptionKeyword = "xor-key"; // simple XOR (optional)
 
-    public FileDataHandler(string dirPath, string fileName, bool useEncryption = false)
+    public FileDataHandler(string dirPath, string fileName, bool useEncryption = false) 
     {
         this.dirPath = dirPath;
         this.fileName = fileName;
         this.useEncryption = useEncryption;
     }
 
-    public string GetFullPath() => Path.Combine(dirPath, fileName);
+    public string GetFullPath() => Path.Combine(dirPath, fileName); // Kombiniert Pfad + Dateiname
 
     public bool TryLoad(out GameData data)
     {
@@ -68,7 +68,7 @@ public class FileDataHandler
         }
     }
 
-    // simple XOR "obfuscation" (optional)
+    // Hier die Verschlüsselungs-Methode (XOR)
     private static string XOR(string text, string key)
     {
         if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(key)) return text;
