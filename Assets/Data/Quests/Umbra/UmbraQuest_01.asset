@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: UmbraQuest_01
   m_EditorClassIdentifier: 
   questId: UmbraQuest_01
-  questName: Bin ich auf LSD
-  description: 'Du hast Mangel an Stoff. Hol dir den Stoff.
+  questName: Something new
+  description: 'find the reality bending material
 
-    (Sammle 10 Gravimetall)'
+    (Collect 10 Gravimetall)'
   requirements:
   - itemId: gravimetall
     requiredAmount: 10

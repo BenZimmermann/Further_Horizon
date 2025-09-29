@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: CryovistaQuest_02
   m_EditorClassIdentifier: 
   questId: CryovistaQuest_02
-  questName: Gebrochener Start
-  description: 'Du hast die Info erhalten das es ein kaputtes Teil zu finden gibt.
+  questName: broken start
+  description: 'Your signals (marker) detected a small signal, you should check it
+    out.
 
-    (Finde
-    Heatexchanger(kaputt))'
+    (find Heatexchanger(broken))'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

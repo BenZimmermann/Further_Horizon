@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: CryovistaQuest_03
   m_EditorClassIdentifier: 
   questId: CryovistaQuest_03
-  questName: Energie Notwendig
-  description: "Du brauchst Kristalle um Energie aufbringen zu k\xF6nnen.\n(Sammle
-    10 Luminesenz)"
+  questName: Broken pieces
+  description: 'find something to repair the broken module
+
+    (collect 10 Luminesenz)'
   requirements:
   - itemId: Luninesenz
     requiredAmount: 10

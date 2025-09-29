@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: UmbraQuest_02
   m_EditorClassIdentifier: 
   questId: UmbraQuest_02
-  questName: "retl\xE4heB rettupaK"
-  description: "Such dir den kaputten Beh\xE4lter f\xFCr deinen Stoff.\n(Sammle Fluiedtank
-    (kaputt))"
+  questName: eludoM nekorB
+  description: 'Find the broken module
+
+    (Collect Fluiedtank (broken))'
   requirements:
   - itemId: fluiedtank(kaputt)
     requiredAmount: 1

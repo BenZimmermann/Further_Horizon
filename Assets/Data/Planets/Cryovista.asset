@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Cryovista
   m_EditorClassIdentifier: 
   displayName: Cryovista
-  description: "Isch der PLanet mit dem Ma anfange. Bisschen mehr Bla Bla f\xFCrs
-    Inventar, um einfach text zu haben."
+  description: A frozen world shrouded in endless ice and snow. Subzero storms sweep
+    across its barren plains.
   temperature: "-50\xB0"
   sceneName: Cryovista
   isLocked: 0

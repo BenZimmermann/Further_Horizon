@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: UmbraQuest_03
   m_EditorClassIdentifier: 
   questId: UmbraQuest_03
-  questName: Voll Crack
-  description: "Stell dir den fl\xFCssigen Stoff her.\n(Crafte Fluiedtank)"
+  questName: Reparing tasks
+  description: 'find the crafting table and repair the module
+
+    (Craft Fluiedtank)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: CryovistaQuest_01
   m_EditorClassIdentifier: 
   questId: CryovistaQuest_01
-  questName: Ich friere
-  description: "Ich rieche eine M\xFCtze die mich warm halten wird!\n(Sammle Ausr\xFCstung
-    ein)"
+  questName: Im Cold!
+  description: 'find somthing to hold you warm
+
+    (Collect armor)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

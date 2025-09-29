@@ -92,7 +92,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
     public void AddItem(ItemDefinition itemData, int amount = 1)
     {
         Debug.LogWarning($"[INV] AddItem {itemData.displayName}  id:{itemData.itemId}  inst:{itemData.GetInstanceID()}");
-
+        //ClearUIAndState();
         if (itemData == null) return;
 
         //Debug.Log($"[Inventory] AddItem: {itemData.displayName}, Amount: {amount}");

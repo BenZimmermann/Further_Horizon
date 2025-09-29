@@ -1,14 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 [RequireComponent(typeof(LineRenderer))]
 public class LaserController : MonoBehaviour
 {
     [Header("Laser Settings")]
-    public int maxReflections = 10;        //max reflections
+    public int maxReflections = 8;        //max reflections
     public float maxDistance = 10f;        //max distance of ray
     public LayerMask collisionLayers;      //all layers that are active
     public LayerMask reflectionLayers;     //LayerMask: the layer witch will reflect the ray (mirror)
+
+    [SerializeField] public GameObject ice;
 
     private LineRenderer lr;
 
@@ -46,6 +49,7 @@ public class LaserController : MonoBehaviour
                 if (((1 << hit.collider.gameObject.layer) & reflectionLayers) != 0)
                 {
                     // reflection with the current object normal 
+                    
                     direction = Vector3.Reflect(direction, hit.normal);
                     start = hit.point;
                     continue;
@@ -63,8 +67,9 @@ public class LaserController : MonoBehaviour
                 break;
             }
         }
-        if (points.Count == 10) {
+        if (points.Count == 8) {
             Debug.Log("lösung");
+            StartCoroutine(LaserDestroy());
             //reward when solving the riddle
         }
 
@@ -72,5 +77,9 @@ public class LaserController : MonoBehaviour
         lr.positionCount = points.Count;
         lr.SetPositions(points.ToArray());
     }
-    
+   private IEnumerator LaserDestroy()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(ice);
+    }
 }

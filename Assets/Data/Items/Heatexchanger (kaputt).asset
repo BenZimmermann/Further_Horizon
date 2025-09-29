@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Heatexchanger (kaputt)
   m_EditorClassIdentifier: 
   itemId: heatexchanger_broken
-  displayName: Heatexchanger (kaputt)
-  description: "Dies ist das kaputte Teil zur Herstellung eines Ger\xE4t zur W\xE4rmemanipulation."
-  itemModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}
+  displayName: Heatexchanger (brocken)
+  description: A damaged thermal regulation unit once used to balance extreme temperatures.
+    Currently non-functional, but with the right parts it might be repaired to restore
+    vital heat management.
+  itemModelSprite: {fileID: 21300000, guid: 7e6f77e44cac3544ea51f1947257922b, type: 3}
   associatedPlanet: {fileID: 11400000, guid: 61038c694c291304b8979c009e17300d, type: 2}
   itemType: 1
   isCraftable: 1

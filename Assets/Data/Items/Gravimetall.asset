@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Gravimetall
   m_EditorClassIdentifier: 
   itemId: gravimetall
-  displayName: Gravimetall
-  description: "Entsprang den Gedanken eines 17 J\xE4hrigen der dieses Universum
-    erschuff. "
-  itemModelSprite: {fileID: 21300000, guid: b72c35508dc91b7489ea3dbc04f65eee, type: 3}
+  displayName: Gravimetal
+  description: A dense, exotic alloy with unusual gravitational properties. It can
+    bend local gravity fields, making it essential for advanced construction, starship
+    engineering, and high-tech weapon systems.
+  itemModelSprite: {fileID: 21300000, guid: a8e69014e36c9624a95a414d127cc9e4, type: 3}
   associatedPlanet: {fileID: 11400000, guid: 3faa3f92ba29f05468f8dfc7025befeb, type: 2}
   itemType: 0
   isCraftable: 1

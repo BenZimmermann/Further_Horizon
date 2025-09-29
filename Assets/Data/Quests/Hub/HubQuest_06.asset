@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: HubQuest_06
   m_EditorClassIdentifier: 
   questId: HubQuest_06
-  questName: "Dunkle M\xE4chte"
-  description: "Du hast es fast geschafft \n(Bereise Planet Singara)"
+  questName: endless void
+  description: 'on the edge of time
+
+    (travel to singara)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

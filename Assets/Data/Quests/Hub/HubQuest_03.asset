@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: HubQuest_03
   m_EditorClassIdentifier: 
   questId: HubQuest_03
-  questName: Erstes Modul
-  description: "Sorge f\xFCr einen Upgrade deines Energieumwandlers\n(Setze Modul
-    in entsprechendes Feld)"
+  questName: First Module
+  description: 'place the modul in the correct socet
+
+'
   requirements:
   - itemId: Heatexchanger
     requiredAmount: 1

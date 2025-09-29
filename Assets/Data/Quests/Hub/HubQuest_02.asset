@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: HubQuest_02
   m_EditorClassIdentifier: 
   questId: HubQuest_02
-  questName: Starte Reise
-  description: 'Gehe zum Cockpit und beginne deine Reise
+  questName: Start the adventure
+  description: 'Go to the control plannel an select a planet
 
-    (Bereise Planet Cryovista)'
+    (travel to Cryovista)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

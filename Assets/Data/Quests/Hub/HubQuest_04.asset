@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: HubQuest_04
   m_EditorClassIdentifier: 
   questId: HubQuest_04
-  questName: Verwirrte Reise
-  description: 'Reise zum Planeten einer anderen Dimension
+  questName: Warped adventure
+  description: 'travel to the dying planet until its to late
 
-    (Bereise Planet Umbra)'
+    (travel to Umbra)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

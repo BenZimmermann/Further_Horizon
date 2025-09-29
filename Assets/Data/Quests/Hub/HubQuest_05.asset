@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: HubQuest_05
   m_EditorClassIdentifier: 
   questId: HubQuest_05
-  questName: Zweites Modul
-  description: "Ein Fl\xFCssiger Tank mit dunkler Materie als Antrieb\n(Setze Modul
-    in entsprechendes Feld)"
+  questName: second Module
+  description: 'place the modul in the correct socet
+
+'
   requirements:
   - itemId: Fluiedtank
     requiredAmount: 1

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: CryovistaQuest_05
   m_EditorClassIdentifier: 
   questId: CryovistaQuest_05
-  questName: Mir friert der Hintern
-  description: "Deine Ausr\xFCstung versagt. Es ist zu kalt.\n(Kehre zum Raumschiff
-    zur\xFCck)"
+  questName: Its too cold!
+  description: 'your armor is in a routh condition!
+
+    (go back to the mothership)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

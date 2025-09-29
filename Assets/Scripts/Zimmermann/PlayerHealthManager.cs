@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class PlayerHealthManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PlayerHealthManager : MonoBehaviour
     public int maxHealth = 10;
     public int health;
     private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
-    [SerializeField] private WindowType windowType = WindowType.Console;
+    [SerializeField] private WindowType windowType = WindowType.GameOver;
 
     [Header("UI Settings")]
     // List of heart/health images in UI (drag & drop in Inspector)

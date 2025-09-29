@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Singara
   m_EditorClassIdentifier: 
   displayName: Singara
-  description: "Planet Singara isch der letzte. Bissle mehr Text f\xFCr Bla bla bla
-    bla bla bla bla bla bla."
+  description: A desert planet of blistering heat and endless dunes. Its scorched
+    surface hides ancient ruins.
   temperature: "-270\xB0"
   sceneName: Singara
   isLocked: 1

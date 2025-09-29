@@ -2,9 +2,11 @@ using UnityEngine;
 using System.Collections;
 using static UnityEngine.InputSystem.InputAction;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 public class PauseGameMenu : MonoBehaviour
 {
     [Header("Window Settings")]
+    [SerializeField] private string newGameScene;   // Name der Startszene fürs neue Spiel
     [SerializeField] private WindowType windowType = WindowType.PauseMenu;
     private bool IsActive => PauseMenuController.Instance.IsWindowOpen(windowType);
     private bool isOpen = false;
@@ -40,6 +42,17 @@ public class PauseGameMenu : MonoBehaviour
             Debug.Log($"Console {windowType} geschlossen");
             PauseMenuController.Instance.CloseWindow();
             //PauseMenuController.Instance.CloseWindow(windowType);
+            isOpen = false;
+            return;
+        }
+    }
+    public void OnbackToShip()
+    {
+        if (isOpen)
+        {
+            Debug.Log("ich wurde gedrückt");
+            PauseMenuController.Instance.CloseWindow();
+            SceneManager.LoadScene(newGameScene);
             isOpen = false;
             return;
         }

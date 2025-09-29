@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: CryovistaQuest_04
   m_EditorClassIdentifier: 
   questId: CryovistaQuest_04
-  questName: Die Crafting Table
-  description: 'Ein Tisch auf dem man Energie umwandeln kann.
+  questName: Crafting?
+  description: 'Repair the module with the collected lumissenz
 
-    (Stelle Heatexchanger
-    her)'
+    (craft Heatexchanger)'
   requirements: []
   rewardItemId: 
   rewardAmount: 1

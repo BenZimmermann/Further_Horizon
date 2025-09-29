@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: HubQuest_01
   m_EditorClassIdentifier: 
   questId: HubQuest_01
-  questName: Lerne Schiff kennen
-  description: 'Leere Bereiche im Raumschiff?
+  questName: know the ship
+  description: 'empty spaces in the walls?
 
-    (Interagiere mit den 3 Modul Fenstern)'
+    (Interact with all 3 moduls)'
   requirements:
   - itemId: InteractModule
     requiredAmount: 3
