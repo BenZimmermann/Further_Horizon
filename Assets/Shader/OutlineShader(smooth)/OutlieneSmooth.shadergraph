@@ -966,7 +966,7 @@
     "m_Title": "Border Up",
     "m_Position": {
         "x": -1249.0,
-        "y": 784.0
+        "y": 783.9999389648438
     }
 }
 
@@ -1752,7 +1752,7 @@
     "m_ObjectId": "340df80c6c7f4bdcbb9893635b28e2d0",
     "m_Title": "Border Right",
     "m_Position": {
-        "x": -1264.0,
+        "x": -1264.0001220703125,
         "y": 278.0
     }
 }

@@ -5,6 +5,7 @@ struct ScharrOperators
 };
 ScharrOperators GetEdgeDetectionKernels()
 {
+    //scharr uses 3x3 as kernels
     ScharrOperators kernels;
     kernels.x = float3x3(
         -3, -10, -3,
@@ -12,8 +13,11 @@ ScharrOperators GetEdgeDetectionKernels()
          3,  10,  3
     );
     kernels.y = float3x3(
-        -3, 0, 3, -10, 0, 10, -3, 0, 3
+        -3,  0, 3, 
+        -10, 0, 10,
+        -3,  0, 3
     );
+ //too sharp
  /*   kernels.x = float3x3(
     -2, -5, -2,
      0, 0, 0,
@@ -27,7 +31,7 @@ ScharrOperators GetEdgeDetectionKernels()
 */
     return kernels;
 }
-
+//based on the depth of the object in world
 void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
 {
     outlines = 0;
@@ -52,6 +56,7 @@ void DepthBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
 outlines = smoothstep(0.01, 0.03, g);
 #endif
 }
+//based on the normal of the object in the world
 void NormalBasedOutlines_float(float2 screenUV, float2 px, out float outlines)
 {
     outlines = 0;

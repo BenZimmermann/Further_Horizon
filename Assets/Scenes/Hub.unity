@@ -1339,6 +1339,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Inventory
       objectReference: {fileID: 0}
+    - target: {fileID: 5140744765076737054, guid: 4cd19423a4d30fb4596223ba86c311a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499351570725215288, guid: 4cd19423a4d30fb4596223ba86c311a7, type: 3}
+      propertyPath: m_Color.a
+      value: 0.8627451
+      objectReference: {fileID: 0}
     - target: {fileID: 8279847425259492342, guid: 4cd19423a4d30fb4596223ba86c311a7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

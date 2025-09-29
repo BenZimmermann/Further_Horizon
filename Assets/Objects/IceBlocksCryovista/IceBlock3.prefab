@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 941042061471627557}
   - component: {fileID: 7436655981201309425}
   - component: {fileID: -3136265109487869648}
+  - component: {fileID: 8865690490719770468}
   m_Layer: 0
   m_Name: IceBlock3
   m_TagString: Untagged
@@ -137,3 +138,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 941042061471627557}
   m_Enabled: 1
+--- !u!65 &8865690490719770468
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423960788147280130}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.021339208, y: 0.01535139, z: 0.022189293}
+  m_Center: {x: 0.00025114184, y: 0.00057168724, z: 0.000848677}

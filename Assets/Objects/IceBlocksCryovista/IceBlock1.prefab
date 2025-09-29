@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6672540260821876970}
   - component: {fileID: 3909570313580297539}
   - component: {fileID: 1501260339202805427}
-  - component: {fileID: 8878294228217875049}
   - component: {fileID: 9135673739931097328}
+  - component: {fileID: -504132723914311696}
   m_Layer: 0
   m_Name: IceBlock1
   m_TagString: Untagged
@@ -88,28 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8878294228217875049
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4505413441756082550}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: -1
-  m_Mesh: {fileID: -3541629673168548286, guid: f110ec03939279943932fc9ab5b3de29, type: 3}
 --- !u!205 &9135673739931097328
 LODGroup:
   m_ObjectHideFlags: 0
@@ -137,3 +115,24 @@ LODGroup:
     renderers:
     - renderer: {fileID: 1501260339202805427}
   m_Enabled: 1
+--- !u!65 &-504132723914311696
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4505413441756082550}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0467744, y: 0.03797472, z: 0.031862818}
+  m_Center: {x: -0.0051628463, y: -0.00014692917, z: -0.0008973851}
