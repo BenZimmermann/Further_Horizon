@@ -52,6 +52,8 @@ The game aims for a tone that is curious, adventurous, and respectful toward all
 
 + Idle enemies with fixed patrol routes
 
+![](Example_Img/Img_8.png)
+
 ### Planet Cryovista
 
 + Item collection (heat suit, crafting materials)
@@ -62,6 +64,8 @@ The game aims for a tone that is curious, adventurous, and respectful toward all
 
 + Laser reflection puzzle based on heat conduction
 
+![](Example_Img/Img_7.png)
+
 ### Planet Singara
 
 + Energy-connection mini-game to open doors
@@ -69,6 +73,8 @@ The game aims for a tone that is curious, adventurous, and respectful toward all
 + Enemies with rotating vision cones and patrols
 
 + Terminal interaction puzzles
+
+![](Example_Img/Img_1.png)
 
 ### Mothership Hub
 
@@ -99,6 +105,13 @@ The game aims for a tone that is curious, adventurous, and respectful toward all
 
 - UI elements may appear misaligned or behave incorrectly
 
+# Gallery
+![](Example_Img/Img_2.png)
+![](Example_Img/Img_4.png)
+![](Example_Img/Img_3.png)
+![](Example_Img/Img_5.png)
+![](Example_Img/Img_6.png)
+
 # Authors
 
 Project Lead / Game Designer:
@@ -115,7 +128,7 @@ Developers:
 
 3D Artists:
 
-""
+[madplixcreate](https://madplixcreate.framer.website/)
 
 ""
 
