@@ -120,7 +120,7 @@ Ben Zimmermann
 
 Lead Artist / Co-Lead:
 
-""
+Emma Reissfelder
 
 Developers:
 
